@@ -1,0 +1,18 @@
+#!/bin/sh
+
+source /etc/gameros-gamescope.conf
+export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+
+export MANGOHUD=1
+export MANGOHUD_CONFIG="no_display,toggle_hud=F3"
+
+STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
+
+# Workaround for Steam login issue while Steam client change propagates out of Beta
+touch ~/.steam/root/config/SteamAppData.vdf || true
+
+if command -v steam-tweaks > /dev/null; then
+	steam-tweaks
+fi
+
+/usr/bin/gamescope -h $GAMESCOPE_HEIGHT -w $GAMESCOPE_WIDTH -- $STEAMCMD
