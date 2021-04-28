@@ -11,8 +11,16 @@ STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch ~/.steam/root/config/SteamAppData.vdf || true
 
-if command -v steam-tweaks > /dev/null; then
-	steam-tweaks
+# Log rotate the last session
+if [ -f ~/.steam-tweaks.log ] then
+	cp ~/.steam-tweaks.log ~/.steam-tweaks.log.old
+fi
+if [ -f ~/.steam-stdout.log ] then
+	cp ~/.steam-stdout.log ~/.steam-stdout.log.old
 fi
 
-/usr/bin/gamescope -h $GAMESCOPE_HEIGHT -w $GAMESCOPE_WIDTH -- $STEAMCMD
+if command -v steam-tweaks > /dev/null; then
+	steam-tweaks > ~/.steam-tweaks.log
+fi
+
+/usr/bin/gamescope -h $GAMESCOPE_HEIGHT -w $GAMESCOPE_WIDTH -- $STEAMCMD > ~/.steam-stdout.log 2>&1
