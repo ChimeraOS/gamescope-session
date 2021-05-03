@@ -22,7 +22,7 @@ After=getty@%i.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/gameros-session
+ExecStart=/usr/bin/gamescope-session
 Restart=always
 User=gamer
 # Log this user with utmp, letting it show up with commands 'w' and

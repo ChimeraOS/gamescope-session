@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source /etc/gameros-gamescope.conf
+source /etc/gamescope-session.conf
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 export MANGOHUD=1

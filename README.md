@@ -21,9 +21,9 @@ Then you'll need to write a PAM file for the session. Copy the provided file to
 `/etc/pam.d/gamescope`.
 
 Then you'll need the executable file for the session. Copy the provided file to
-`/usr/bin/gameros-session`
+`/usr/bin/gamescope-session`
 
-Copy the configuration file to `/etc/gameros-gamescope.conf`. Then if you want
+Copy the configuration file to `/etc/gamescope-session.conf`. Then if you want
 to configure your monitor resolution, just change the variables inside that
 file.
 
