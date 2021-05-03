@@ -1,21 +1,24 @@
-# GamerOS session based on Valve's `gamescope`
+# Steam Big Picture Mode session based on Valve's `gamescope`
 
-This project is not affiliated with GamerOS, nor Valve. It's just a personal
-experiment to make a couch gaming experience similar to GamerOS without lightDM
-and a pure Wayland/Xwayland session started by systemd.
+This project is not affiliated with GamerOS (wide inspiration was taken from
+their awesome work), nor Valve. It's just a personal experiment to make a couch
+gaming experience similar to GamerOS without lightDM and a pure
+Wayland/Xwayland session started by systemd.
 
 Might work for you and you are encouraged to test it. Don't report to Valve or
 GamerOS folks for this project. It might kill your kittens.
 
 ## Installation
 
-TODO
+A PKGBUILD will be available Soon(tm)
 
-## Basic setup
+## Basic manual setup
 
-First you'll need to make a template for the session. This is a service file
-located in `/etc/systemd/system/gamescope@.service`. Use the provided one.
-Thanks to the [cage project](https://github.com/Hjdskes/cage/wiki/Starting-Cage-on-boot-with-systemd).
+First you'll need to make a template for the session (that way you can start
+it in any console you want). This is a service file located in
+`/etc/systemd/system/gamescope@.service`. Use the provided one. Thanks to the
+[cage project](https://github.com/Hjdskes/cage/wiki/Starting-Cage-on-boot-with-systemd)
+for the -shameless copy- inspiration.
 
 Then you'll need to write a PAM file for the session. Copy the provided file to
 `/etc/pam.d/gamescope`.
