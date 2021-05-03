@@ -1,4 +1,4 @@
-# Steam Big Picture Mode session based on Valve's [`gamescope`] (https://github.com/Plagman/gamescope)
+# Steam Big Picture Mode session based on Valve's [`gamescope`](https://github.com/Plagman/gamescope)
 
 This project is not affiliated with GamerOS (wide inspiration was taken from
 their awesome work), nor Valve. It's just a personal experiment to make a couch
