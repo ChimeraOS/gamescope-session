@@ -6,7 +6,6 @@ export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 export MANGOHUD=1
 export MANGOHUD_CONFIG="no_display,toggle_hud=F3"
 
-STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch ~/.steam/root/config/SteamAppData.vdf || true
@@ -23,4 +22,7 @@ if command -v steam-tweaks > /dev/null; then
 	steam-tweaks > ~/.steam-tweaks.log
 fi
 
-/usr/bin/gamescope -h $GAMESCOPE_HEIGHT -w $GAMESCOPE_WIDTH -e -- $STEAMCMD > ~/.steam-stdout.log 2>&1
+STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
+GAMESCOPECMD="/usr/bin/gamescope -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
+
+$GAMESCOPECMD -- $STEAMCMD > ~/.steam-stdout.log 2>&1
