@@ -1,16 +1,16 @@
 # Steam Big Picture Mode session based on Valve's [`gamescope`](https://github.com/Plagman/gamescope)
 
-This project is not affiliated with GamerOS (wide inspiration was taken from
+This project is not affiliated with ChimeraOS (wide inspiration was taken from
 their awesome work), nor Valve. It's just a personal experiment to make a couch
-gaming experience similar to GamerOS without lightDM and a pure
+gaming experience similar to ChimeraOS without lightDM and a pure
 Wayland/Xwayland session started by systemd.
 
 Might work for you and you are encouraged to test it. Don't report to Valve or
-GamerOS folks for this project. It might kill your kittens.
+ChimeraOS folks for this project. It might kill your kittens.
 
 ## Installation
 
-A PKGBUILD will be available Soon(tm)
+A PKGBUILD for Archlinux is available in the AUR.
 
 ## Basic manual setup
 
@@ -38,5 +38,5 @@ gamescope@tty1.service`. Reboot and you are done.
 
 I think this needs one, not sure which one but as long as you don't infringe
 any of the projects's linked here licenses this is licensed under the
-[WTFPL](http://www.wtfpl.net/). If you want to contribute, just do so and 
+[WTFPL](http://www.wtfpl.net/). If you want to contribute, just do so and
 thank you.
