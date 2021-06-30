@@ -2,6 +2,7 @@
 
 source /etc/gamescope-session.conf
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+export MANGOHUD=1
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch ~/.steam/root/config/SteamAppData.vdf || true
