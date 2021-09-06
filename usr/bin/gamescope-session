@@ -9,12 +9,21 @@ do
     [[ -f "${i}" ]] && source "${i}"
 done
 
+# Use cursor if file exist
+if [ -z "$CURSOR_FILE" ] ; then
+    CURSOR_FILE="~/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
+fi
+CURSOR=""
+if [ -f "$CURSOR_FILE" ] ; then
+    CURSOR="--cursor $CURSOR_FILE"
+fi
+
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
     STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
 fi
 if [ -z "$GAMESCOPECMD" ] ; then
-    GAMESCOPECMD="/usr/bin/gamescope -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
+    GAMESCOPECMD="/usr/bin/gamescope $CURSOR -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
