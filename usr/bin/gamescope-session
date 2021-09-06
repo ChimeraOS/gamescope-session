@@ -2,7 +2,20 @@
 
 source /etc/gamescope-session.conf
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
-export MANGOHUD=1
+
+# Source environment from ~/.config
+for i in "~/.config/environment.d/*.conf" ;
+do
+    [[ -f "${i}" ]] && source "${i}"
+done
+
+# Define session if not overriden
+if [ -z "$STEAMCMD" ] ; then
+    STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
+fi
+if [ -z "$GAMESCOPECMD" ] ; then
+    GAMESCOPECMD="/usr/bin/gamescope -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
+fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch ~/.steam/root/config/SteamAppData.vdf || true
@@ -19,8 +32,5 @@ fi
 if command -v steam-tweaks > /dev/null; then
 	steam-tweaks > ~/.steam-tweaks.log
 fi
-
-STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
-GAMESCOPECMD="/usr/bin/gamescope -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
 
 $GAMESCOPECMD -- $STEAMCMD > ~/.steam-stdout.log 2>&1
