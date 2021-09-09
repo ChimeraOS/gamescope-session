@@ -1,7 +1,6 @@
 #!/bin/sh
 
 source /etc/gamescope-session.conf
-export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 # Source environment from ~/.config
 for i in "~/.config/environment.d/*.conf" ;
