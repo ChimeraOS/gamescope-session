@@ -2,11 +2,13 @@
 
 source /etc/gamescope-session.conf
 
-# Source environment from ~/.config
+# Source environment from ~/.config/environment.d
+set -a
 for i in "~/.config/environment.d/*.conf" ;
 do
     [[ -f "${i}" ]] && source "${i}"
 done
+set+a
 
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
