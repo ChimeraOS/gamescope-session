@@ -8,7 +8,7 @@ for i in "~/.config/environment.d/*.conf" ;
 do
     [[ -f "${i}" ]] && source "${i}"
 done
-set+a
+set +a
 
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
