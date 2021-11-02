@@ -22,7 +22,7 @@ fi
 
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
-    STEAMCMD="steam -tenfoot -steamos -fulldesktopres"
+    STEAMCMD="steam -tenfoot -steamos -fulldesktopres -nointro"
 fi
 if [ -z "$GAMESCOPECMD" ] ; then
     GAMESCOPECMD="/usr/bin/gamescope $CURSOR -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
