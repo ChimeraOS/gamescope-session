@@ -5,7 +5,7 @@ export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 # Source environment from ~/.config/environment.d
 set -a
-for i in "~/.config/environment.d/*.conf" ;
+for i in ~/.config/environment.d/*.conf ;
 do
     [[ -f "${i}" ]] && source "${i}"
 done
