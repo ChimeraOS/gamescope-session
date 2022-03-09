@@ -33,15 +33,15 @@ touch ~/.steam/root/config/SteamAppData.vdf || true
 
 # Log rotate the last session
 if [ -f ~/.steam-tweaks.log ]; then
-	cp ~/.steam-tweaks.log ~/.steam-tweaks.log.old
+    cp ~/.steam-tweaks.log ~/.steam-tweaks.log.old
 fi
 if [ -f ~/.steam-stdout.log ]; then
-	cp ~/.steam-stdout.log ~/.steam-stdout.log.old
+    cp ~/.steam-stdout.log ~/.steam-stdout.log.old
 fi
 
 # Run steam-tweaks if exists
 if command -v steam-tweaks > /dev/null; then
-	steam-tweaks > ~/.steam-tweaks.log
+    steam-tweaks > ~/.steam-tweaks.log
 fi
 
 $GAMESCOPECMD -- $STEAMCMD > ~/.steam-stdout.log 2>&1
