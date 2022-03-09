@@ -3,7 +3,7 @@
 # with systemd logind support.
 
 [Unit]
-Description=Gamescope Wayland compositor on %I
+Description=Gamescope Wayland compositor session for user %I on tty1
 # Make sure we are started after logins are permitted. If Plymouth is
 # used, we want to start when it is on its way out.
 After=systemd-user-sessions.service plymouth-quit-wait.service
@@ -17,20 +17,20 @@ Wants=dbus.socket systemd-logind.service
 After=dbus.socket systemd-logind.service
 # Replace any (a)getty that may have spawned, since we log in
 # automatically.
-Conflicts=getty@%i.service
-After=getty@%i.service
+Conflicts=getty@tty1.service
+After=getty@tty1.service
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/gamescope-session
 Restart=always
-User=gamer
+User=%i
 # Log this user with utmp, letting it show up with commands 'w' and
 # 'who'. This is needed since we replace (a)getty.
-UtmpIdentifier=%I
+UtmpIdentifier=tty1
 UtmpMode=user
 # A virtual terminal is needed.
-TTYPath=/dev/%I
+TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
 TTYVTDisallocate=yes
