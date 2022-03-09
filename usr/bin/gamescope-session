@@ -22,7 +22,18 @@ fi
 
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
-    STEAMCMD="steam -gamepadui -steamos -pipewire-dmabuf"
+    # Check beta branch and select prefered UI
+    STEAM_BETA_FILE="~/.local/share/Steam/package/beta"
+    if [ -f "$STEAM_BETA_FILE" ] ; then
+        BETA=$(cat $STEAM_BETA_FILE)
+        if [[ $BETA =~ steampal ]] ; then
+            STEAMCMD="steam -gamepadui -steamos -pipewire-dmabuf"
+        else
+            STEAMCMD="steam -tenfoot -steamos -pipewire-dmabuf"
+        fi
+    else
+        STEAMCMD="steam -tenfoot -steamos -pipewire-dmabuf"
+    fi
 fi
 if [ -z "$GAMESCOPECMD" ] ; then
     GAMESCOPECMD="/usr/bin/gamescope $CURSOR -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
