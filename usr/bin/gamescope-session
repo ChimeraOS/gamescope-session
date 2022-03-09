@@ -1,19 +1,19 @@
 #!/bin/sh
 
-source /etc/gamescope-session.conf
+. /etc/gamescope-session.conf
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 # Source environment from ~/.config/environment.d
 set -a
 for i in ~/.config/environment.d/*.conf ;
 do
-    [[ -f "${i}" ]] && source "${i}"
+    [[ -f "${i}" ]] && . "${i}"
 done
 set +a
 
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
-    CURSOR_FILE="~/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
+    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
 fi
 CURSOR=""
 if [ -f "$CURSOR_FILE" ] ; then
@@ -23,7 +23,7 @@ fi
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
     # Check beta branch and select prefered UI
-    STEAM_BETA_FILE="~/.local/share/Steam/package/beta"
+    STEAM_BETA_FILE="${HOME}/.local/share/Steam/package/beta"
     if [ -f "$STEAM_BETA_FILE" ] ; then
         BETA=$(cat $STEAM_BETA_FILE)
         if [[ $BETA =~ steampal ]] ; then
