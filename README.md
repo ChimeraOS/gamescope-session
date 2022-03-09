@@ -37,6 +37,32 @@ It will use tty1 by default.
 
 Reboot and you are done.
 
+# Configuration
+
+The session sources environment from `~/.config/environment.d/*.conf` files.
+The easiest way to configure the session is to create `~/.config/environment.d/gamescope-session.conf`
+and set variables there:
+
+```
+# Size of the screen
+SCREEN_H=2160
+SCREEN_W=3840
+
+# Size to render
+RENDER_H=2160
+RENDER_W=3840
+
+# Cursor file to use as default
+CURSOR_FILE="~/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
+
+# Override entire Steam client command line
+STEAMCMD="steam -steamos -pipewire-dmabuf -gamepadui"
+
+# Override the entire Gamescope command line
+# This will not use screen and render sizes above
+GAMESCOPECMD="gamescope -e -f"
+```
+
 # License
 
 I think this needs one, not sure which one but as long as you don't infringe
