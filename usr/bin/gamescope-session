@@ -13,7 +13,7 @@ set +a
 
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
-    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
+    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow_right.png"
 fi
 CURSOR=""
 if [ -f "$CURSOR_FILE" ] ; then
@@ -52,4 +52,4 @@ if command -v steam-tweaks > /dev/null; then
     steam-tweaks > "${HOME}"/.steam-tweaks.log
 fi
 
-"$GAMESCOPECMD" -- "$STEAMCMD" > "${HOME}"/.steam-stdout.log 2>&1
+$GAMESCOPECMD -- $STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
