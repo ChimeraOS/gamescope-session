@@ -5,7 +5,7 @@ export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 # Source environment from ~/.config/environment.d
 set -a
-for i in ~/.config/environment.d/*.conf ;
+for i in "${HOME}"/.config/environment.d/*.conf ;
 do
     [[ -f "${i}" ]] && . "${i}"
 done
@@ -17,22 +17,19 @@ if [ -z "$CURSOR_FILE" ] ; then
 fi
 CURSOR=""
 if [ -f "$CURSOR_FILE" ] ; then
-    CURSOR="--cursor $CURSOR_FILE"
+    CURSOR="--cursor ${CURSOR_FILE}"
 fi
 
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
+    STEAMCMD="steam -tenfoot -steamos -pipewire-dmabuf"
     # Check beta branch and select prefered UI
     STEAM_BETA_FILE="${HOME}/.local/share/Steam/package/beta"
     if [ -f "$STEAM_BETA_FILE" ] ; then
-        BETA=$(cat $STEAM_BETA_FILE)
+        BETA=$(cat "${STEAM_BETA_FILE}")
         if [[ $BETA =~ steampal ]] ; then
             STEAMCMD="steam -gamepadui -steamos -pipewire-dmabuf"
-        else
-            STEAMCMD="steam -tenfoot -steamos -pipewire-dmabuf"
         fi
-    else
-        STEAMCMD="steam -tenfoot -steamos -pipewire-dmabuf"
     fi
 fi
 if [ -z "$GAMESCOPECMD" ] ; then
@@ -40,19 +37,19 @@ if [ -z "$GAMESCOPECMD" ] ; then
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
-touch ~/.steam/root/config/SteamAppData.vdf || true
+touch "${HOME}"/.steam/root/config/SteamAppData.vdf || true
 
 # Log rotate the last session
-if [ -f ~/.steam-tweaks.log ]; then
-    cp ~/.steam-tweaks.log ~/.steam-tweaks.log.old
+if [ -f "${HOME}"/.steam-tweaks.log ]; then
+    cp "${HOME}"/.steam-tweaks.log "${HOME}"/.steam-tweaks.log.old
 fi
-if [ -f ~/.steam-stdout.log ]; then
-    cp ~/.steam-stdout.log ~/.steam-stdout.log.old
+if [ -f "${HOME}"/.steam-stdout.log ]; then
+    cp "${HOME}"/.steam-stdout.log "${HOME}"~/.steam-stdout.log.old
 fi
 
 # Run steam-tweaks if exists
 if command -v steam-tweaks > /dev/null; then
-    steam-tweaks > ~/.steam-tweaks.log
+    steam-tweaks > "${HOME}"/.steam-tweaks.log
 fi
 
-$GAMESCOPECMD -- $STEAMCMD > ~/.steam-stdout.log 2>&1
+"$GAMESCOPECMD" -- "$STEAMCMD" > "${HOME}"/.steam-stdout.log 2>&1
