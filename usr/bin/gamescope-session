@@ -44,7 +44,7 @@ if [ -f "${HOME}"/.steam-tweaks.log ]; then
     cp "${HOME}"/.steam-tweaks.log "${HOME}"/.steam-tweaks.log.old
 fi
 if [ -f "${HOME}"/.steam-stdout.log ]; then
-    cp "${HOME}"/.steam-stdout.log "${HOME}"~/.steam-stdout.log.old
+    cp "${HOME}"/.steam-stdout.log "${HOME}"/.steam-stdout.log.old
 fi
 
 # Run steam-tweaks if exists
