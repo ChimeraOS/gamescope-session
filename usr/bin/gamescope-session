@@ -79,3 +79,35 @@ $STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
 
 # When the client exits, kill gamescope nicely
 kill $gamescope_pid
+
+# Start a background sleep for five seconds because we don't trust it
+sleep 5 &
+sleep_pid=$!
+
+# Wait for gamescope or the sleep to finish for timeout purposes
+ret=0
+wait -n $gamescope_pid $sleep_pid || ret=$?
+
+# If we get a SIGTERM/etc while waiting this happens.  Proceed to kill -9 everything but complain
+if [[ $ret = 127 ]]; then
+	echo >&2 "gamescope-session: Interrupted while waiting on teardown, force-killing remaining tasks"
+fi
+
+# Kill all remaining jobs and warn if unexpected things are in there (should be just sleep_pid, unless gamescope failed
+# to exit in time or we hit the interrupt case above)
+for job in $(jobs -p); do
+	# Warn about unexpected things
+	if [[ $ret != 127 && $job = "$gamescope_pid" ]]; then
+		echo >&2 "gamescope-session: gamescope timed out while exiting, killing"
+	elif [[ $ret != 127 && $job != "$sleep_pid" ]]; then
+		echo >&2 "gamescope-session: unexpected background pid $job at teardown: "
+		# spew some debug about it
+		ps -p "$job" >&2
+	fi
+	kill -9 "$job"
+done
+
+# This should just be waiting on kill -9'd things. Another signal will cause us to give up, but we should be a little
+# stubborn about not letting the session die with gamescope holding on to things.
+wait
+
