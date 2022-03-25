@@ -1,7 +1,11 @@
 #!/bin/sh
 
+# Source global variables
 . /etc/gamescope-session.conf
+
+# Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+export STEAM_USE_MANGOAPP=1
 
 # Source environment from ~/.config/environment.d
 set -a
@@ -46,10 +50,26 @@ fi
 if [ -f "${HOME}"/.steam-stdout.log ]; then
     cp "${HOME}"/.steam-stdout.log "${HOME}"/.steam-stdout.log.old
 fi
+if [ -f "${HOME}"/.gamescope-stdout.log ]; then
+    cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
+fi
 
 # Run steam-tweaks if exists
 if command -v steam-tweaks > /dev/null; then
     steam-tweaks > "${HOME}"/.steam-tweaks.log
 fi
 
-$GAMESCOPECMD -- $STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
+# Start gamescope compositor, log it's output and background it
+$GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
+gamescope_pid="$!"
+
+# If we have mangoapp binary start it
+if command -v mangoapp > /dev/null; then
+    mangoapp &
+fi
+
+# Start Steam client
+$STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
+
+# When the client exits, kill gamescope nicely
+kill $gamescope_pid
