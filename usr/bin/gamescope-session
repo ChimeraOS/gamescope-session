@@ -37,7 +37,13 @@ if [ -z "$STEAMCMD" ] ; then
     fi
 fi
 if [ -z "$GAMESCOPECMD" ] ; then
-    GAMESCOPECMD="/usr/bin/gamescope $CURSOR -e -f -W $SCREEN_W -H $SCREEN_H -w $RENDER_W -h $RENDER_H"
+    GAMESCOPECMD="/usr/bin/gamescope \
+      $CURSOR \
+      -e \
+      -f \
+      -W $SCREEN_W -H $SCREEN_H \
+      -w $RENDER_W -h $RENDER_H \
+      --xwayland-count 2"
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
