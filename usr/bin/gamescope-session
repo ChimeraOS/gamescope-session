@@ -67,7 +67,6 @@ if [ -z "$GAMESCOPECMD" ] ; then
     GAMESCOPECMD="/usr/bin/gamescope \
       $CURSOR \
       -e \
-      -f \
       -R "$socket" \
       -W $SCREEN_W -H $SCREEN_H \
       -w $RENDER_W -h $RENDER_H \
