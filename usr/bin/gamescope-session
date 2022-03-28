@@ -7,6 +7,21 @@
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 export STEAM_USE_MANGOAPP=1
 
+# Enable volume key management via steam for this session
+export STEAM_ENABLE_VOLUME_HANDLER=1
+
+# Have SteamRT's xdg-open send http:// and https:// URLs to Steam
+export SRT_URLOPEN_PREFER_STEAM=1
+
+# Disable automatic audio device switching in steam, now handled by wireplumber
+export STEAM_DISABLE_AUDIO_DEVICE_SWITCHING=1
+
+# Enable support for xwayland isolation per-game in Steam
+export STEAM_MULTIPLE_XWAYLANDS=1
+
+# Don't wait for buffers to idle on the client side before sending them to gamescope
+export vk_xwayland_wait_ready=false
+
 # Source environment from ~/.config/environment.d
 set -a
 for i in "${HOME}"/.config/environment.d/*.conf ;
@@ -82,7 +97,7 @@ kill $gamescope_pid
 
 # Start a background sleep for five seconds because we don't trust it
 sleep 5 &
-sleep_pid=$!
+sleep_pid="$!"
 
 # Wait for gamescope or the sleep to finish for timeout purposes
 ret=0
@@ -106,8 +121,4 @@ for job in $(jobs -p); do
 	fi
 	kill -9 "$job"
 done
-
-# This should just be waiting on kill -9'd things. Another signal will cause us to give up, but we should be a little
-# stubborn about not letting the session die with gamescope holding on to things.
-wait
 
