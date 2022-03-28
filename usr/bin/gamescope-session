@@ -30,6 +30,18 @@ do
 done
 set +a
 
+# Setup socket for gamescope
+# Create run directory file for startup and stats sockets
+tmpdir="$([[ -n ${XDG_RUNTIME_DIR+x} ]] && mktemp -p "$XDG_RUNTIME_DIR" -d -t gamescope.XXXXXXX)"
+socket="${tmpdir:+$tmpdir/startup.socket}"
+# Fail early if we don't have a proper runtime directory setup
+if [[ -z $tmpdir || -z ${XDG_RUNTIME_DIR+x} ]]; then
+	echo >&2 "!! Failed to find run directory in which to create stats session sockets (is \$XDG_RUNTIME_DIR set?)"
+	exit 0
+fi
+
+mkfifo -- "$socket"
+
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
     CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow_right.png"
@@ -56,6 +68,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
       $CURSOR \
       -e \
       -f \
+      -R "$socket" \
       -W $SCREEN_W -H $SCREEN_H \
       -w $RENDER_W -h $RENDER_H \
       --xwayland-count 2"
@@ -83,6 +96,17 @@ fi
 # Start gamescope compositor, log it's output and background it
 $GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
 gamescope_pid="$!"
+
+if read -r -t 3 response_x_display response_wl_display <> "$socket"; then
+	export DISPLAY="$response_x_display"
+	export GAMESCOPE_WAYLAND_DISPLAY="$response_wl_display"
+	# We're done!
+else
+	kill -9 "$gamescope_pid"
+	wait
+	exit 0
+	# Systemd or Session manager will have to restart session
+fi
 
 # If we have mangoapp binary start it
 if command -v mangoapp > /dev/null; then
