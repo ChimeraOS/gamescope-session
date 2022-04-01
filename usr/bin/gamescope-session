@@ -5,7 +5,10 @@
 
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+
+# Enable Mangoapp
 export STEAM_USE_MANGOAPP=1
+export MANGOAPP=1
 
 # Enable volume key management via steam for this session
 export STEAM_ENABLE_VOLUME_HANDLER=1
