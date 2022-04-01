@@ -62,7 +62,7 @@ if [ -z "$STEAMCMD" ] ; then
     if [ -f "$STEAM_BETA_FILE" ] ; then
         BETA=$(cat "${STEAM_BETA_FILE}")
         if [[ $BETA =~ steampal ]] ; then
-            STEAMCMD="steam -gamepadui -steamos -pipewire-dmabuf"
+            STEAMCMD="steam -gamepadui -steamos"
         fi
     fi
 fi
