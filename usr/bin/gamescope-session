@@ -67,12 +67,15 @@ if [ -z "$STEAMCMD" ] ; then
     fi
 fi
 if [ -z "$GAMESCOPECMD" ] ; then
+    RESOLUTION=""
+    if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ] ; then
+        RESOLUTION="-w $SCREEN_WIDTH -h $SCREEN_HEIGHT"
+    fi
     GAMESCOPECMD="/usr/bin/gamescope \
       $CURSOR \
       -e \
       -R "$socket" \
-      -W $SCREEN_W -H $SCREEN_H \
-      -w $RENDER_W -h $RENDER_H \
+      $RESOLUTION \
       --xwayland-count 2"
 fi
 
