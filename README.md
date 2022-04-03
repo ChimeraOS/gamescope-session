@@ -24,11 +24,7 @@ Then you'll need to write a PAM file for the session. Copy the provided file to
 `/etc/pam.d/gamescope`.
 
 Then you'll need the executable file for the session. Copy the provided file to
-`/usr/bin/gamescope-session`
-
-Copy the configuration file to `/etc/gamescope-session.conf`. Then if you want
-to configure your monitor resolution, just change the variables inside that
-file.
+`/usr/bin/gamescope-session`.
 
 Disable any other display manager you may have (i.e. `# systemctl disable
 lightdm.service`) and then enable this one with `# systemctl enable
@@ -44,12 +40,9 @@ The easiest way to configure the session is to create `~/.config/environment.d/g
 and set variables there:
 
 ```
-# Size of the (rendered) screen
+# Size of the screen. If not set gamescope will detect native resolution from drm.
 SCREEN_HEIGHT=2160
 SCREEN_WIDTH=3840
-
-# Cursor file to use as default
-CURSOR_FILE="~/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
 
 # Override entire Steam client command line
 STEAMCMD="steam -steamos -pipewire-dmabuf -gamepadui"
