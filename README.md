@@ -44,13 +44,9 @@ The easiest way to configure the session is to create `~/.config/environment.d/g
 and set variables there:
 
 ```
-# Size of the screen
-SCREEN_H=2160
-SCREEN_W=3840
-
-# Size to render
-RENDER_H=2160
-RENDER_W=3840
+# Size of the (rendered) screen
+SCREEN_HEIGHT=2160
+SCREEN_WIDTH=3840
 
 # Cursor file to use as default
 CURSOR_FILE="~/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
