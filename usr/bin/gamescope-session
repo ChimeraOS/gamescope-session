@@ -74,6 +74,9 @@ if [ -z "$GAMESCOPECMD" ] ; then
       -R "$socket" \
       $RESOLUTION \
       --xwayland-count 2"
+else
+    # Add socket read
+    GAMESCOPECMD+=" -R $socket"
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
