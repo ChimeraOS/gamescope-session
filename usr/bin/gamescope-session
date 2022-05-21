@@ -60,16 +60,9 @@ fi
 
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
-    STEAMCMD="steam -tenfoot -steamos -pipewire-dmabuf"
-    # Check beta branch and select prefered UI
-    STEAM_BETA_FILE="${HOME}/.local/share/Steam/package/beta"
-    if [ -f "$STEAM_BETA_FILE" ] ; then
-        BETA=$(cat "${STEAM_BETA_FILE}")
-        if [[ $BETA =~ steampal ]] ; then
-            STEAMCMD="steam -gamepadui -steamos3 -steampal -steamdeck"
-        fi
-    fi
+    STEAMCMD="steam -gamepadui -steamos3 -steampal -steamdeck"
 fi
+
 if [ -z "$GAMESCOPECMD" ] ; then
     RESOLUTION=""
     if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ] ; then
