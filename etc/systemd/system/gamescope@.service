@@ -19,6 +19,9 @@ After=dbus.socket systemd-logind.service
 # automatically.
 Conflicts=getty@tty1.service
 After=getty@tty1.service
+# Limit burst of this unit failing
+StartLimitIntervalSec=200
+StartLimitBurst=5
 
 [Service]
 Type=simple
