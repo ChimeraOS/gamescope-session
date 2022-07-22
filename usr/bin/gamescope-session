@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usb/bin/env bash
 
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
