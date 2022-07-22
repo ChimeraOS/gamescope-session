@@ -156,7 +156,7 @@ fi
 
 # If we have mangoapp binary start it
 if command -v mangoapp > /dev/null; then
-    mangoapp & > "${HOME}"/.mangoapp-stdout.log 2>&1
+    mangoapp > "${HOME}"/.mangoapp-stdout.log 2>&1 &
 fi
 
 # Start Steam client
