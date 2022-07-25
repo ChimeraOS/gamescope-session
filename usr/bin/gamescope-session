@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
@@ -62,7 +62,12 @@ export GTK_IM_MODULE=Steam
 
 export XCURSOR_THEME=steam
 
-# Source environment from ~/.config/environment.d
+# Source device quirks if exists
+if [ -f /usr/share/gamescope-session/device-quirks ]; then
+  . /usr/share/gamescope-session/device-quirks
+fi
+
+# Source environment from ~/.config/environment.d with user overrides
 set -a
 for i in "${HOME}"/.config/environment.d/*.conf ;
 do
