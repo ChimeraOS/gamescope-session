@@ -6,7 +6,6 @@ export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 # Enable Mangoapp
 export STEAM_USE_MANGOAPP=1
 export MANGOHUD_CONFIGFILE=$(mktemp /tmp/mangohud.XXXXXXXX)
-export MANGOAPP=1
 
 # There is no way to set a color space for an NV12
 # buffer in Wayland. And the color management protocol that is
@@ -86,12 +85,15 @@ set +a
 # Create run directory file for startup and stats sockets
 tmpdir="$([[ -n ${XDG_RUNTIME_DIR+x} ]] && mktemp -p "$XDG_RUNTIME_DIR" -d -t gamescope.XXXXXXX)"
 socket="${tmpdir:+$tmpdir/startup.socket}"
+stats="${tmpdir:+$tmpdir/stats.pipe}"
 # Fail early if we don't have a proper runtime directory setup
 if [[ -z $tmpdir || -z ${XDG_RUNTIME_DIR+x} ]]; then
 	echo >&2 "!! Failed to find run directory in which to create stats session sockets (is \$XDG_RUNTIME_DIR set?)"
 	exit 0
 fi
 
+export GAMESCOPE_STATS="$stats"
+mkfifo -- "$stats"
 mkfifo -- "$socket"
 
 # Use cursor if file exist
@@ -116,15 +118,15 @@ if [ -z "$GAMESCOPECMD" ] ; then
     GAMESCOPECMD="/usr/bin/gamescope \
       $CURSOR \
       -e \
-      -R "$socket" \
       $RESOLUTION \
       --xwayland-count 2 \
       -O \'\*\',eDP-1 \
       --default-touch-mode 4 \
-	  --hide-cursor-delay 3000"
+      --hide-cursor-delay 3000 \
+      -R $socket -T $stats"
 else
-    # Add socket read
-    GAMESCOPECMD+=" -R $socket"
+    # Add socket and stats read
+    GAMESCOPECMD+=" -R $socket -T $stats"
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
