@@ -57,6 +57,9 @@ export vk_xwayland_wait_ready=false
 export QT_IM_MODULE=steam
 export GTK_IM_MODULE=Steam
 
+# To play nice with the short term callback-based limiter for now
+export GAMESCOPE_LIMITER_FILE=$(mktemp /tmp/gamescope-limiter.XXXXXXXX)
+
 export XCURSOR_THEME=steam
 
 # Source device quirks if exists
