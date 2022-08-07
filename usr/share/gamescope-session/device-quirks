@@ -12,4 +12,6 @@ if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONE XPLAYER" ]; then
       --hide-cursor-delay 3000 \
       --force-orientation left "
   fi
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi

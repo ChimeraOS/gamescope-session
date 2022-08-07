@@ -53,9 +53,6 @@ export STEAM_GAMESCOPE_NIS_SUPPORTED=1
 # Don't wait for buffers to idle on the client side before sending them to gamescope
 export vk_xwayland_wait_ready=false
 
-# Set refresh rate range and enable refresh rate switching
-export STEAM_DISPLAY_REFRESH_LIMITS=50,60
-
 # Set input method modules for Qt/GTK that will show the Steam keyboard
 export QT_IM_MODULE=steam
 export GTK_IM_MODULE=Steam
