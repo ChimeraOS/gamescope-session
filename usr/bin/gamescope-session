@@ -109,6 +109,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
     GAMESCOPECMD="/usr/bin/gamescope \
       $CURSOR \
       -e \
+      -f \
       -R "$socket" \
       $RESOLUTION \
       --xwayland-count 2 \
