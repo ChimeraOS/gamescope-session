@@ -1,7 +1,7 @@
 # This file would be sourced by gamescope-session script (meant for
 # ChimeraOS devices).
 
-if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONE XPLAYER" ]; then
+if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONE XPLAYER" ] || [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONEXPLAYER mini-A07" ]; then
   # Dependent on a special --force-orientation option in gamescope
   if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
     export GAMESCOPECMD="/usr/bin/gamescope \
