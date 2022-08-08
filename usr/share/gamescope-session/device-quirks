@@ -27,5 +27,4 @@ if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "AIR" ] || [ "$(cat /s
       --hide-cursor-delay 3000 \
       --force-orientation left "
   fi
-  # Set refresh rate range and enable refresh rate switching
 fi
