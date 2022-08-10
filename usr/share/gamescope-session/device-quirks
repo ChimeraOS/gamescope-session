@@ -28,3 +28,16 @@ if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "AIR" ] || [ "$(cat /s
       --force-orientation left "
   fi
 fi
+
+if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ROG Zephyrus G14 GA402RJ_GA402RJ" ]; then
+  export GAMESCOPECMD="/usr/bin/gamescope \
+      -e \
+      --xwayland-count 2 \
+      -O \'\*\',eDP-1 \
+      --default-touch-mode 4 \
+      --hide-cursor-delay 3000 \
+# uncomment the line below to enable 6700s discreet graphics and # the line with 1002:1681 to disable integrated graphics
+#     --prefer-vk-device 1002:73ef "
+      --prefer-vk-device 1002:1681 "
+fi
+
