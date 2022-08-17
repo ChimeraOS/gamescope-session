@@ -1,7 +1,11 @@
 # This file would be sourced by gamescope-session script (meant for
 # ChimeraOS devices).
 
-if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONE XPLAYER" ] || [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONEXPLAYER mini-A07" ]; then
+SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
+
+# OXP Devices
+OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23"
+if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]]; then
   # Dependent on a special --force-orientation option in gamescope
   if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
     export GAMESCOPECMD="/usr/bin/gamescope \
@@ -16,7 +20,9 @@ if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "ONE XPLAYER" ] || [ "
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
-if [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "AIR" ] || [ "$(cat /sys/devices/virtual/dmi/id/product_name)" == "AIR Pro" ]; then
+# AYANEO AIR Devices
+AIR_LIST="AIR:AIR Pro"
+if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
   # Dependent on a special --force-orientation option in gamescope
   if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
     export GAMESCOPECMD="/usr/bin/gamescope \
