@@ -28,6 +28,24 @@ export RADV_FORCE_VRS_CONFIG_FILE=$(mktemp /tmp/radv_vrs.XXXXXXXX)
 mkdir -p "$(dirname "$RADV_FORCE_VRS_CONFIG_FILE")"
 echo "1x1" > "$RADV_FORCE_VRS_CONFIG_FILE"
 
+# To expose vram info from radv
+export WINEDLLOVERRIDES=dxgi=n
+
+# Workaround for steam getting killed immediatly during reboot
+export STEAMOS_STEAM_REBOOT_SENTINEL="/tmp/steamos-reboot-sentinel"
+if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
+	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
+	sudo -n reboot
+fi
+
+# Workaround for steam getting killed immediatly during shutdown
+# Same idea as reboot sentinel above
+export STEAMOS_STEAM_SHUTDOWN_SENTINEL="/tmp/steamos-shutdown-sentinel"
+if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
+	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
+	sudo -n poweroff
+fi
+
 # Enable volume key management via steam for this session
 export STEAM_ENABLE_VOLUME_HANDLER=1
 
