@@ -141,6 +141,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
       -O \'\*\',eDP-1 \
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
+      --fade-out-duration 200 \
       -R $socket -T $stats"
 else
     # Add socket and stats read
