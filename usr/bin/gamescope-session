@@ -35,7 +35,7 @@ export WINEDLLOVERRIDES=dxgi=n
 export STEAMOS_STEAM_REBOOT_SENTINEL="/tmp/steamos-reboot-sentinel"
 if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
-	sudo -n reboot
+	reboot
 fi
 
 # Workaround for steam getting killed immediatly during shutdown
@@ -43,7 +43,7 @@ fi
 export STEAMOS_STEAM_SHUTDOWN_SENTINEL="/tmp/steamos-shutdown-sentinel"
 if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
-	sudo -n poweroff
+	poweroff
 fi
 
 # Enable volume key management via steam for this session
