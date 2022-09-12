@@ -15,7 +15,7 @@
       <allow_inactive>yes</allow_inactive>
       <allow_active>yes</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/steamos-update</annotate>
+		<annotate key="org.freedesktop.policykit.exec.path">/usr/bin/steamos-polkit-helpers/steamos-update</annotate>
   </action>
 
   <action id="org.chimeraos.policykit.steamos.pkexec.run-jupiter-biosupdate">
@@ -26,7 +26,7 @@
       <allow_inactive>yes</allow_inactive>
       <allow_active>yes</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/jupiter-biosupdate</annotate>
+		<annotate key="org.freedesktop.policykit.exec.path">/usr/bin/steamos-polkit-helpers/jupiter-biosupdate</annotate>
   </action>
 
 </policyconfig>
