@@ -173,11 +173,6 @@ if [ -f "${HOME}"/.gamescope-stdout.log ]; then
     cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
 fi
 
-# Run steam-tweaks if exists
-if command -v steam-tweaks > /dev/null; then
-    steam-tweaks > "${HOME}"/.steam-tweaks.log
-fi
-
 # Start gamescope compositor, log it's output and background it
 $GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
 gamescope_pid="$!"
@@ -191,6 +186,11 @@ else
 	wait
 	exit 0
 	# Systemd or Session manager will have to restart session
+fi
+
+# Run steam-tweaks if exists
+if command -v steam-tweaks > /dev/null; then
+    steam-tweaks > "${HOME}"/.steam-tweaks.log
 fi
 
 # Input method support if present
