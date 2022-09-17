@@ -7,6 +7,17 @@ export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 export STEAM_USE_MANGOAPP=1
 export MANGOHUD_CONFIGFILE=$(mktemp /tmp/mangohud.XXXXXXXX)
 
+# Plop GAMESCOPE_MODE_SAVE_FILE into $XDG_CONFIG_HOME (defaults to ~/.config).
+export GAMESCOPE_MODE_SAVE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/modes.cfg"
+
+# Make path to gamescope mode save file.
+mkdir -p "$(dirname "$GAMESCOPE_MODE_SAVE_FILE")"
+touch "$GAMESCOPE_MODE_SAVE_FILE"
+echo "Making Gamescope Mode Save file at \"$GAMESCOPE_MODE_SAVE_FILE\""
+
+# Support for gamescope tearing with GAMESCOPE_ALLOW_TEARING atom
+export STEAM_GAMESCOPE_HAS_TEARING_SUPPORT=1
+
 # There is no way to set a color space for an NV12
 # buffer in Wayland. And the color management protocol that is
 # meant to let this happen is missing the color range...
@@ -83,6 +94,8 @@ export XCURSOR_THEME=steam
 if [ -f "/usr/share/steamos/steamos.png" ] ; then
   export STEAM_UPDATEUI_PNG_BACKGROUND=/usr/share/steamos/steamos.png
 fi
+
+ulimit -n 524288
 
 # Source device quirks if exists
 if [ -f /usr/share/gamescope-session/device-quirks ]; then
