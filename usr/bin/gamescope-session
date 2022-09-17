@@ -79,10 +79,8 @@ export GAMESCOPE_LIMITER_FILE=$(mktemp /tmp/gamescope-limiter.XXXXXXXX)
 
 export XCURSOR_THEME=steam
 
-# Use our own background if exists
-if [ -f "/usr/share/backgrounds/chimeraos/chimeraos_background.png" ] ; then
-  export STEAM_UPDATEUI_PNG_BACKGROUND=/usr/share/backgrounds/chimeraos/chimeraos_background.png
-elif [ -f "/usr/share/steamos/steamos.png" ] ; then
+# Use SteamOS background if exists
+if [ -f "/usr/share/steamos/steamos.png" ] ; then
   export STEAM_UPDATEUI_PNG_BACKGROUND=/usr/share/steamos/steamos.png
 fi
 
