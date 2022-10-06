@@ -125,6 +125,19 @@ export GAMESCOPE_STATS="$stats"
 mkfifo -- "$stats"
 mkfifo -- "$socket"
 
+# Attempt to claim global session if we're the first one running (e.g. /run/1000/gamescope)
+linkname="gamescope-stats"
+#   shellcheck disable=SC2031 # (broken warning)
+sessionlink="${XDG_RUNTIME_DIR:+$XDG_RUNTIME_DIR/}${linkname}" # Account for XDG_RUNTIME_DIR="" (notfragileatall)
+lockfile="$sessionlink".lck
+exec 9>"$lockfile" # Keep as an fd such that the lock lasts as long as the session if it is taken
+if flock -n 9 && rm -f "$sessionlink" && ln -sf "$tmpdir" "$sessionlink"; then
+	# Took the lock.  Don't blow up if those commands fail, though.
+	echo >&2 "Claimed global gamescope stats session at \"$sessionlink\""
+else
+	echo >&2 "!! Failed to claim global gamescope stats session"
+fi
+
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
     CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow_right.png"
