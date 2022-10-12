@@ -162,7 +162,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
       -e \
       $RESOLUTION \
       --xwayland-count 2 \
-      -O \'\*\',eDP-1 \
+      -O *,eDP-1 \
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \

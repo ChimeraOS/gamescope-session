@@ -13,7 +13,7 @@ if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]] || [[  ":$AOK_LIST:" =~ ":$SYS_ID:"   ]];
       -e \
       --generate-drm-mode fixed \
       --xwayland-count 2 \
-      -O \'\*\',eDP-1 \
+      -O *,eDP-1 \
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -31,7 +31,7 @@ if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
     export GAMESCOPECMD="/usr/bin/gamescope \
       -e \
       --xwayland-count 2 \
-      -O \'\*\',eDP-1 \
+      -O *,eDP-1 \
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
