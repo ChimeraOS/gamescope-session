@@ -1,0 +1,7 @@
+[Default Applications]
+x-scheme-handler/http=steam_http_loader.desktop
+x-scheme-handler/https=steam_http_loader.desktop
+x-scheme-handler/mailto=steam_http_loader.desktop
+application/pdf=steam_http_loader.desktop
+application/x-extension-html=steam_http_loader.desktop
+text/html=steam_http_loader.desktop
