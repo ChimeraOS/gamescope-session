@@ -90,6 +90,9 @@ export STEAM_ALLOW_DRIVE_UNMOUNT=1
 # We no longer need to set GAMESCOPE_EXTERNAL_OVERLAY from steam, mangoapp now does it itself
 export STEAM_DISABLE_MANGOAPP_ATOM_WORKAROUND=1
 
+# Enable horizontal mangoapp bar
+export STEAM_MANGOAPP_HORIZONTAL_SUPPORTED=1
+
 # Scaling support
 export STEAM_GAMESCOPE_FANCY_SCALING_SUPPORT=1
 
