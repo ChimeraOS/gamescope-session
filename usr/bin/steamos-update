@@ -1,7 +1,11 @@
 #! /bin/bash
 
 if command -v frzr-deploy > /dev/null; then
-    frzr-deploy --update-ready
+	if [ "$1" == "check" ]; then
+		frzr-deploy --check
+	else
+		frzr-deploy --steam-progress
+	fi
 else
     exit 7
 fi
