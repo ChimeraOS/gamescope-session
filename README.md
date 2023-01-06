@@ -1,12 +1,9 @@
 # Steam Big Picture Mode session based on Valve's [`gamescope`](https://github.com/Plagman/gamescope)
 
-This project is not affiliated with ChimeraOS (wide inspiration was taken from
-their awesome work), nor Valve. It's just a personal experiment to make a couch
-gaming experience similar to ChimeraOS without lightDM and a pure
-Wayland/Xwayland session started by systemd.
-
-Might work for you and you are encouraged to test it. Don't report to Valve or
-ChimeraOS folks for this project. It might kill your kittens.
+This project is not affiliated with Valve (wide inspiration was taken from
+their work on teh SteamDeck) and is part of the ChimeraOS project. Regardless
+is generic enough and aims to be usable on any distribution. If you have any
+issues with it, just report them on teh issue tracker.
 
 ## Installation
 
@@ -14,24 +11,8 @@ A PKGBUILD for Archlinux is available [in the AUR](https://aur.archlinux.org/pac
 
 ## Basic manual setup
 
-First you'll need to make a template for the session for the user you want to use.
-It will start on tty1. This is a service file located in
-`/etc/systemd/system/gamescope@.service`. Use the provided one. Thanks to the
-[cage project](https://github.com/Hjdskes/cage/wiki/Starting-Cage-on-boot-with-systemd)
-for the -shameless copy- inspiration.
-
-Then you'll need to write a PAM file for the session. Copy the provided file to
-`/etc/pam.d/gamescope`.
-
-Then you'll need the executable file for the session. Copy the provided file to
-`/usr/bin/gamescope-session`.
-
-Disable any other display manager you may have (i.e. `# systemctl disable
-lightdm.service`) and then enable this one with `# systemctl enable
-gamescope@<user>.service`, replace `<user>` with your username.
-It will use tty1 by default.
-
-Reboot and you are done.
+Copy this repository file structure into the appropriate places and you'll be
+able to start the session on any Display Manager of your choice.
 
 # Configuration
 
