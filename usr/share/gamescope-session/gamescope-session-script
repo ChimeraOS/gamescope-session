@@ -47,18 +47,10 @@ export WINEDLLOVERRIDES=dxgi=n
 
 # Workaround for steam getting killed immediatly during reboot
 export STEAMOS_STEAM_REBOOT_SENTINEL="/tmp/steamos-reboot-sentinel"
-if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
-	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
-	reboot
-fi
 
 # Workaround for steam getting killed immediatly during shutdown
 # Same idea as reboot sentinel above
 export STEAMOS_STEAM_SHUTDOWN_SENTINEL="/tmp/steamos-shutdown-sentinel"
-if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
-	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
-	poweroff
-fi
 
 # Enable volume key management via steam for this session
 export STEAM_ENABLE_VOLUME_HANDLER=1
@@ -238,6 +230,16 @@ kill $gamescope_pid
 # Start a background sleep for five seconds because we don't trust it
 sleep 5 &
 sleep_pid="$!"
+
+# Catch reboot and poweroof sentinels here
+if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
+	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
+	reboot
+fi
+if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
+	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
+	poweroff
+fi
 
 # Wait for gamescope or the sleep to finish for timeout purposes
 ret=0
