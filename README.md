@@ -40,9 +40,7 @@ Display Manager of choice. The script will look for a special file
 `/usr/lib/os-session-select` to handoff the control of the session. If the file
 does not exist it will just exit steam.
 
-# License
+# License & Contributing
 
-I think this needs one, not sure which one but as long as you don't infringe
-any of the projects's linked here licenses this is licensed under the
-[WTFPL](http://www.wtfpl.net/). If you want to contribute, just do so and
-thank you.
+The project is licensed under MIT license. If you want to contribute,
+just do so and thank you.
