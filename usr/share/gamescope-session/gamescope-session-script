@@ -221,6 +221,29 @@ if command -v /usr/bin/ibus-daemon > /dev/null; then
     /usr/bin/ibus-daemon -d -r --panel=disable --emoji-extension=disable
 fi
 
+short_session_tracker_file="/tmp/chimeraos-short-session-tracker"
+short_session_duration=60
+short_session_count_before_reset=3
+SECONDS=0
+
+short_session_count=$(< "$short_session_tracker_file" wc -l)
+
+if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
+	echo >&2 "gamescope-session: detected broken Steam, will try to reset the session"
+	mkdir -p ~/.local/share/Steam
+	# remove some caches and stateful things known to cause Steam to fail to start if corrupt
+	rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+	# change session to desktop as fallback
+  if command -v chimera-session > /dev/null; then
+    chimera-session desktop
+  else
+    exit 1
+  fi
+	# rearm
+	rm "$short_session_tracker_file"
+fi
+
+
 # If we have mangoapp binary start it
 if command -v mangoapp > /dev/null; then
     mangoapp > "${HOME}"/.mangoapp-stdout.log 2>&1 &
@@ -228,6 +251,12 @@ fi
 
 # Start Steam client
 $STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
+
+if [[ "$SECONDS" -lt "$short_session_duration" ]]; then
+	echo "failed" >> "$short_session_tracker_file"
+else
+	rm "$short_session_tracker_file"
+fi
 
 # When the client exits, kill gamescope nicely
 kill $gamescope_pid
@@ -239,10 +268,14 @@ sleep_pid="$!"
 # Catch reboot and poweroof sentinels here
 if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
+	# rearm short session tracker
+	rm "$short_session_tracker_file"
 	reboot
 fi
 if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
+	# rearm short session tracker
+	rm "$short_session_tracker_file"
 	poweroff
 fi
 
