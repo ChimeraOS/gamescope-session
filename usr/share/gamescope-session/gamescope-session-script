@@ -194,18 +194,15 @@ SECONDS=0
 short_session_count=$(< "$short_session_tracker_file" wc -l)
 
 if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
-	echo >&2 "gamescope-session: detected broken Steam or gamescope failure, will try to reset the session"
-	mkdir -p ~/.local/share/Steam
-	# remove some caches and stateful things known to cause Steam to fail to start if corrupt
-	rm -rf --one-file-system ~/.local/share/Steam/config/widevine
-	# change session to desktop as fallback
-  if command -v chimera-session > /dev/null; then
-    chimera-session desktop
-  else
+    echo >&2 "gamescope-session: detected broken Steam or gamescope failure, will try to reset the session"
+    mkdir -p ~/.local/share/Steam
+    # remove some caches and stateful things known to cause Steam to fail to start if corrupt
+    rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+    # change session to desktop as fallback
+    steamos-session-select desktop
+    # rearm
+    rm "$short_session_tracker_file"
     exit 1
-  fi
-	# rearm
-	rm "$short_session_tracker_file"
 fi
 
 # Log rotate the last session
@@ -231,7 +228,7 @@ else
 	echo "gamescope failed" >> "$short_session_tracker_file"
 	kill -9 "$gamescope_pid"
 	wait
-	exit 0
+	exit 1
 	# Systemd or Session manager will have to restart session
 fi
 
