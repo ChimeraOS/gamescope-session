@@ -185,6 +185,29 @@ fi
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch "${HOME}"/.steam/root/config/SteamAppData.vdf || true
 
+# Atempt to fallback to a desktop session if something goes wrong too many times
+short_session_tracker_file="/tmp/chimeraos-short-session-tracker"
+short_session_duration=60
+short_session_count_before_reset=3
+SECONDS=0
+
+short_session_count=$(< "$short_session_tracker_file" wc -l)
+
+if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
+	echo >&2 "gamescope-session: detected broken Steam or gamescope failure, will try to reset the session"
+	mkdir -p ~/.local/share/Steam
+	# remove some caches and stateful things known to cause Steam to fail to start if corrupt
+	rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+	# change session to desktop as fallback
+  if command -v chimera-session > /dev/null; then
+    chimera-session desktop
+  else
+    exit 1
+  fi
+	# rearm
+	rm "$short_session_tracker_file"
+fi
+
 # Log rotate the last session
 if [ -f "${HOME}"/.steam-tweaks.log ]; then
     cp "${HOME}"/.steam-tweaks.log "${HOME}"/.steam-tweaks.log.old
@@ -220,29 +243,6 @@ fi
 if command -v /usr/bin/ibus-daemon > /dev/null; then
     /usr/bin/ibus-daemon -d -r --panel=disable --emoji-extension=disable
 fi
-
-short_session_tracker_file="/tmp/chimeraos-short-session-tracker"
-short_session_duration=60
-short_session_count_before_reset=3
-SECONDS=0
-
-short_session_count=$(< "$short_session_tracker_file" wc -l)
-
-if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
-	echo >&2 "gamescope-session: detected broken Steam, will try to reset the session"
-	mkdir -p ~/.local/share/Steam
-	# remove some caches and stateful things known to cause Steam to fail to start if corrupt
-	rm -rf --one-file-system ~/.local/share/Steam/config/widevine
-	# change session to desktop as fallback
-  if command -v chimera-session > /dev/null; then
-    chimera-session desktop
-  else
-    exit 1
-  fi
-	# rearm
-	rm "$short_session_tracker_file"
-fi
-
 
 # If we have mangoapp binary start it
 if command -v mangoapp > /dev/null; then
