@@ -22,3 +22,8 @@ trap 'systemctl --user stop gamescope-session.service' HUP INT TERM
 # Start gamescope-session and wait
 systemctl --user --wait start gamescope-session.service &
 wait
+
+# Unset XDG_DESKTOP_PORTAL_DIR environment to allow desktop portals to work
+# again.
+systemctl --user unset-environment XDG_DESKTOP_PORTAL_DIR
+
