@@ -48,7 +48,7 @@ if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
       -e \
       --generate-drm-mode fixed \
       --xwayland-count 2 \
-      -O *,eDP-1 \
+      -O *,DSI-1 \
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
