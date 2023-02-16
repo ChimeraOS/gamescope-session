@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ENABLE_STRACE="false"
+
 # Fix intel color corruption
 # might come with some performance degradation but is better than a corrupted
 # color image
@@ -195,9 +197,25 @@ fi
 if [ -f "${HOME}"/.gamescope-stdout.log ]; then
     cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
 fi
+if [ -f "${HOME}"/.gamescope-strace.log ]; then
+    cp "${HOME}"/.gamescope-strace.log "${HOME}"/.gamescope-strace.log.old
+fi
 
 # Start gamescope compositor, log it's output and background it
-$GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
+
+if [ "$ENABLE_STRACE" = "true" ] ; then
+        # this will cause a blackscreen and only should be used for specific debugging conditions
+        if command -v strace > /dev/null; then
+                strace -o "${HOME}"/.gamescope-strace.log $GAMESCOPECMD &
+        else
+                echo "strace debugging is enabled, but strace was not found, exiting"
+                exit 0
+        fi
+
+else
+        $GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
+fi
+
 gamescope_pid="$!"
 
 if read -r -t 3 response_x_display response_wl_display <> "$socket"; then
