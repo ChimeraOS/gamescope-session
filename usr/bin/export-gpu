@@ -23,7 +23,7 @@ for i in "${!gpu_ids[@]}"; do
   elif [[ ${gpu_ids[$i]} == 10de:* ]]; then
     gpu_vendor="[NVIDIA]"
   fi
-  echo "$((i+1)). ${gpu_ids[$i]} ${gpu_vendor}"
+  echo "$((i)). ${gpu_ids[$i]} ${gpu_vendor}"
 done
 
 # Prompt the user to select a device ID
@@ -34,16 +34,16 @@ while true; do
     continue
   fi
 
-  if (( selected_gpu_num < 1 || selected_gpu_num > ${#gpu_ids[@]} )); then
+  if (( selected_gpu_num < 0 || selected_gpu_num >= ${#gpu_ids[@]} )); then
     echo "Invalid entry: $selected_gpu_num is not a valid option."
     continue
   fi
-  selected_gpu_id=${gpu_ids[$((selected_gpu_num-1))]}
+  selected_gpu_id=${gpu_ids[$selected_gpu_num]}
   break
 done
 
 # Write the VULKAN_ADAPTER environment variable to a config file
-env_file="$HOME/.config/environment.d/gamescope-session.conf"
+env_file="$HOME/.config/environment.d/00-vulkan-device.conf"
 if [[ ! -d $(dirname "$env_file") ]]; then
   mkdir -p "$(dirname "$env_file")"
 fi
@@ -56,7 +56,7 @@ if [[ -f "$env_file" ]]; then
 else
   echo "VULKAN_ADAPTER=$selected_gpu_id" >> "$env_file"
 fi
-echo "VULKAN_ADAPTER written to $env_file."
+echo "VULKAN_ADAPTER set to $selected_gpu_id and written to $env_file."
 echo "Reboot or restart your display manager for the changes to take effect. If you are using a desktop with an iGPU and dGPU you might need to switch your display adapter from the GPU to the motherboard or vice versa."
 echo "You might also need to enable iGPU multi-monitor support in your bios or any option enabling both the iGPU and dedicate GPU at the same time."
 
