@@ -177,10 +177,11 @@ if [ -z "$GAMESCOPECMD" ] ; then
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
+      --prefer-vk-device $VULKAN_ADAPTER \
       -R $socket -T $stats"
 else
     # Add socket and stats read
-    GAMESCOPECMD+=" -R $socket -T $stats"
+    GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
