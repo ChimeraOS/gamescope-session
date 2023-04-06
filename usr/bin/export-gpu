@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Search for all VGA-compatible devices
+echo "Searching for VGA-compatible devices..."
+gpu_info=$(lspci -vnn | grep VGA)
+
+if [ -z "$gpu_info" ]; then
+  echo "No GPU devices found."
+  exit 1
+fi
+
+# Extract the device IDs from the output and store them in an array
+gpu_ids=($(echo "$gpu_info" | grep -o "\[[0-9a-f]\{4\}:[0-9a-f]\{4\}\]" | tr -d '[]'))
+
+# Print the available GPU device IDs
+echo "Available GPU device IDs:"
+for i in "${!gpu_ids[@]}"; do
+  echo "$((i+1)). ${gpu_ids[$i]}"
+done
+
+# Prompt the user to select a device ID
+while true; do
+  read -p "Enter the device ID of the GPU to use: " selected_gpu_id
+  if [[ " ${gpu_ids[@]} " =~ " ${selected_gpu_id} " ]]; then
+    break
+  else
+    echo "Invalid entry: ${selected_gpu_id} is not a valid GPU device ID."
+  fi
+done
+
+# Set the VULKAN_ADAPTER environment variable
+export VULKAN_ADAPTER="$selected_gpu_id"
+echo "VULKAN_ADAPTER set to: $VULKAN_ADAPTER"
+
+# Check if gamescope-session.conf exists, and create it if it doesn't
+if [ ! -f "$HOME/.config/environment.d/gamescope-session.conf" ]; then
+    mkdir -p $HOME/.config/environment.d/
+    touch $HOME/.config/environment.d/gamescope-session.conf
+fi
+
+# Check if VULKAN_ADAPTER already exists in gamescope-session.conf, and update it if it does
+if grep -q '^VULKAN_ADAPTER=' "$HOME/.config/environment.d/gamescope-session.conf"; then
+    sed -i "s|^VULKAN_ADAPTER=.*|VULKAN_ADAPTER=$VULKAN_ADAPTER|" "$HOME/.config/environment.d/gamescope-session.conf"
+else
+    echo "VULKAN_ADAPTER=$VULKAN_ADAPTER" >> "$HOME/.config/environment.d/gamescope-session.conf"
+fi
+
+echo "VULKAN_ADAPTER written to $HOME/.config/environment.d/gamescope-session.conf"
+
