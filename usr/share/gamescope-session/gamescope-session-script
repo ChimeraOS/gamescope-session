@@ -18,11 +18,17 @@ export RADV_FORCE_VRS_CONFIG_FILE=$(mktemp /tmp/radv_vrs.XXXXXXXX)
 
 # Plop GAMESCOPE_MODE_SAVE_FILE into $XDG_CONFIG_HOME (defaults to ~/.config).
 export GAMESCOPE_MODE_SAVE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/modes.cfg"
+export GAMESCOPE_PATCHED_EDID_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/edid.bin"
 
 # Make path to gamescope mode save file.
 mkdir -p "$(dirname "$GAMESCOPE_MODE_SAVE_FILE")"
 touch "$GAMESCOPE_MODE_SAVE_FILE"
 #echo "Making Gamescope Mode Save file at \"$GAMESCOPE_MODE_SAVE_FILE\""
+
+# Make path to Gamescope edid patched file.
+mkdir -p "$(dirname "$GAMESCOPE_PATCHED_EDID_FILE")"
+touch "$GAMESCOPE_PATCHED_EDID_FILE"
+#echo "Making Gamescope patched edid at \"$GAMESCOPE_PATCHED_EDID_FILE\""
 
 # Support for gamescope tearing with GAMESCOPE_ALLOW_TEARING atom
 export STEAM_GAMESCOPE_HAS_TEARING_SUPPORT=1
