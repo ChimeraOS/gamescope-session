@@ -166,6 +166,11 @@ if [ -f "$CURSOR_FILE" ] ; then
     CURSOR="--cursor ${CURSOR_FILE}"
 fi
 
+PREFERED_VULKAN_DEVICE=""
+if [ -z "$VULKAN_ADAPTER" ]; then
+    PREFERED_VULKAN_DEVICE="--prefer-vk-device ${VULKAN_ADAPTER}"
+fi
+
 # Define session if not overriden
 if [ -z "$STEAMCMD" ] ; then
     STEAMCMD="steam -gamepadui -steamos3 -steampal -steamdeck"
@@ -176,40 +181,20 @@ if [ -z "$GAMESCOPECMD" ] ; then
     if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ] ; then
         RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
     fi
-    
-    if [ -z $VULKAN_ADAPTER ]; then
-        GAMESCOPECMD="/usr/bin/gamescope \
-        $CURSOR \
-        -e \
-        $RESOLUTION \
-        --xwayland-count 2 \
-        -O *,eDP-1 \
-        --default-touch-mode 4 \
-        --hide-cursor-delay 3000 \
-        --fade-out-duration 200 \
-        -R $socket -T $stats"
-     else
-        GAMESCOPECMD="/usr/bin/gamescope \
-        $CURSOR \
-        -e \
-        $RESOLUTION \
-        --xwayland-count 2 \
-        -O *,eDP-1 \
-        --default-touch-mode 4 \
-        --hide-cursor-delay 3000 \
-        --fade-out-duration 200 \
-        --prefer-vk-device $VULKAN_ADAPTER \
-        -R $socket -T $stats"
-     fi
-
+    GAMESCOPECMD="/usr/bin/gamescope \
+    $CURSOR \
+    -e \
+    $RESOLUTION \
+    --xwayland-count 2 \
+    -O *,eDP-1 \
+    --default-touch-mode 4 \
+    --hide-cursor-delay 3000 \
+    --fade-out-duration 200 \
+    $PREFERED_VULKAN_DEVICE \
+    -R $socket -T $stats"
 else
     # Add socket and stats read
-    if [ -z $VULKAN_ADAPTER ]; then
-        GAMESCOPECMD+=" -R $socket -T $stats"
-    else
-        GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
-    fi
-    
+    GAMESCOPECMD+=" -R $socket -T $stats"
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
