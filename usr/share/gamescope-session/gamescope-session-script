@@ -43,6 +43,8 @@ export STEAM_GAMESCOPE_TEARING_SUPPORTED=1
 # and Gamescope will use for now.
 export GAMESCOPE_NV12_COLORSPACE=k_EStreamColorspace_BT601
 
+export STEAM_GAMESCOPE_HDR_SUPPORTED=1
+
 # Initially write no_display to our config file
 # so we don't get mangoapp showing up before Steam initializes
 # on OOBE and stuff.
