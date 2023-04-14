@@ -54,8 +54,9 @@ if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
       --fade-out-duration 200 \
       --force-orientation right "
   fi
-  
-  # GPD Win 3 specifc quirk to prevent crashing
+fi
+
+# GPD Win 3 specifc quirk to prevent crashing
   # The GPD Win 3 does not support hardware rotation for 270/90 modes. We need to implement shader rotations to get this working correctly.
   # 0/180 rotations should work.
 if [[ ":G1618-03:" =~ ":$SYS_ID:"  ]]; then
