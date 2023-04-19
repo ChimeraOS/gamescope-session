@@ -159,7 +159,7 @@ fi
 
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
-    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow_right.png"
+    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
 fi
 CURSOR=""
 if [ -f "$CURSOR_FILE" ] ; then
