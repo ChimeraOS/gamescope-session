@@ -10,6 +10,7 @@ export mesa_glthread=true
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 # Enable Mangoapp
+export STEAM_MANGOAPP_PRESETS_SUPPORTED=1
 export STEAM_USE_MANGOAPP=1
 export MANGOHUD_CONFIGFILE=$(mktemp /tmp/mangohud.XXXXXXXX)
 
