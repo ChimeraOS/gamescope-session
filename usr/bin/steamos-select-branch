@@ -11,7 +11,7 @@ fi
 if [[ $# -eq 1 ]]; then
   case "$1" in
     "-c")
-      branch=$(cat "$BRANCH_PATH" 2> /dev/null || cat "$DEFAULT_BRANCH_PATH" 2>/dev/null || echo "rel")
+      branch=$(cat "$BRANCH_PATH" 2> /dev/null || cat "$DEFAULT_BRANCH_PATH" 2>/dev/null || echo "Stable")
       case "$branch" in
         "Stable" | "Unstable" | "Testing" | "USB" | "Network")
           echo "$branch"
