@@ -28,5 +28,16 @@
     </defaults>
 		<annotate key="org.freedesktop.policykit.exec.path">/usr/bin/steamos-polkit-helpers/jupiter-biosupdate</annotate>
   </action>
+  
+  <action id="org.chimeraos.policykit.steamos.pkexec.run-steamos-select-branch">
+    <description>Select branch script for frzr in GamepadUI</description>
+    <icon_name>package-x-generic</icon_name>
+    <defaults>
+      <allow_any>yes</allow_any>
+      <allow_inactive>yes</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+		<annotate key="org.freedesktop.policykit.exec.path">/usr/bin/steamos-polkit-helpers/steamos-select-branch</annotate>
+  </action>
 
 </policyconfig>
