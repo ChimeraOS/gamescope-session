@@ -73,3 +73,8 @@ if [[ ":G1618-03:" =~ ":$SYS_ID:"  ]]; then
       --force-orientation normal "
   fi
 fi
+
+#GPD Win 4 supports 40-60hz refresh rate changing
+if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+fi
