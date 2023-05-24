@@ -78,3 +78,8 @@ fi
 if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
+
+#Steam Deck
+if [[ ":Jupiter:" =~ ":$SYS_ID:"  ]]; then
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+fi
