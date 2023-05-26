@@ -8,6 +8,11 @@ export XDG_SESSION_TYPE=x11
 # Update the enviroment with DESKTOP_SESSION and all XDG variables
 dbus-update-activation-environment --systemd DESKTOP_SESSION `env | grep ^XDG_ | cut -d = -f 1`
 
+# This makes it so that xdg-desktop-portal doesn't find any portal implementations and doesn't start them and makes
+# them crash/exit because the dbus env has no DISPLAY. In turn this causes dbus calls to the portal which don't rely
+# on implementations to hang (such as SDL talking to the real time portal)
+systemctl --user set-environment XDG_DESKTOP_PORTAL_DIR=""
+
 # Remove these as they prevent gamescope-session from starting correctly
 systemctl --user unset-environment DISPLAY XAUTHORITY
 
@@ -17,3 +22,8 @@ trap 'systemctl --user stop gamescope-session.service' HUP INT TERM
 # Start gamescope-session and wait
 systemctl --user --wait start gamescope-session.service &
 wait
+
+# Unset XDG_DESKTOP_PORTAL_DIR environment to allow desktop portals to work
+# again.
+systemctl --user unset-environment XDG_DESKTOP_PORTAL_DIR
+
