@@ -3,6 +3,11 @@
 
 SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
 
+# avoid long start times on games when no nvidia gpu is available
+if ! lspci | grep -i vga | grep -i nvidia > /dev/null; then
+  export VK_DRIVER_FILES=$(ls -1 -d /usr/share/vulkan/icd.d/* | grep -v nvidia | tr '\n' ':' | sed 's/:$//')
+fi
+
 # OXP Devices
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER Mini Pro:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23"
 AOK_LIST="AOKZOE A1 AR07"
