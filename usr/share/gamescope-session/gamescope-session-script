@@ -203,6 +203,9 @@ if [ -z "$GAMESCOPECMD" ] ; then
         -R $socket -T $stats"
      fi
 
+    # Add fullscreen flag for nested mode
+    GAMESCOPECMD+=' -f'
+    
 else
     # Add socket and stats read
     if [ -z $VULKAN_ADAPTER ]; then
