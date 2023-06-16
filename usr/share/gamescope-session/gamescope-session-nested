@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# close any existing steam/gamescope session
+if pgrep steam; then steam -shutdown; fi
+while pgrep steam; do sleep 1; done
+for pid in $(pgrep gamescope); do kill $pid; done
+
+# start the nested session
+systemd-run --user --pty --pipe /usr/share/gamescope-session/gamescope-session-script
+
+# after exiting the nested session, silently start steam again
+systemd-run --user steam -silent
