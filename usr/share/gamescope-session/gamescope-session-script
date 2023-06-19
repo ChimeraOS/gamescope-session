@@ -245,6 +245,7 @@ if [ -f "${HOME}"/.steam-stdout.log ]; then
 fi
 if [ -f "${HOME}"/.gamescope-stdout.log ]; then
     cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
+fi
 if [ -f "${HOME}"/.gamescope-cmd.log ]; then
     cp "${HOME}"/.gamescope-cmd.log "${HOME}"/.gamescope-cmd.log.old
 fi
