@@ -251,7 +251,7 @@ if [ -f "${HOME}"/.gamescope-cmd.log ]; then
 fi
 
 # Start gamescope compositor, log it's output and background it
-echo $GAMESCOPECMD" > "${HOME}"/.gamescope-cmd.log
+echo $GAMESCOPECMD > "${HOME}"/.gamescope-cmd.log
 $GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
 gamescope_pid="$!"
 
