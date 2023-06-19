@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Search for all VGA-compatible devices
+echo "Searching for VGA-compatible devices..."
+gpu_info=$(lspci -vnn | grep VGA)
+
+if [ -z "$gpu_info" ]; then
+  echo "No GPU devices found."
+  exit 1
+fi
+
+# Extract the device IDs from the output and store them in an array
+gpu_ids=($(echo "$gpu_info" | grep -o "\[[0-9a-f]\{4\}:[0-9a-f]\{4\}\]" | tr -d '[]'))
+
+# Print the available GPU device IDs
+echo "Available GPU device IDs:"
+for i in "${!gpu_ids[@]}"; do
+  gpu_vendor=""
+  if [[ ${gpu_ids[$i]} == 1002:* ]]; then
+    gpu_vendor="[AMD]"
+  elif [[ ${gpu_ids[$i]} == 8086:* ]]; then
+    gpu_vendor="[INTEL]"
+  elif [[ ${gpu_ids[$i]} == 10de:* ]]; then
+    gpu_vendor="[NVIDIA]"
+  fi
+  echo "$((i)). ${gpu_ids[$i]} ${gpu_vendor}"
+done
+
+# Prompt the user to select a device ID
+while true; do
+  read -p "Enter the number of the GPU device to use: " selected_gpu_num
+  if ! [[ "$selected_gpu_num" =~ ^[0-9]+$ ]]; then
+    echo "Invalid entry: $selected_gpu_num is not a number."
+    continue
+  fi
+
+  if (( selected_gpu_num < 0 || selected_gpu_num >= ${#gpu_ids[@]} )); then
+    echo "Invalid entry: $selected_gpu_num is not a valid option."
+    continue
+  fi
+  selected_gpu_id=${gpu_ids[$selected_gpu_num]}
+  break
+done
+
+# Write the VULKAN_ADAPTER environment variable to a config file
+env_file="$HOME/.config/environment.d/00-vulkan-device.conf"
+if [[ ! -d $(dirname "$env_file") ]]; then
+  mkdir -p "$(dirname "$env_file")"
+fi
+if [[ -f "$env_file" ]]; then
+  if grep -q "^VULKAN_ADAPTER=" "$env_file"; then
+    sed -i "s/^VULKAN_ADAPTER=.*/VULKAN_ADAPTER=$selected_gpu_id/" "$env_file"
+  else
+    echo "VULKAN_ADAPTER=$selected_gpu_id" >> "$env_file"
+  fi
+else
+  echo "VULKAN_ADAPTER=$selected_gpu_id" >> "$env_file"
+fi
+echo "VULKAN_ADAPTER set to $selected_gpu_id and written to $env_file."
+echo "Reboot or restart your display manager for the changes to take effect. If you are using a desktop with an iGPU and dGPU you might need to switch your display adapter from the GPU to the motherboard or vice versa."
+echo "You might also need to enable iGPU multi-monitor support in your bios or any option enabling both the iGPU and dedicate GPU at the same time."
+

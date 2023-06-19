@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+# Hook for custom OS branch script
+STEAMOS_BRANCH_SCRIPT="/usr/lib/os-branch-select"
+if [ -f $STEAMOS_BRANCH_SCRIPT ] ; then
+	# Call branch script from the OS
+	${STEAMOS_BRANCH_SCRIPT} $@
+else
+	# Simply call shutdown on the client
+	echo "No branch script was found, branches won't be visible in the SteamUI"
+fi
+

@@ -4,11 +4,13 @@
 # might come with some performance degradation but is better than a corrupted
 # color image
 export INTEL_DEBUG=norbc
+export mesa_glthread=true
 
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
 # Enable Mangoapp
+export STEAM_MANGOAPP_PRESETS_SUPPORTED=1
 export STEAM_USE_MANGOAPP=1
 export MANGOHUD_CONFIGFILE=$(mktemp /tmp/mangohud.XXXXXXXX)
 
@@ -17,11 +19,17 @@ export RADV_FORCE_VRS_CONFIG_FILE=$(mktemp /tmp/radv_vrs.XXXXXXXX)
 
 # Plop GAMESCOPE_MODE_SAVE_FILE into $XDG_CONFIG_HOME (defaults to ~/.config).
 export GAMESCOPE_MODE_SAVE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/modes.cfg"
+export GAMESCOPE_PATCHED_EDID_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/edid.bin"
 
 # Make path to gamescope mode save file.
 mkdir -p "$(dirname "$GAMESCOPE_MODE_SAVE_FILE")"
 touch "$GAMESCOPE_MODE_SAVE_FILE"
 #echo "Making Gamescope Mode Save file at \"$GAMESCOPE_MODE_SAVE_FILE\""
+
+# Make path to Gamescope edid patched file.
+mkdir -p "$(dirname "$GAMESCOPE_PATCHED_EDID_FILE")"
+touch "$GAMESCOPE_PATCHED_EDID_FILE"
+#echo "Making Gamescope patched edid at \"$GAMESCOPE_PATCHED_EDID_FILE\""
 
 # Support for gamescope tearing with GAMESCOPE_ALLOW_TEARING atom
 export STEAM_GAMESCOPE_HAS_TEARING_SUPPORT=1
@@ -35,6 +43,8 @@ export STEAM_GAMESCOPE_TEARING_SUPPORTED=1
 # So just workaround this with an ENV var that Remote Play Together
 # and Gamescope will use for now.
 export GAMESCOPE_NV12_COLORSPACE=k_EStreamColorspace_BT601
+
+export STEAM_GAMESCOPE_HDR_SUPPORTED=1
 
 # Initially write no_display to our config file
 # so we don't get mangoapp showing up before Steam initializes
@@ -150,7 +160,7 @@ fi
 
 # Use cursor if file exist
 if [ -z "$CURSOR_FILE" ] ; then
-    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow_right.png"
+    CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
 fi
 CURSOR=""
 if [ -f "$CURSOR_FILE" ] ; then
@@ -167,23 +177,64 @@ if [ -z "$GAMESCOPECMD" ] ; then
     if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ] ; then
         RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
     fi
-    GAMESCOPECMD="/usr/bin/gamescope \
-      $CURSOR \
-      -e \
-      $RESOLUTION \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      -R $socket -T $stats"
+    
+    if [ -z $VULKAN_ADAPTER ]; then
+        GAMESCOPECMD="/usr/bin/gamescope \
+        $CURSOR \
+        -e \
+        $RESOLUTION \
+        --xwayland-count 2 \
+        -O *,eDP-1 \
+        --default-touch-mode 4 \
+        --hide-cursor-delay 3000 \
+        --fade-out-duration 200 \
+        -R $socket -T $stats"
+     else
+        GAMESCOPECMD="/usr/bin/gamescope \
+        $CURSOR \
+        -e \
+        $RESOLUTION \
+        --xwayland-count 2 \
+        -O *,eDP-1 \
+        --default-touch-mode 4 \
+        --hide-cursor-delay 3000 \
+        --fade-out-duration 200 \
+        --prefer-vk-device $VULKAN_ADAPTER \
+        -R $socket -T $stats"
+     fi
+
 else
     # Add socket and stats read
-    GAMESCOPECMD+=" -R $socket -T $stats"
+    if [ -z $VULKAN_ADAPTER ]; then
+        GAMESCOPECMD+=" -R $socket -T $stats"
+    else
+        GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
+    fi
+    
 fi
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch "${HOME}"/.steam/root/config/SteamAppData.vdf || true
+
+# Atempt to fallback to a desktop session if something goes wrong too many times
+short_session_tracker_file="/tmp/chimeraos-short-session-tracker"
+short_session_duration=60
+short_session_count_before_reset=3
+SECONDS=0
+
+short_session_count=$(< "$short_session_tracker_file" wc -l)
+
+if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
+    echo >&2 "gamescope-session: detected broken Steam or gamescope failure, will try to reset the session"
+    mkdir -p ~/.local/share/Steam
+    # remove some caches and stateful things known to cause Steam to fail to start if corrupt
+    rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+    # change session to desktop as fallback
+    steamos-session-select desktop
+    # rearm
+    rm "$short_session_tracker_file"
+    exit 1
+fi
 
 # Log rotate the last session
 if [ -f "${HOME}"/.steam-tweaks.log ]; then
@@ -205,9 +256,10 @@ if read -r -t 3 response_x_display response_wl_display <> "$socket"; then
 	export GAMESCOPE_WAYLAND_DISPLAY="$response_wl_display"
 	# We're done!
 else
+	echo "gamescope failed" >> "$short_session_tracker_file"
 	kill -9 "$gamescope_pid"
 	wait
-	exit 0
+	exit 1
 	# Systemd or Session manager will have to restart session
 fi
 
@@ -229,6 +281,12 @@ fi
 # Start Steam client
 $STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
 
+if [[ "$SECONDS" -lt "$short_session_duration" ]]; then
+	echo "steam failed" >> "$short_session_tracker_file"
+else
+	rm "$short_session_tracker_file"
+fi
+
 # When the client exits, kill gamescope nicely
 kill $gamescope_pid
 
@@ -239,10 +297,14 @@ sleep_pid="$!"
 # Catch reboot and poweroof sentinels here
 if [[ -e "$STEAMOS_STEAM_REBOOT_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_REBOOT_SENTINEL"
+	# rearm short session tracker
+	rm "$short_session_tracker_file"
 	reboot
 fi
 if [[ -e "$STEAMOS_STEAM_SHUTDOWN_SENTINEL" ]]; then
 	rm -f "$STEAMOS_STEAM_SHUTDOWN_SENTINEL"
+	# rearm short session tracker
+	rm "$short_session_tracker_file"
 	poweroff
 fi
 

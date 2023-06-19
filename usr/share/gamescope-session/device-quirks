@@ -3,6 +3,11 @@
 
 SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
 
+# avoid long start times on games when no nvidia gpu is available
+if ! lspci | grep -i vga | grep -i nvidia > /dev/null; then
+  export VK_DRIVER_FILES=$(ls -1 -d /usr/share/vulkan/icd.d/* | grep -v nvidia | tr '\n' ':' | sed 's/:$//')
+fi
+
 # OXP Devices
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER Mini Pro:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23"
 AOK_LIST="AOKZOE A1 AR07"
@@ -39,7 +44,7 @@ if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]] || [[  ":$AOK_LIST:" =~ ":$SYS_ID:"   ]];
 fi
 
 # AYANEO AIR Devices
-AIR_LIST="AIR:AIR Pro"
+AIR_LIST="AIR:AIR Pro:AIR Plus"
 if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
   # Dependent on a special --force-orientation option in gamescope
   if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
@@ -55,8 +60,57 @@ if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
 fi
 
 # GDP Win devices
-GDP_LIST="G1618-03:G1619-01:G1621-02:MicroPC"
+GDP_LIST="G1619-01:G1621-02:MicroPC"
 if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
+  # Dependent on a special --force-orientation option in gamescope
+  if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
+    export GAMESCOPECMD="/usr/bin/gamescope \
+      -e \
+      --generate-drm-mode fixed \
+      --xwayland-count 2 \
+      -O *,DSI-1 \
+      --default-touch-mode 4 \
+      --hide-cursor-delay 3000 \
+      --fade-out-duration 200 \
+      --force-orientation right "
+  fi
+fi
+
+# GPD Win 3 specifc quirk to prevent crashing
+  # The GPD Win 3 does not support hardware rotation for 270/90 modes. We need to implement shader rotations to get this working correctly.
+  # 0/180 rotations should work.
+if [[ ":G1618-03:" =~ ":$SYS_ID:"  ]]; then
+  # Dependent on a special --force-orientation option in gamescope
+  if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
+    export GAMESCOPECMD="/usr/bin/gamescope \
+      -e \
+      --generate-drm-mode fixed \
+      --xwayland-count 2 \
+      -O *,DSI-1 \
+      --default-touch-mode 4 \
+      --hide-cursor-delay 3000 \
+      --fade-out-duration 200 \
+      --force-orientation normal "
+  fi
+fi
+
+#GPD Win 4 supports 40-60hz refresh rate changing
+if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
+  # Dependent on a special --force-orientation option in gamescope
+  if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
+    export GAMESCOPECMD="/usr/bin/gamescope \
+      -e \
+      --xwayland-count 2 \
+      -O *,eDP-1 \
+      --default-touch-mode 4 \
+      --hide-cursor-delay 3000 \
+      --fade-out-duration 200 "
+   fi
+   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+fi
+
+#Steam Deck
+if [[ ":Jupiter:" =~ ":$SYS_ID:"  ]]; then
   # Dependent on a special --force-orientation option in gamescope
   if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
     export GAMESCOPECMD="/usr/bin/gamescope \
@@ -66,7 +120,7 @@ if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
       -O *,eDP-1 \
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation right "
+      --fade-out-duration 200 "
   fi
+   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
