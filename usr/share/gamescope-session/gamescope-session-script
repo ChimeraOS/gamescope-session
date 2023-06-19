@@ -245,9 +245,12 @@ if [ -f "${HOME}"/.steam-stdout.log ]; then
 fi
 if [ -f "${HOME}"/.gamescope-stdout.log ]; then
     cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
+if [ -f "${HOME}"/.gamescope-cmd.log ]; then
+    cp "${HOME}"/.gamescope-cmd.log "${HOME}"/.gamescope-cmd.log.old
 fi
 
 # Start gamescope compositor, log it's output and background it
+echo $GAMESCOPECMD" > "${HOME}"/.gamescope-cmd.log
 $GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
 gamescope_pid="$!"
 
