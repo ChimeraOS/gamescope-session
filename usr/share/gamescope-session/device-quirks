@@ -74,7 +74,7 @@ if [[ ":$AYN_LIST:" =~ ":$SYS_ID:"  ]]; then
       --force-external-orientation left "
   fi
   # Set refresh rate range and enable refresh rate switching
-#  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
 # GDP Win devices
