@@ -176,4 +176,6 @@ if [[ ":ROG Ally RC71L_RC71L:" =~ ":$SYS_ID:"  ]]; then
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 "
   fi
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,120
 fi
