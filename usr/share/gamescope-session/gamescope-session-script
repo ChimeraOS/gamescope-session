@@ -21,6 +21,9 @@ export RADV_FORCE_VRS_CONFIG_FILE=$(mktemp /tmp/radv_vrs.XXXXXXXX)
 export GAMESCOPE_MODE_SAVE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/modes.cfg"
 export GAMESCOPE_PATCHED_EDID_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/edid.bin"
 
+# Set up first time bootstrap status
+export STEAM_BOOTSTRAP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/bootstrap.cfg"
+
 # Make path to gamescope mode save file.
 mkdir -p "$(dirname "$GAMESCOPE_MODE_SAVE_FILE")"
 touch "$GAMESCOPE_MODE_SAVE_FILE"
@@ -30,6 +33,10 @@ touch "$GAMESCOPE_MODE_SAVE_FILE"
 mkdir -p "$(dirname "$GAMESCOPE_PATCHED_EDID_FILE")"
 touch "$GAMESCOPE_PATCHED_EDID_FILE"
 #echo "Making Gamescope patched edid at \"$GAMESCOPE_PATCHED_EDID_FILE\""
+
+# Make path to Steam bootstrap config file.
+mkdir -p "$(dirname "$STEAM_BOOTSTRAP_CONFIG")"
+touch "$STEAM_BOOTSTRAP_CONFIG"
 
 # Support for gamescope tearing with GAMESCOPE_ALLOW_TEARING atom
 export STEAM_GAMESCOPE_HAS_TEARING_SUPPORT=1
@@ -216,6 +223,13 @@ fi
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch "${HOME}"/.steam/root/config/SteamAppData.vdf || true
 
+if [[ -f "/etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz" ]] && ! grep -q "set_bootstrap=1" "$STEAM_BOOTSTRAP_CONFIG"; then
+    mkdir -p ~/.local/share/Steam
+    tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
+    echo "set_bootstrap=1" >> "$STEAM_BOOTSTRAP_CONFIG"
+fi
+
+
 # Atempt to fallback to a desktop session if something goes wrong too many times
 short_session_tracker_file="/tmp/chimeraos-short-session-tracker"
 short_session_duration=60
@@ -229,6 +243,10 @@ if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
     mkdir -p ~/.local/share/Steam
     # remove some caches and stateful things known to cause Steam to fail to start if corrupt
     rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+    # extract the steam bootstrap to potentially fix the issue the next boot
+    if [[ -f "/etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz" ]]; then
+        tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
+    fi
     # change session to desktop as fallback
     steamos-session-select desktop
     # rearm
