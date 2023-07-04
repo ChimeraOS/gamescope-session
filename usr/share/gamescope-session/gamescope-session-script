@@ -243,6 +243,10 @@ if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
     mkdir -p ~/.local/share/Steam
     # remove some caches and stateful things known to cause Steam to fail to start if corrupt
     rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+    # extract the steam bootstrap to potentially fix the issue the next boot
+    if [[ -f "/etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz" ]]; then
+        tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
+    fi
     # change session to desktop as fallback
     steamos-session-select desktop
     # rearm
