@@ -4,6 +4,17 @@
 SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
 CPU_VENDOR="$(lscpu | grep "Vendor ID" | cut -d : -f 2 | xargs)"
 
+# avoid long start times on games when no nvidia gpu is available
+if command -v change-nvidia-icd > /dev/null; then
+  if lspci | grep -i vga | grep -i nvidia > /dev/null; then
+    # have an nvidia gpu
+    change-nvidia-icd add
+  else
+    # do not have an nvidia gpu
+    change-nvidia-icd remove
+  fi
+fi
+
 # OXP Devices
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER Mini Pro:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23"
 AOK_LIST="AOKZOE A1 AR07:AOKZOE A1 Pro"
