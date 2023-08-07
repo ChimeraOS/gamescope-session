@@ -213,9 +213,9 @@ if [ -z "$GAMESCOPECMD" ] ; then
 else
     # Add socket and stats read
     if [ -z $VULKAN_ADAPTER ]; then
-        GAMESCOPECMD+=" -R $socket -T $stats"
+        GAMESCOPECMD+=" --disable-color-management -R $socket -T $stats"
     else
-        GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
+        GAMESCOPECMD+=" --disable-color-management --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
     fi
     
 fi
