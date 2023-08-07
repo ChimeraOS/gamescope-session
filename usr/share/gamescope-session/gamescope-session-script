@@ -44,6 +44,9 @@ export STEAM_GAMESCOPE_HAS_TEARING_SUPPORT=1
 # Enable tearing controls in steam
 export STEAM_GAMESCOPE_TEARING_SUPPORTED=1
 
+# Enable VRR controls in steam
+export STEAM_GAMESCOPE_VRR_SUPPORTED=1
+
 # There is no way to set a color space for an NV12
 # buffer in Wayland. And the color management protocol that is
 # meant to let this happen is missing the color range...
