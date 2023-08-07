@@ -113,6 +113,9 @@ export STEAM_MANGOAPP_HORIZONTAL_SUPPORTED=1
 # Scaling support
 export STEAM_GAMESCOPE_FANCY_SCALING_SUPPORT=1
 
+# Color management support
+export STEAM_GAMESCOPE_COLOR_MANAGED=1
+
 # Set input method modules for Qt/GTK that will show the Steam keyboard
 export QT_IM_MODULE=steam
 export GTK_IM_MODULE=Steam
