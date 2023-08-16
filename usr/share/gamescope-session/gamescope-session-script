@@ -6,6 +6,13 @@
 export INTEL_DEBUG=norbc
 export mesa_glthread=true
 
+# Swap wayland environment variables for x11 ones
+export XDG_SESSION_TYPE=x11
+export XDG_CURRENT_DESKTOP=gamescope
+export XDG_BACKEND=x11
+export GDK_BACKEND=x11
+unset WAYLAND_DISPLAY
+
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
