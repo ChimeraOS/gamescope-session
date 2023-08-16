@@ -202,6 +202,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
         --default-touch-mode 4 \
         --hide-cursor-delay 3000 \
         --fade-out-duration 200 \
+	--force-grab-cursor \
         -R $socket -T $stats"
      else
         GAMESCOPECMD="/usr/bin/gamescope \
@@ -213,6 +214,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
         --default-touch-mode 4 \
         --hide-cursor-delay 3000 \
         --fade-out-duration 200 \
+	--force-grab-cursor \
         --prefer-vk-device $VULKAN_ADAPTER \
         -R $socket -T $stats"
      fi
