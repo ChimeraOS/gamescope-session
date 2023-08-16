@@ -92,9 +92,6 @@ export STEAM_MULTIPLE_XWAYLANDS=1
 # We have the Mesa integration for the fifo-based dynamic fps-limiter
 export STEAM_GAMESCOPE_DYNAMIC_FPSLIMITER=1
 
-# We have gamma/degamma exponent support
-export STEAM_GAMESCOPE_COLOR_TOYS=1
-
 # We have NIS support
 export STEAM_GAMESCOPE_NIS_SUPPORTED=1
 
