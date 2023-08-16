@@ -6,6 +6,9 @@
 export INTEL_DEBUG=norbc
 export mesa_glthread=true
 
+# Show VRR controls in Steam
+export STEAM_GAMESCOPE_VRR_SUPPORTED=1
+
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
