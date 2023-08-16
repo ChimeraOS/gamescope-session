@@ -13,6 +13,9 @@ export XDG_BACKEND=x11
 export GDK_BACKEND=x11
 unset WAYLAND_DISPLAY
 
+# Show VRR controls in Steam
+export STEAM_GAMESCOPE_VRR_SUPPORTED=1
+
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
@@ -96,9 +99,6 @@ export STEAM_MULTIPLE_XWAYLANDS=1
 # We have the Mesa integration for the fifo-based dynamic fps-limiter
 export STEAM_GAMESCOPE_DYNAMIC_FPSLIMITER=1
 
-# We have gamma/degamma exponent support
-export STEAM_GAMESCOPE_COLOR_TOYS=1
-
 # We have NIS support
 export STEAM_GAMESCOPE_NIS_SUPPORTED=1
 
@@ -116,6 +116,10 @@ export STEAM_MANGOAPP_HORIZONTAL_SUPPORTED=1
 
 # Scaling support
 export STEAM_GAMESCOPE_FANCY_SCALING_SUPPORT=1
+
+# Color management support
+# export STEAM_GAMESCOPE_COLOR_MANAGED=1
+export STEAM_GAMESCOPE_VIRTUAL_WHITE=1
 
 # Set input method modules for Qt/GTK that will show the Steam keyboard
 export QT_IM_MODULE=steam
