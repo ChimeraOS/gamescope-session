@@ -4,6 +4,7 @@
 # steamos-update --supports-duplicate-detection     -- should do nothing
 # steamos-update --enable-duplicate-detection check -- should check for update
 # steamos-update check                              -- should check for update
+# steamos-update --enable-duplicate-detection       -- should perform an update
 # steamos-update                                    -- should perform an update
 
 
@@ -13,8 +14,11 @@ while [[ $# -gt 0 ]]; do
       CHECK=1
       shift
       ;;
+    --supports-duplicate-detection)
+      EXIT=1
+      shift
+      ;;
     *)
-      SKIP=1
       shift
       ;;
   esac
@@ -24,7 +28,7 @@ done
 if command -v frzr-deploy > /dev/null; then
 	if [ -n "$CHECK" ]; then
 		frzr-deploy --check
-	elif [ -n "$SKIP" ]; then
+	elif [ -n "$EXIT" ]; then
 		exit 0
 	else
 		frzr-deploy --steam-progress
