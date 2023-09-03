@@ -304,6 +304,11 @@ if command -v mangoapp > /dev/null; then
     mangoapp > "${HOME}"/.mangoapp-stdout.log 2>&1 &
 fi
 
+# If we have steam_notif_daemon binary start it
+if command -v steam_notif_daemon > /dev/null; then
+    steam_notif_daemon > "${HOME}"/.steam_notif_daemon-stdout.log 2>&1 &
+fi
+
 # Start Steam client
 $STEAMCMD > "${HOME}"/.steam-stdout.log 2>&1
 
