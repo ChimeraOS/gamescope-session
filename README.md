@@ -56,8 +56,9 @@ If you are building a launcher or application that will use multiple windows, yo
 
 For any other applications or windows that are opened you must set `STEAM_GAME` to any value (other than `769`) and gamescope will display those windows on top of your main window. Once the new window is closed, the main application will be displayed again. When launching games, Steam sets `STEAM_GAME` to the app id of the Steam game that is launched. There are several hacks in gamescope for specific games that rely on this id.
 
-TODO: document how overlays work: i.e. `STEAM_OVERLAY` and `GAMESCOPE_EXTERNAL_OVERLAY`
-TODO: document how to use multiple xwayland displays
+TODO:
+ - document how overlays work: i.e. `STEAM_OVERLAY` and `GAMESCOPE_EXTERNAL_OVERLAY`
+ - document how to use multiple xwayland displays
 
 
 # License & Contributing
