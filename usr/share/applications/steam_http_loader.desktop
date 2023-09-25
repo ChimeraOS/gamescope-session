@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Steam HTTP Handler
-NoDisplay=true
-Exec=steam-http-loader %u

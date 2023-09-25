@@ -1,5 +1,7 @@
 #!/bin/sh
 
+declare -r CLIENT=$1
+
 # Script to start the session used by Valve with minor tweaks for ChimeraOS.
 
 # Window managers sets this to wayland but apps using Gamescope must use x11
@@ -17,10 +19,10 @@ systemctl --user set-environment XDG_DESKTOP_PORTAL_DIR=""
 systemctl --user unset-environment DISPLAY XAUTHORITY
 
 # If this shell script is killed then stop gamescope-session
-trap 'systemctl --user stop gamescope-session.service' HUP INT TERM
+trap "systemctl --user stop gamescope-session@${CLIENT}.service" HUP INT TERM
 
 # Start gamescope-session and wait
-systemctl --user --wait start gamescope-session.service &
+systemctl --user --wait start gamescope-session@${CLIENT}.service &
 wait
 
 # Unset XDG_DESKTOP_PORTAL_DIR environment to allow desktop portals to work
