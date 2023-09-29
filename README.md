@@ -1,4 +1,4 @@
-# Gamescope session based on Valve's [`gamescope`](https://github.com/Plagman/gamescope)
+# Gamescope session plus based on Valve's [`gamescope`](https://github.com/Plagman/gamescope)
 
 This project is not affiliated with Valve (inspiration was taken from
 their work on the Steam Deck). It is part of the ChimeraOS project, but
@@ -19,7 +19,7 @@ able to start any available sessions on the Display Manager of your choice.
 # User Configuration
 
 The session sources environment from `~/.config/environment.d/*.conf` files.
-The easiest way to configure the session is to create `~/.config/environment.d/gamescope-session.conf`
+The easiest way to configure the session is to create `~/.config/environment.d/gamescope-session-plus.conf`
 and set variables there:
 
 ```
@@ -39,7 +39,7 @@ GAMESCOPECMD="gamescope -e -f"
 
 Let's say we want to create a session that simply plays a video.
 
-First, we create `/usr/share/gamescope-session/sessions.d/video` to define the session.
+First, we create `/usr/share/gamescope-session-plus/sessions.d/video` to define the session.
 This file must define `CLIENTCMD` which specific the command to run as the main application of the session.
 In this example we add:
 `CLIENTCMD="vlc my-video.mp4"`
@@ -55,12 +55,12 @@ In our example, this could be:
 Encoding=UTF-8
 Name=Video
 Comment=A session to play a video
-Exec=gamescope-session video
+Exec=gamescope-session-plus video
 Type=Application
 DesktopNames=gamescope
 ```
 
-Note that the Exec must call `gamescope-session` with the parameter value corresponding to the file that we placed under `/usr/share/gamescope-session/sessions.d/`.
+Note that the Exec must call `gamescope-session-plus` with the parameter value corresponding to the file that we placed under `/usr/share/gamescope-session-plus/sessions.d/`.
 
 
 See https://github.com/shadowblip/opengamepadui-session for a real-life example of a gamescope session.
@@ -68,9 +68,9 @@ See https://github.com/shadowblip/opengamepadui-session for a real-life example 
 
 ## Window visibility
 
-If you would like to run an arbitrary application in gamescope-session, prepare for a bit of an adventure.
+If you would like to run an arbitrary application in a gamescope session, prepare for a bit of an adventure.
 
-Gamescope embedded mode (which is used by gamescope-session) is tightly integrated with Steam. Your application will have to essentially emulate what Steam does when interacting with gamescope.
+Gamescope embedded mode (which is used by gamescope-session-plus) is tightly integrated with Steam. Your application will have to essentially emulate what Steam does when interacting with gamescope.
 
 Steam interacts with gamescope by setting properties on Xorg windows. By default, if you launch an application with the gamescope session by overriding the `CLIENTCMD` environment variable you may notice that you only see a black screen. That is because gamescope will only show windows when the `STEAM_GAME` property is present on the window. In most cases, all you will need to do is set this property on your application window to any value and the window should appear.
 

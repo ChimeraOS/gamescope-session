@@ -15,14 +15,14 @@ dbus-update-activation-environment --systemd DESKTOP_SESSION `env | grep ^XDG_ |
 # on implementations to hang (such as SDL talking to the real time portal)
 systemctl --user set-environment XDG_DESKTOP_PORTAL_DIR=""
 
-# Remove these as they prevent gamescope-session from starting correctly
+# Remove these as they prevent gamescope-session-plus from starting correctly
 systemctl --user unset-environment DISPLAY XAUTHORITY
 
-# If this shell script is killed then stop gamescope-session
-trap "systemctl --user stop gamescope-session@${CLIENT}.service" HUP INT TERM
+# If this shell script is killed then stop gamescope-session-plus
+trap "systemctl --user stop gamescope-session-plus@${CLIENT}.service" HUP INT TERM
 
-# Start gamescope-session and wait
-systemctl --user --wait start gamescope-session@${CLIENT}.service &
+# Start gamescope-session-plus and wait
+systemctl --user --wait start gamescope-session-plus@${CLIENT}.service &
 wait
 
 # Unset XDG_DESKTOP_PORTAL_DIR environment to allow desktop portals to work

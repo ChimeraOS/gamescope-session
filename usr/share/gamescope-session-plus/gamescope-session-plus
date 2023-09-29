@@ -1,8 +1,8 @@
 #!/bin/bash
 
 declare -r CLIENT=$1
-declare -r CLIENT_CONFIG_DIR_USR=/usr/share/gamescope-session/sessions.d
-declare -r CLIENT_CONFIG_DIR_ETC=/etc/gamescope-sessions.d
+declare -r CLIENT_CONFIG_DIR_USR=/usr/share/gamescope-session-plus/sessions.d
+declare -r CLIENT_CONFIG_DIR_ETC=/etc/gamescope-session-plus/sessions.d
 
 # default empty session recovery function
 short_session_recover () {
@@ -67,8 +67,8 @@ export GAMESCOPE_LIMITER_FILE=$(mktemp /tmp/gamescope-limiter.XXXXXXXX)
 ulimit -n 524288
 
 # Source device quirks if exists
-if [ -f /usr/share/gamescope-session/device-quirks ]; then
-  . /usr/share/gamescope-session/device-quirks
+if [ -f /usr/share/gamescope-session-plus/device-quirks ]; then
+  . /usr/share/gamescope-session-plus/device-quirks
 fi
 
 # Source client app specific configuration
@@ -171,7 +171,7 @@ SECONDS=0
 short_session_count=$(< "$short_session_tracker_file" wc -l)
 
 if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
-    echo >&2 "gamescope-session: detected broken ${CLIENT} or gamescope failure, will try to reset the session"
+    echo >&2 "gamescope-session-plus: detected broken ${CLIENT} or gamescope failure, will try to reset the session"
 
     short_session_recover
 
@@ -259,7 +259,7 @@ wait -n $gamescope_pid $sleep_pid || ret=$?
 
 # If we get a SIGTERM/etc while waiting this happens.  Proceed to kill -9 everything but complain
 if [[ $ret = 127 ]]; then
-	echo >&2 "gamescope-session: Interrupted while waiting on teardown, force-killing remaining tasks"
+	echo >&2 "gamescope-session-plus: Interrupted while waiting on teardown, force-killing remaining tasks"
 fi
 
 # Kill all remaining jobs and warn if unexpected things are in there (should be just sleep_pid, unless gamescope failed
@@ -267,9 +267,9 @@ fi
 for job in $(jobs -p); do
 	# Warn about unexpected things
 	if [[ $ret != 127 && $job = "$gamescope_pid" ]]; then
-		echo >&2 "gamescope-session: gamescope timed out while exiting, killing"
+		echo >&2 "gamescope-session-plus: gamescope timed out while exiting, killing"
 	elif [[ $ret != 127 && $job != "$sleep_pid" ]]; then
-		echo >&2 "gamescope-session: unexpected background pid $job at teardown: "
+		echo >&2 "gamescope-session-plus: unexpected background pid $job at teardown: "
 		# spew some debug about it
 		ps -p "$job" >&2
 	fi
