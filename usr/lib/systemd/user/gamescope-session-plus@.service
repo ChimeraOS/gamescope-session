@@ -9,7 +9,7 @@ Wants=graphical-session-pre.target
 After=graphical-session-pre.target
 
 [Service]
-ExecStart=/usr/share/gamescope-session-plus/gamescope-session-plus %I
+ExecStart=/usr/share/gamescope-session-plus/gamescope-session-plus %i
 # This is a temporary workaround for the some proton apps becoming
 # confused by the AF_UNIX socket they get for the stdout when the
 # service outputs to the journal. (e.g.  Vampire Survivors).
