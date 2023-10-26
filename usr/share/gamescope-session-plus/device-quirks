@@ -37,6 +37,35 @@ if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]] || [[  ":$AOK_LIST:" =~ ":$SYS_ID:"   ]];
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
+# OXP 120hz Devices
+OXP_120_LIST="ONEXPLAYER F1"
+if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
+  # Dependent on a special --force-external-orientation option in gamescope-plus
+  if ( gamescope --help 2>&1 | grep -e "--force-external-orientation" > /dev/null ) ; then
+    export GAMESCOPECMD="/usr/bin/gamescope \
+      -e \
+      --xwayland-count 2 \
+      -O *,eDP-1 \
+      --default-touch-mode 4 \
+      --hide-cursor-delay 3000 \
+      --fade-out-duration 200 \
+      --force-panel-type external \
+      --force-external-orientation left "
+  # Fallback method. Dependent on a special --force-orientation option in gamescope
+  elif ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
+    export GAMESCOPECMD="/usr/bin/gamescope \
+      -e \
+      --xwayland-count 2 \
+      -O *,eDP-1 \
+      --default-touch-mode 4 \
+      --hide-cursor-delay 3000 \
+      --fade-out-duration 200 \
+      --force-orientation left "
+  fi
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,120
+fi
+
 # AYANEO AIR Devices
 AIR_LIST="AIR:AIR Pro:AIR Plus"
 if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
