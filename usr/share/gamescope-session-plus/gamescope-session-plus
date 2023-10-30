@@ -3,6 +3,7 @@
 declare -r CLIENT=$1
 declare -r CLIENT_CONFIG_DIR_USR=/usr/share/gamescope-session-plus/sessions.d
 declare -r CLIENT_CONFIG_DIR_ETC=/etc/gamescope-session-plus/sessions.d
+declare -r CLIENT_CONFIG_DIR_LOCAL="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope-session-plus/sessions.d"
 
 # default empty session recovery function
 short_session_recover () {
@@ -71,9 +72,9 @@ if [ -f /usr/share/gamescope-session-plus/device-quirks ]; then
   . /usr/share/gamescope-session-plus/device-quirks
 fi
 
-# Source client app specific configuration
+# Source client app specific configuration files
 set -a
-for i in ${CLIENT_CONFIG_DIR_USR}/${CLIENT} ${CLIENT_CONFIG_DIR_ETC}/${CLIENT} ;
+for i in ${CLIENT_CONFIG_DIR_USR}/${CLIENT} ${CLIENT_CONFIG_DIR_ETC}/${CLIENT} ${CLIENT_CONFIG_DIR_LOCAL}/${CLIENT} ;
 do
     [[ -f "${i}" ]] && . "${i}"
 done
