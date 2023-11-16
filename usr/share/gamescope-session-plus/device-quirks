@@ -192,7 +192,7 @@ if [[ ":Galileo:" =~ ":$SYS_ID:"  ]]; then
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 "
   fi
-   export STEAM_DISPLAY_REFRESH_LIMITS=40,90
+   export STEAM_DISPLAY_REFRESH_LIMITS=45,90
 fi
 
 # ROG Ally
