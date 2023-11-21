@@ -1,0 +1,150 @@
+# Legion Go display panel
+# PNP: "LEN"
+# MODEL: "Display Go"
+# MODELINES VERSION: 0.1
+# Target  60hz: VSYNC 6456 (fb: 3796 syn: 4 bp: 96), actual 60.00hz.
+060 Modeline "1600x2560_60" 704.990 1600 1660 1690 1820 2560 6356 6360 6456 +HSync +VSync
+# Target  73hz: VSYNC 5304 (fb: 2644 syn: 4 bp: 96), actual 73.03hz.
+073 Modeline "1600x2560_73" 704.990 1600 1660 1690 1820 2560 5204 5208 5304 +HSync +VSync
+# Target  74hz: VSYNC 5232 (fb: 2572 syn: 4 bp: 96), actual 74.04hz.
+074 Modeline "1600x2560_74" 704.990 1600 1660 1690 1820 2560 5132 5136 5232 +HSync +VSync
+# Target  75hz: VSYNC 5164 (fb: 2504 syn: 4 bp: 96), actual 75.01hz.
+075 Modeline "1600x2560_75" 704.990 1600 1660 1690 1820 2560 5064 5068 5164 +HSync +VSync
+# Target  76hz: VSYNC 5096 (fb: 2436 syn: 4 bp: 96), actual 76.01hz.
+076 Modeline "1600x2560_76" 704.990 1600 1660 1690 1820 2560 4996 5000 5096 +HSync +VSync
+# Target  77hz: VSYNC 5028 (fb: 2368 syn: 4 bp: 96), actual 77.04hz.
+077 Modeline "1600x2560_77" 704.990 1600 1660 1690 1820 2560 4928 4932 5028 +HSync +VSync
+# Target  78hz: VSYNC 4964 (fb: 2304 syn: 4 bp: 96), actual 78.03hz.
+078 Modeline "1600x2560_78" 704.990 1600 1660 1690 1820 2560 4864 4868 4964 +HSync +VSync
+# Target  79hz: VSYNC 4904 (fb: 2244 syn: 4 bp: 96), actual 78.99hz.
+079 Modeline "1600x2560_79" 704.990 1600 1660 1690 1820 2560 4804 4808 4904 +HSync +VSync
+# Target  80hz: VSYNC 4840 (fb: 2180 syn: 4 bp: 96), actual 80.03hz.
+080 Modeline "1600x2560_80" 704.990 1600 1660 1690 1820 2560 4740 4744 4840 +HSync +VSync
+# Target  81hz: VSYNC 4780 (fb: 2120 syn: 4 bp: 96), actual 81.04hz.
+081 Modeline "1600x2560_81" 704.990 1600 1660 1690 1820 2560 4680 4684 4780 +HSync +VSync
+# Target  82hz: VSYNC 4724 (fb: 2064 syn: 4 bp: 96), actual 82.00hz.
+082 Modeline "1600x2560_82" 704.990 1600 1660 1690 1820 2560 4624 4628 4724 +HSync +VSync
+# Target  83hz: VSYNC 4664 (fb: 2004 syn: 4 bp: 96), actual 83.05hz.
+083 Modeline "1600x2560_83" 704.990 1600 1660 1690 1820 2560 4564 4568 4664 +HSync +VSync
+# Target  84hz: VSYNC 4612 (fb: 1952 syn: 4 bp: 96), actual 83.99hz.
+084 Modeline "1600x2560_84" 704.990 1600 1660 1690 1820 2560 4512 4516 4612 +HSync +VSync
+# Target  85hz: VSYNC 4556 (fb: 1896 syn: 4 bp: 96), actual 85.02hz.
+085 Modeline "1600x2560_85" 704.990 1600 1660 1690 1820 2560 4456 4460 4556 +HSync +VSync
+# Target  86hz: VSYNC 4504 (fb: 1844 syn: 4 bp: 96), actual 86.00hz.
+086 Modeline "1600x2560_86" 704.990 1600 1660 1690 1820 2560 4404 4408 4504 +HSync +VSync
+# Target  87hz: VSYNC 4452 (fb: 1792 syn: 4 bp: 96), actual 87.01hz.
+087 Modeline "1600x2560_87" 704.990 1600 1660 1690 1820 2560 4352 4356 4452 +HSync +VSync
+# Target  88hz: VSYNC 4400 (fb: 1740 syn: 4 bp: 96), actual 88.04hz.
+088 Modeline "1600x2560_88" 704.990 1600 1660 1690 1820 2560 4300 4304 4400 +HSync +VSync
+# Target  89hz: VSYNC 4352 (fb: 1692 syn: 4 bp: 96), actual 89.01hz.
+089 Modeline "1600x2560_89" 704.990 1600 1660 1690 1820 2560 4252 4256 4352 +HSync +VSync
+# Target  90hz: VSYNC 4304 (fb: 1644 syn: 4 bp: 96), actual 90.00hz.
+090 Modeline "1600x2560_90" 704.990 1600 1660 1690 1820 2560 4204 4208 4304 +HSync +VSync
+# Target  91hz: VSYNC 4256 (fb: 1596 syn: 4 bp: 96), actual 91.01hz.
+091 Modeline "1600x2560_91" 704.990 1600 1660 1690 1820 2560 4156 4160 4256 +HSync +VSync
+# Target  92hz: VSYNC 4208 (fb: 1548 syn: 4 bp: 96), actual 92.05hz.
+092 Modeline "1600x2560_92" 704.990 1600 1660 1690 1820 2560 4108 4112 4208 +HSync +VSync
+# Target  93hz: VSYNC 4164 (fb: 1504 syn: 4 bp: 96), actual 93.03hz.
+093 Modeline "1600x2560_93" 704.990 1600 1660 1690 1820 2560 4064 4068 4164 +HSync +VSync
+# Target  94hz: VSYNC 4120 (fb: 1460 syn: 4 bp: 96), actual 94.02hz.
+094 Modeline "1600x2560_94" 704.990 1600 1660 1690 1820 2560 4020 4024 4120 +HSync +VSync
+# Target  95hz: VSYNC 4076 (fb: 1416 syn: 4 bp: 96), actual 95.03hz.
+095 Modeline "1600x2560_95" 704.990 1600 1660 1690 1820 2560 3976 3980 4076 +HSync +VSync
+# Target  96hz: VSYNC 4032 (fb: 1372 syn: 4 bp: 96), actual 96.07hz.
+096 Modeline "1600x2560_96" 704.990 1600 1660 1690 1820 2560 3932 3936 4032 +HSync +VSync
+# Target  97hz: VSYNC 3992 (fb: 1332 syn: 4 bp: 96), actual 97.03hz.
+097 Modeline "1600x2560_97" 704.990 1600 1660 1690 1820 2560 3892 3896 3992 +HSync +VSync
+# Target  98hz: VSYNC 3952 (fb: 1292 syn: 4 bp: 96), actual 98.02hz.
+098 Modeline "1600x2560_98" 704.990 1600 1660 1690 1820 2560 3852 3856 3952 +HSync +VSync
+# Target  99hz: VSYNC 3912 (fb: 1252 syn: 4 bp: 96), actual 99.02hz.
+099 Modeline "1600x2560_99" 704.990 1600 1660 1690 1820 2560 3812 3816 3912 +HSync +VSync
+# Target 100hz: VSYNC 3872 (fb: 1212 syn: 4 bp: 96), actual 100.04hz.
+100 Modeline "1600x2560_100" 704.990 1600 1660 1690 1820 2560 3772 3776 3872 +HSync +VSync
+# Target 101hz: VSYNC 3836 (fb: 1176 syn: 4 bp: 96), actual 100.98hz.
+101 Modeline "1600x2560_101" 704.990 1600 1660 1690 1820 2560 3736 3740 3836 +HSync +VSync
+# Target 102hz: VSYNC 3796 (fb: 1136 syn: 4 bp: 96), actual 102.04hz.
+102 Modeline "1600x2560_102" 704.990 1600 1660 1690 1820 2560 3696 3700 3796 +HSync +VSync
+# Target 103hz: VSYNC 3760 (fb: 1100 syn: 4 bp: 96), actual 103.02hz.
+103 Modeline "1600x2560_103" 704.990 1600 1660 1690 1820 2560 3660 3664 3760 +HSync +VSync
+# Target 104hz: VSYNC 3724 (fb: 1064 syn: 4 bp: 96), actual 104.02hz.
+104 Modeline "1600x2560_104" 704.990 1600 1660 1690 1820 2560 3624 3628 3724 +HSync +VSync
+# Target 105hz: VSYNC 3688 (fb: 1028 syn: 4 bp: 96), actual 105.03hz.
+105 Modeline "1600x2560_105" 704.990 1600 1660 1690 1820 2560 3588 3592 3688 +HSync +VSync
+# Target 106hz: VSYNC 3652 (fb: 992 syn: 4 bp: 96), actual 106.07hz.
+106 Modeline "1600x2560_106" 704.990 1600 1660 1690 1820 2560 3552 3556 3652 +HSync +VSync
+# Target 107hz: VSYNC 3620 (fb: 960 syn: 4 bp: 96), actual 107.00hz.
+107 Modeline "1600x2560_107" 704.990 1600 1660 1690 1820 2560 3520 3524 3620 +HSync +VSync
+# Target 108hz: VSYNC 3584 (fb: 924 syn: 4 bp: 96), actual 108.08hz.
+108 Modeline "1600x2560_108" 704.990 1600 1660 1690 1820 2560 3484 3488 3584 +HSync +VSync
+# Target 109hz: VSYNC 3552 (fb: 892 syn: 4 bp: 96), actual 109.05hz.
+109 Modeline "1600x2560_109" 704.990 1600 1660 1690 1820 2560 3452 3456 3552 +HSync +VSync
+# Target 110hz: VSYNC 3520 (fb: 860 syn: 4 bp: 96), actual 110.04hz.
+110 Modeline "1600x2560_110" 704.990 1600 1660 1690 1820 2560 3420 3424 3520 +HSync +VSync
+# Target 111hz: VSYNC 3488 (fb: 828 syn: 4 bp: 96), actual 111.05hz.
+111 Modeline "1600x2560_111" 704.990 1600 1660 1690 1820 2560 3388 3392 3488 +HSync +VSync
+# Target 112hz: VSYNC 3456 (fb: 796 syn: 4 bp: 96), actual 112.08hz.
+112 Modeline "1600x2560_112" 704.990 1600 1660 1690 1820 2560 3356 3360 3456 +HSync +VSync
+# Target 113hz: VSYNC 3428 (fb: 768 syn: 4 bp: 96), actual 113.00hz.
+113 Modeline "1600x2560_113" 704.990 1600 1660 1690 1820 2560 3328 3332 3428 +HSync +VSync
+# Target 114hz: VSYNC 3396 (fb: 736 syn: 4 bp: 96), actual 114.06hz.
+114 Modeline "1600x2560_114" 704.990 1600 1660 1690 1820 2560 3296 3300 3396 +HSync +VSync
+# Target 115hz: VSYNC 3368 (fb: 708 syn: 4 bp: 96), actual 115.01hz.
+115 Modeline "1600x2560_115" 704.990 1600 1660 1690 1820 2560 3268 3272 3368 +HSync +VSync
+# Target 116hz: VSYNC 3340 (fb: 680 syn: 4 bp: 96), actual 115.98hz.
+116 Modeline "1600x2560_116" 704.990 1600 1660 1690 1820 2560 3240 3244 3340 +HSync +VSync
+# Target 117hz: VSYNC 3308 (fb: 648 syn: 4 bp: 96), actual 117.10hz.
+117 Modeline "1600x2560_117" 704.990 1600 1660 1690 1820 2560 3208 3212 3308 +HSync +VSync
+# Target 118hz: VSYNC 3280 (fb: 620 syn: 4 bp: 96), actual 118.10hz.
+118 Modeline "1600x2560_118" 704.990 1600 1660 1690 1820 2560 3180 3184 3280 +HSync +VSync
+# Target 119hz: VSYNC 3256 (fb: 596 syn: 4 bp: 96), actual 118.97hz.
+119 Modeline "1600x2560_119" 704.990 1600 1660 1690 1820 2560 3156 3160 3256 +HSync +VSync
+# Target 120hz: VSYNC 3228 (fb: 568 syn: 4 bp: 96), actual 120.00hz.
+120 Modeline "1600x2560_120" 704.990 1600 1660 1690 1820 2560 3128 3132 3228 +HSync +VSync
+# Target 121hz: VSYNC 3200 (fb: 540 syn: 4 bp: 96), actual 121.05hz.
+121 Modeline "1600x2560_121" 704.990 1600 1660 1690 1820 2560 3100 3104 3200 +HSync +VSync
+# Target 122hz: VSYNC 3176 (fb: 516 syn: 4 bp: 96), actual 121.96hz.
+122 Modeline "1600x2560_122" 704.990 1600 1660 1690 1820 2560 3076 3080 3176 +HSync +VSync
+# Target 123hz: VSYNC 3148 (fb: 488 syn: 4 bp: 96), actual 123.05hz.
+123 Modeline "1600x2560_123" 704.990 1600 1660 1690 1820 2560 3048 3052 3148 +HSync +VSync
+# Target 124hz: VSYNC 3124 (fb: 464 syn: 4 bp: 96), actual 123.99hz.
+124 Modeline "1600x2560_124" 704.990 1600 1660 1690 1820 2560 3024 3028 3124 +HSync +VSync
+# Target 125hz: VSYNC 3096 (fb: 436 syn: 4 bp: 96), actual 125.12hz.
+125 Modeline "1600x2560_125" 704.990 1600 1660 1690 1820 2560 2996 3000 3096 +HSync +VSync
+# Target 126hz: VSYNC 3072 (fb: 412 syn: 4 bp: 96), actual 126.09hz.
+126 Modeline "1600x2560_126" 704.990 1600 1660 1690 1820 2560 2972 2976 3072 +HSync +VSync
+# Target 127hz: VSYNC 3048 (fb: 388 syn: 4 bp: 96), actual 127.09hz.
+127 Modeline "1600x2560_127" 704.990 1600 1660 1690 1820 2560 2948 2952 3048 +HSync +VSync
+# Target 128hz: VSYNC 3024 (fb: 364 syn: 4 bp: 96), actual 128.09hz.
+128 Modeline "1600x2560_128" 704.990 1600 1660 1690 1820 2560 2924 2928 3024 +HSync +VSync
+# Target 129hz: VSYNC 3000 (fb: 340 syn: 4 bp: 96), actual 129.12hz.
+129 Modeline "1600x2560_129" 704.990 1600 1660 1690 1820 2560 2900 2904 3000 +HSync +VSync
+# Target 130hz: VSYNC 2980 (fb: 320 syn: 4 bp: 96), actual 129.99hz.
+130 Modeline "1600x2560_130" 704.990 1600 1660 1690 1820 2560 2880 2884 2980 +HSync +VSync
+# Target 131hz: VSYNC 2956 (fb: 296 syn: 4 bp: 96), actual 131.04hz.
+131 Modeline "1600x2560_131" 704.990 1600 1660 1690 1820 2560 2856 2860 2956 +HSync +VSync
+# Target 132hz: VSYNC 2932 (fb: 272 syn: 4 bp: 96), actual 132.11hz.
+132 Modeline "1600x2560_132" 704.990 1600 1660 1690 1820 2560 2832 2836 2932 +HSync +VSync
+# Target 133hz: VSYNC 2912 (fb: 252 syn: 4 bp: 96), actual 133.02hz.
+133 Modeline "1600x2560_133" 704.990 1600 1660 1690 1820 2560 2812 2816 2912 +HSync +VSync
+# Target 134hz: VSYNC 2888 (fb: 228 syn: 4 bp: 96), actual 134.13hz.
+134 Modeline "1600x2560_134" 704.990 1600 1660 1690 1820 2560 2788 2792 2888 +HSync +VSync
+# Target 135hz: VSYNC 2868 (fb: 208 syn: 4 bp: 96), actual 135.06hz.
+135 Modeline "1600x2560_135" 704.990 1600 1660 1690 1820 2560 2768 2772 2868 +HSync +VSync
+# Target 136hz: VSYNC 2848 (fb: 188 syn: 4 bp: 96), actual 136.01hz.
+136 Modeline "1600x2560_136" 704.990 1600 1660 1690 1820 2560 2748 2752 2848 +HSync +VSync
+# Target 137hz: VSYNC 2828 (fb: 168 syn: 4 bp: 96), actual 136.97hz.
+137 Modeline "1600x2560_137" 704.990 1600 1660 1690 1820 2560 2728 2732 2828 +HSync +VSync
+# Target 138hz: VSYNC 2804 (fb: 144 syn: 4 bp: 96), actual 138.14hz.
+138 Modeline "1600x2560_138" 704.990 1600 1660 1690 1820 2560 2704 2708 2804 +HSync +VSync
+# Target 139hz: VSYNC 2784 (fb: 124 syn: 4 bp: 96), actual 139.14hz.
+139 Modeline "1600x2560_139" 704.990 1600 1660 1690 1820 2560 2684 2688 2784 +HSync +VSync
+# Target 140hz: VSYNC 2764 (fb: 104 syn: 4 bp: 96), actual 140.14hz.
+140 Modeline "1600x2560_140" 704.990 1600 1660 1690 1820 2560 2664 2668 2764 +HSync +VSync
+# Target 141hz: VSYNC 2748 (fb: 88 syn: 4 bp: 96), actual 140.96hz.
+141 Modeline "1600x2560_141" 704.990 1600 1660 1690 1820 2560 2648 2652 2748 +HSync +VSync
+# Target 142hz: VSYNC 2728 (fb: 68 syn: 4 bp: 96), actual 141.99hz.
+142 Modeline "1600x2560_142" 704.990 1600 1660 1690 1820 2560 2628 2632 2728 +HSync +VSync
+# Target 143hz: VSYNC 2708 (fb: 48 syn: 4 bp: 96), actual 143.04hz.
+143 Modeline "1600x2560_143" 704.990 1600 1660 1690 1820 2560 2608 2612 2708 +HSync +VSync
+# Target 144hz: VSYNC 2688 (fb: 28 syn: 4 bp: 96), actual 144.11hz.
+144 Modeline "1600x2560_144" 704.990 1600 1660 1690 1820 2560 2588 2592 2688 +HSync +VSync
