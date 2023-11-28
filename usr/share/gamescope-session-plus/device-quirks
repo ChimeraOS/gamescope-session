@@ -235,7 +235,7 @@ if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
       --fade-out-duration 200 \
       --adaptive-sync \
       --generate-drm-mode custom \
-      --generate-drm-mode-custom-dir /usr/share/gamescope-session-plus/device-quirks/modelines \
+      --generate-drm-mode-custom-dir /usr/share/gamescope-session-plus/modelines \
       --force-orientation left "
   fi
   # Set refresh rate range and enable refresh rate switching
