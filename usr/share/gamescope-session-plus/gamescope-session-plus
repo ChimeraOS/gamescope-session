@@ -65,6 +65,9 @@ export vk_xwayland_wait_ready=false
 # To play nice with the short term callback-based limiter for now
 export GAMESCOPE_LIMITER_FILE=$(mktemp /tmp/gamescope-limiter.XXXXXXXX)
 
+# Temporary crutch until dummy plane interactions / etc are figured out
+export GAMESCOPE_DISABLE_ASYNC_FLIPS=1
+
 ulimit -n 524288
 
 # Source device quirks if exists
