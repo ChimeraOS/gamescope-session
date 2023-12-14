@@ -10,6 +10,11 @@ short_session_recover () {
 	:
 }
 
+# default empty function to run after gamescope is started
+post_gamescope_start () {
+	:
+}
+
 # Fix intel color corruption
 # might come with some performance degradation but is better than a corrupted
 # color image
@@ -211,6 +216,9 @@ else
 	exit 1
 	# Systemd or Session manager will have to restart session
 fi
+
+# Run session defined hook
+post_gamescope_start
 
 # Input method support if present
 if command -v /usr/bin/ibus-daemon > /dev/null; then
