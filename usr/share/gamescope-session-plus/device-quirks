@@ -196,7 +196,8 @@ if [[ ":Galileo:" =~ ":$SYS_ID:"  ]]; then
 fi
 
 # ROG Ally
-if [[ ":ROG Ally RC71L_RC71L:" =~ ":$SYS_ID:"  ]]; then
+ALLY_LIST="ROG Ally RC71L_RC71L:ROG Ally RC71L"
+if [[ ":$ALLY_LIST:" =~ ":$SYS_ID:"  ]]; then
   # Dependent on a special --force-panel-type option in gamescope-plus
   if ( gamescope --help 2>&1 | grep -e "--force-panel-type" > /dev/null ) ; then
     export GAMESCOPECMD="/usr/bin/gamescope \
