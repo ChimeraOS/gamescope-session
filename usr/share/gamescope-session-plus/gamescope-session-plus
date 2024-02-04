@@ -21,6 +21,10 @@ post_gamescope_start () {
 export INTEL_DEBUG=norbc
 export mesa_glthread=true
 
+# This should be used by default by gamescope. Cannot hurt to force it anyway.
+# Reported better framelimiting with this enabled
+export ENABLE_GAMESCOPE_WSI=1
+
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
