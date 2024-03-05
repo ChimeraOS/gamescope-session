@@ -114,7 +114,7 @@ if [[ ":$AYN_LIST:" =~ ":$SYS_ID:"  ]]; then
 fi
 
 # GDP Win devices
-GDP_LIST="G1619-01:G1621-02:MicroPC"
+GDP_LIST="G1619-01:G1621-02:MicroPC:WIN2"
 if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
   # Dependent on a special --force-orientation option in gamescope
   if ( gamescope --help 2>&1 | grep -e "--force-orientation" > /dev/null ) ; then
