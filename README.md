@@ -33,6 +33,10 @@ CLIENTCMD="steam -steamos -pipewire-dmabuf -gamepadui"
 # Override the entire Gamescope command line
 # This will not use screen and render sizes above
 GAMESCOPECMD="gamescope -e -f"
+
+# Overwrites only the basic call to composer (useful if composer is on a different path).
+# In this case, the remaining arguments are also set automatically.
+GAMESCOPECMD_BASE="/usr/bin/gamescope"
 ```
 
 # Creating a custom session

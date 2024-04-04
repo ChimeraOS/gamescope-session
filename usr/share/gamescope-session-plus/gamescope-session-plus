@@ -134,13 +134,17 @@ fi
 : "${OUTPUT_CONNECTOR:=*,eDP-1}"
 
 if [ -z "$GAMESCOPECMD" ] ; then
+    if [ -z "$GAMESCOPECMD_BASE" ] ; then
+        GAMESCOPECMD_BASE="/usr/bin/gamescope"
+    fi
+
     RESOLUTION=""
     if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ] ; then
         RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
     fi
     
     if [ -z $VULKAN_ADAPTER ]; then
-        GAMESCOPECMD="/usr/bin/gamescope \
+        GAMESCOPECMD="${GAMESCOPECMD_BASE} \
         $CURSOR \
         -e \
         $RESOLUTION \
@@ -151,7 +155,7 @@ if [ -z "$GAMESCOPECMD" ] ; then
         --fade-out-duration 200 \
         -R $socket -T $stats"
      else
-        GAMESCOPECMD="/usr/bin/gamescope \
+        GAMESCOPECMD="${GAMESCOPECMD_BASE} \
         $CURSOR \
         -e \
         $RESOLUTION \
