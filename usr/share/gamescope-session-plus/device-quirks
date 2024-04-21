@@ -144,7 +144,7 @@ if [[ ":G1618-03:" =~ ":$SYS_ID:"  ]]; then
       --default-touch-mode 4 \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
-      --force-orientation normal "
+      --force-orientation right "
   fi
 fi
 
