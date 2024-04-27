@@ -96,6 +96,10 @@ do
 done
 set +a
 
+if [[ -n ${BEFORE_GAMESCOPE_SESSION_PLUS+x} ]]; then
+  $BEFORE_GAMESCOPE_SESSION_PLUS
+fi
+
 # Setup socket for gamescope
 # Create run directory file for startup and stats sockets
 tmpdir="$([[ -n ${XDG_RUNTIME_DIR+x} ]] && mktemp -p "$XDG_RUNTIME_DIR" -d -t gamescope.XXXXXXX)"
@@ -271,6 +275,9 @@ if [[ -e "$SHUTDOWN_SENTINEL" ]]; then
 	rm -f "$SHUTDOWN_SENTINEL"
 	# rearm short session tracker
 	rm "$short_session_tracker_file"
+	if [[ -n ${AFTER_GAMESCOPE_SESSION_PLUS+x} ]]; then
+    ${AFTER_GAMESCOPE_SESSION_PLUS}
+  fi
 	poweroff
 fi
 
@@ -297,3 +304,6 @@ for job in $(jobs -p); do
 	kill -9 "$job"
 done
 
+if [[ -n ${AFTER_GAMESCOPE_SESSION_PLUS+x} ]]; then
+  ${AFTER_GAMESCOPE_SESSION_PLUS}
+fi

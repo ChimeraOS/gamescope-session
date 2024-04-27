@@ -22,7 +22,7 @@ The session sources environment from `~/.config/environment.d/*.conf` files.
 The easiest way to configure the session is to create `~/.config/environment.d/gamescope-session-plus.conf`
 and set variables there:
 
-```
+```sh
 # Size of the screen. If not set gamescope will detect native resolution from drm.
 SCREEN_HEIGHT=2160
 SCREEN_WIDTH=3840
@@ -37,6 +37,15 @@ GAMESCOPECMD="gamescope -e -f"
 # Overwrites only the basic call to composer (useful if composer is on a different path).
 # In this case, the remaining arguments are also set automatically.
 GAMESCOPECMD_BASE="/usr/bin/gamescope"
+
+#Define this if you want composer to run with this option
+ENABLE_GAMESCOPE_WSI=1
+
+#If desired, define an additional command that must be executed before starting the gamescope
+BEFORE_GAMESCOPE_SESSION_PLUS="/bin/turn_on_tv.sh"
+
+#If desired, define an additional command that will be executed after the session ends
+AFTER_GAMESCOPE_SESSION_PLUS="/bin/turn_off_tv.sh"
 ```
 
 # Creating a custom session
