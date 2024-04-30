@@ -21,6 +21,9 @@ post_gamescope_start () {
 export INTEL_DEBUG=norbc
 export mesa_glthread=true
 
+# Force Qt applications to run under xwayland
+export QT_QPA_PLATFORM=xcb
+
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 
