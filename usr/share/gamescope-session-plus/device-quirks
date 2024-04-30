@@ -3,7 +3,6 @@
 
 SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
 CPU_VENDOR="$(lscpu | grep "Vendor ID" | cut -d : -f 2 | xargs)"
-SCREEN_ID="$(lshw -c video | grep produc | awk '{print $2}')"
 # OXP Devices
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER Mini Pro:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER 2 PRO ARP23P:ONEXPLAYER 2 PRO ARP23P EVA-01"
 AOK_LIST="AOKZOE A1 AR07:AOKZOE A1 Pro"
@@ -163,12 +162,15 @@ if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
    export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
-# GPD Win mini 8840U
+# GPD Win mini 2023 and 2024
 if [[ ":G1617-01:" =~ ":$SYS_ID:"  ]]; then
+  SCREEN_ID="$(lshw -c video | grep produc | awk '{print $2}')"
   ROTATION=""
+  # This is the screen of the win mini 2023
   if [[ "Phoenix1" =~ "$SCREEN_ID" ]]; then
      ROTATION=" --force-orientation right "
   fi
+  ## Win mini 2024 uses 'Phoenix3' and doesnt require any aditional settings for rotation
   # Dependent on a special --force-panel-type option in gamescope-plus
   if ( gamescope --help 2>&1 | grep -e "--force-panel-type" > /dev/null ) ; then
     export GAMESCOPECMD="/usr/bin/gamescope \
