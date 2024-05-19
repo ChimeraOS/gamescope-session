@@ -146,7 +146,6 @@ if [ -z "$GAMESCOPECMD" ]; then
           --xwayland-count 2 \
           -O $OUTPUT_CONNECTOR \
           --default-touch-mode 4 \
-          --touch-gestures \
           --bypass-steam-resolution \
           --hide-cursor-delay 3000 \
           --fade-out-duration 200 \
@@ -159,7 +158,6 @@ if [ -z "$GAMESCOPECMD" ]; then
           --xwayland-count 2 \
           -O $OUTPUT_CONNECTOR \
           --default-touch-mode 4 \
-          --touch-gestures \
           --bypass-steam-resolution \
           --hide-cursor-delay 3000 \
           --fade-out-duration 200 \
