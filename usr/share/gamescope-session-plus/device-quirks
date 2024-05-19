@@ -16,7 +16,6 @@ if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]] || [[  ":$AOK_LIST:" =~ ":$SYS_ID:"   ]];
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -48,7 +47,6 @@ if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -79,7 +77,6 @@ if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -109,7 +106,6 @@ if [[ ":$AYN_LIST:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -142,7 +138,6 @@ if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,DSI-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -173,7 +168,6 @@ if [[ ":G1618-03:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,DSI-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -201,7 +195,6 @@ if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 "
@@ -211,7 +204,6 @@ if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 "
@@ -232,8 +224,7 @@ if [[ ":G1617-01:" =~ ":$SYS_ID:"  ]]; then
        --xwayland-count 2 \
        -O *,eDP-1 \
        --default-touch-mode 4 \
-        --touch-gestures \
-        --bypass-steam-resolution \
+       --bypass-steam-resolution \
        --hide-cursor-delay 3000 \
        --fade-out-duration 200 \
        $ROTATION "
@@ -259,7 +250,6 @@ if [[ ":Jupiter:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 "
@@ -287,7 +277,6 @@ if [[ ":Galileo:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 "
@@ -315,7 +304,6 @@ if [[ ":$ALLY_LIST:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
@@ -345,7 +333,6 @@ if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
       --xwayland-count 2 \
       -O *,eDP-1 \
       --default-touch-mode 4 \
-      --touch-gestures \
       --bypass-steam-resolution \
       --hide-cursor-delay 3000 \
       --fade-out-duration 200 \
