@@ -102,8 +102,9 @@ if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
   ADAPTIVE_SYNC=1
 fi
 
-# Aya Neo 2
-if [[ ":AYANEO 2:" =~ ":$SYS_ID:"  ]]; then
+# Aya Neo 2 & 2S
+if [[ ":AYANEO 2:AYANEO 2S:" =~ ":$SYS_ID:"  ]]; then
+  # enable lower resolution for better out of the box performance
   SCREEN_WIDTH=1920
   SCREEN_HEIGHT=1200
   INTERNAL_WIDTH=1280
