@@ -351,3 +351,11 @@ if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
 
   fi
 fi
+
+# Aya Neo 2
+if [[ ":AYANEO 2:" =~ ":$SYS_ID:"  ]]; then
+  SCREEN_WIDTH=1920
+  SCREEN_HEIGHT=1200
+  INTERNAL_WIDTH=1280
+  INTERNAL_HEIGHT=800
+fi

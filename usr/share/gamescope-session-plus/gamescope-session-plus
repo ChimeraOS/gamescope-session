@@ -137,12 +137,18 @@ if [ -z "$GAMESCOPECMD" ]; then
 		RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
 	fi
 
+	INTERNAL_RESOLUTION=""
+	if [ -n "$INTERNAL_WIDTH" ] && [ -n "$INTERNAL_HEIGHT" ] ; then
+		INTERNAL_RESOLUTION="-w $INTERNAL_WIDTH -h $INTERNAL_HEIGHT"
+	fi
+
 	if (gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" >/dev/null); then
 		if [ -z $VULKAN_ADAPTER ]; then
 			GAMESCOPECMD="/usr/bin/gamescope \
           $CURSOR \
           -e \
           $RESOLUTION \
+          $INTERNAL_RESOLUTION \
           --xwayland-count 2 \
           -O $OUTPUT_CONNECTOR \
           --default-touch-mode 4 \
@@ -155,6 +161,7 @@ if [ -z "$GAMESCOPECMD" ]; then
           $CURSOR \
           -e \
           $RESOLUTION \
+          $INTERNAL_RESOLUTION \
           --xwayland-count 2 \
           -O $OUTPUT_CONNECTOR \
           --default-touch-mode 4 \
@@ -170,6 +177,7 @@ if [ -z "$GAMESCOPECMD" ]; then
           $CURSOR \
           -e \
           $RESOLUTION \
+          $INTERNAL_RESOLUTION \
           --xwayland-count 2 \
           -O $OUTPUT_CONNECTOR \
           --default-touch-mode 4 \
@@ -181,6 +189,7 @@ if [ -z "$GAMESCOPECMD" ]; then
           $CURSOR \
           -e \
           $RESOLUTION \
+          $INTERNAL_RESOLUTION \
           --xwayland-count 2 \
           -O $OUTPUT_CONNECTOR \
           --default-touch-mode 4 \
