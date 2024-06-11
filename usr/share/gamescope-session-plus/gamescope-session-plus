@@ -122,16 +122,20 @@ else
 	echo >&2 "!! Failed to claim global gamescope stats session"
 fi
 
-CURSOR=""
-# Use specified cursor if file exists
-if [ -f "$CURSOR_FILE" ]; then
-	CURSOR="--cursor ${CURSOR_FILE}"
-fi
-
-# Use specified output connector(s) if set, otherwise use default value
-: "${OUTPUT_CONNECTOR:=*,eDP-1}"
-
 if [ -z "$GAMESCOPECMD" ]; then
+	# Set default values
+	: "${OUTPUT_CONNECTOR:=*,eDP-1}"
+	: "${XWAYLAND_COUNT:=2}"
+	: "${TOUCH_MODE:=4}"
+	: "${HIDE_CURSOR_DELAY_MS:=3000}"
+	: "${FADE_OUT_DURATION_MS:=200}"
+
+	CURSOR=""
+	if [ -f "$CURSOR_FILE" ]; then
+		# Use specified cursor if file exists
+		CURSOR="--cursor ${CURSOR_FILE}"
+	fi
+
 	RESOLUTION=""
 	if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ]; then
 		RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
@@ -142,69 +146,55 @@ if [ -z "$GAMESCOPECMD" ]; then
 		INTERNAL_RESOLUTION="-w $INTERNAL_WIDTH -h $INTERNAL_HEIGHT"
 	fi
 
-	if (gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" >/dev/null); then
-		if [ -z $VULKAN_ADAPTER ]; then
-			GAMESCOPECMD="/usr/bin/gamescope \
-          $CURSOR \
-          -e \
-          $RESOLUTION \
-          $INTERNAL_RESOLUTION \
-          --xwayland-count 2 \
-          -O $OUTPUT_CONNECTOR \
-          --default-touch-mode 4 \
-          --bypass-steam-resolution \
-          --hide-cursor-delay 3000 \
-          --fade-out-duration 200 \
-          -R $socket -T $stats"
-		else
-			GAMESCOPECMD="/usr/bin/gamescope \
-          $CURSOR \
-          -e \
-          $RESOLUTION \
-          $INTERNAL_RESOLUTION \
-          --xwayland-count 2 \
-          -O $OUTPUT_CONNECTOR \
-          --default-touch-mode 4 \
-          --bypass-steam-resolution \
-          --hide-cursor-delay 3000 \
-          --fade-out-duration 200 \
-          --prefer-vk-device $VULKAN_ADAPTER \
-          -R $socket -T $stats"
-		fi
-	else
-		if [ -z $VULKAN_ADAPTER ]; then
-			GAMESCOPECMD="/usr/bin/gamescope \
-          $CURSOR \
-          -e \
-          $RESOLUTION \
-          $INTERNAL_RESOLUTION \
-          --xwayland-count 2 \
-          -O $OUTPUT_CONNECTOR \
-          --default-touch-mode 4 \
-          --hide-cursor-delay 3000 \
-          --fade-out-duration 200 \
-          -R $socket -T $stats"
-		else
-			GAMESCOPECMD="/usr/bin/gamescope \
-          $CURSOR \
-          -e \
-          $RESOLUTION \
-          $INTERNAL_RESOLUTION \
-          --xwayland-count 2 \
-          -O $OUTPUT_CONNECTOR \
-          --default-touch-mode 4 \
-          --prefer-vk-device $VULKAN_ADAPTER \
-          -R $socket -T $stats"
-		fi
-	fi
-else
-	# Add socket and stats read
-	if [ -z $VULKAN_ADAPTER ]; then
-		GAMESCOPECMD+=" -R $socket -T $stats"
-	else
-		GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
+	DRM_MODE_OPTION=""
+	if [ -n "$DRM_MODE" ] ; then
+		DRM_MODE_OPTION="--generate-drm-mode $DRM_MODE"
 	fi
 
+	ORIENTATION_OPTION=""
+	if [ -n "$ORIENTATION" ] ; then
+		ORIENTATION_OPTION="--force-orientation $ORIENTATION"
+	fi
+
+	ADAPTIVE_SYNC_OPTION=""
+	if [ -n "$ADAPTIVE_SYNC" ]; then
+		ADAPTIVE_SYNC_OPTION="--adaptive-sync"
+	fi
+
+	PANEL_TYPE_OPTION=""
+	if [ -n "$PANEL_TYPE" ]; then
+		PANEL_TYPE_OPTION="--force-panel-type $PANEL_TYPE"
+	fi
+
+	if (gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" >/dev/null); then
+		BYPASS_STEAM_RESOLUTION="--bypass-steam-resolution"
+	else
+		BYPASS_STEAM_RESOLUTION=""
+		PANEL_TYPE_OPTION="" # setting panel type requires `--bypass-steam-resolution`
+	fi
+
+	GAMESCOPECMD="/usr/bin/gamescope \
+		$CURSOR \
+		$RESOLUTION \
+		$INTERNAL_RESOLUTION \
+		$ORIENTATION_OPTION \
+		$DRM_MODE_OPTION \
+		$BYPASS_STEAM_RESOLUTION \
+		$PANEL_TYPE_OPTION \
+		--prefer-output $OUTPUT_CONNECTOR \
+		--xwayland-count $XWAYLAND_COUNT \
+		--default-touch-mode $TOUCH_MODE \
+		--hide-cursor-delay $HIDE_CURSOR_DELAY_MS \
+		--fade-out-duration $FADE_OUT_DURATION_MS \
+		--steam"
+fi
+
+# Add socket and stats read
+GAMESCOPECMD+=" -R $socket -T $stats"
+
+# Add custom vulkan adapter if specified
+if [ -n $VULKAN_ADAPTER ]; then
+	GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER"
 fi
 
 # Attempt to fallback to a desktop session if something goes wrong too many times

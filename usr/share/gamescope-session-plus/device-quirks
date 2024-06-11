@@ -8,31 +8,10 @@ CPU_VENDOR="$(lscpu | grep "Vendor ID" | cut -d : -f 2 | xargs)"
 OXP_LIST="ONE XPLAYER:ONEXPLAYER 1 T08:ONEXPLAYER 1S A08:ONEXPLAYER 1S T08:ONEXPLAYER mini A07:ONEXPLAYER mini GA72:ONEXPLAYER mini GT72:ONEXPLAYER Mini Pro:ONEXPLAYER GUNDAM GA72:ONEXPLAYER 2 ARP23:ONEXPLAYER 2 PRO ARP23P:ONEXPLAYER 2 PRO ARP23P EVA-01"
 AOK_LIST="AOKZOE A1 AR07:AOKZOE A1 Pro"
 if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]] || [[  ":$AOK_LIST:" =~ ":$SYS_ID:"   ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-panel-type external \
-      --force-orientation left "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation left "
+  DRM_MODE=fixed
+  PANEL_TYPE=external
+  ORIENTATION=left
 
-  fi
   # Set refresh rate range and enable refresh rate switching
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
@@ -40,29 +19,9 @@ fi
 # OXP 120Hz Devices
 OXP_120_LIST="ONEXPLAYER F1"
 if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-panel-type external \
-      --force-orientation left "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation left "
+  PANEL_TYPE=external
+  ORIENTATION=left
 
-  fi
   # Set refresh rate range and enable refresh rate switching
   export STEAM_DISPLAY_REFRESH_LIMITS=40,120
 fi
@@ -70,59 +29,17 @@ fi
 # AYANEO AIR, SLIDE, and FLIP Devices
 AIR_LIST="AIR:AIR Pro:AIR Plus:SLIDE:FLIP KB:FLIP DS:"
 if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-panel-type external \
-      --force-orientation left "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation left "
-
-  fi
+  PANEL_TYPE=external
+  ORIENTATION=left
 fi
 
 # AYN Loki Devices
 AYN_LIST="Loki Max:Loki Zero:Loki MiniPro"
 if [[ ":$AYN_LIST:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-panel-type external \
-      --force-orientation left "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation left "
+  DRM_MODE=fixed
+  PANEL_TYPE=external
+  ORIENTATION=left
 
-  fi
   # Set refresh rate range and enable refresh rate switching
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
@@ -130,226 +47,59 @@ fi
 # GDP Win devices
 GDP_LIST="G1619-01:G1621-02:MicroPC:WIN2"
 if [[ ":$GDP_LIST:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,DSI-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation right "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,DSI-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation right "
-
-  fi
+  OUTPUT_CONNECTOR='*,DSI-1'
+  DRM_MODE=fixed
+  ORIENTATION=right
 fi
 
 # GPD Win 3 specifc quirk to prevent crashing
   # The GPD Win 3 does not support hardware rotation for 270/90 modes. We need to implement shader rotations to get this working correctly.
   # 0/180 rotations should work.
 if [[ ":G1618-03:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,DSI-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation right "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,DSI-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-orientation right "
-
-  fi
+  OUTPUT_CONNECTOR='*,DSI-1'
+  DRM_MODE=fixed
+  ORIENTATION=right
 fi
 
 #GPD Win 4 supports 40-60hz refresh rate changing
 if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 "
-  fi
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
 # GPD Win mini
 if [[ ":G1617-01:" =~ ":$SYS_ID:"  ]]; then
-  ROTATION=""
+  ORIENTATION=""
   if ( xrandr --prop 2>$1 | grep -e "1080x1920 " > /dev/null ) ; then
-     ROTATION=" --force-orientation right "
-  fi
-
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-       -e \
-       --xwayland-count 2 \
-       -O *,eDP-1 \
-       --default-touch-mode 4 \
-       --bypass-steam-resolution \
-       --hide-cursor-delay 3000 \
-       --fade-out-duration 200 \
-       $ROTATION "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-       -e \
-       --xwayland-count 2 \
-       -O *,eDP-1 \
-       --default-touch-mode 4 \
-       --hide-cursor-delay 3000 \
-       --fade-out-duration 200 \
-       $ROTATION "
+     ORIENTATION=right
   fi
 fi
 
 # Steam Deck
 if [[ ":Jupiter:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 "
-
-  fi
-   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+  DRM_MODE=fixed
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
 # OLED Steam Deck
 if [[ ":Galileo:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --generate-drm-mode fixed \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 "
-
-  fi
-   export STEAM_DISPLAY_REFRESH_LIMITS=45,90
+  DRM_MODE=fixed
+  export STEAM_DISPLAY_REFRESH_LIMITS=45,90
 fi
 
 # ROG Ally
 ALLY_LIST="ROG Ally RC71L_RC71L:ROG Ally RC71L"
 if [[ ":$ALLY_LIST:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --force-panel-type external \
-      --adaptive-sync "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --adaptive-sync "
+  PANEL_TYPE=external
+  ADAPTIVE_SYNC=1
 
-  fi
   # Set refresh rate range and enable refresh rate switching
   export STEAM_DISPLAY_REFRESH_LIMITS=40,120
 fi
 
 # Lenovo Legion Go
 if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
-  # Dependent on a special --bypass-steam-resolution option in gamescope-plus
-  if ( gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" > /dev/null ) ; then
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --bypass-steam-resolution \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --adaptive-sync \
-      --force-orientation left "
-  else
-    export GAMESCOPECMD="/usr/bin/gamescope \
-      -e \
-      --xwayland-count 2 \
-      -O *,eDP-1 \
-      --default-touch-mode 4 \
-      --hide-cursor-delay 3000 \
-      --fade-out-duration 200 \
-      --adaptive-sync \
-      --force-orientation left "
-
-  fi
+  ORIENTATION=left
+  ADAPTIVE_SYNC=1
 fi
 
 # Aya Neo 2
