@@ -15,6 +15,14 @@ post_gamescope_start() {
 	:
 }
 
+gamescope_has_option() {
+	if (gamescope --help 2>&1 | grep -e "$1" > /dev/null); then
+		return 0
+	fi
+
+	return 1
+}
+
 # Fix intel color corruption
 # might come with some performance degradation but is better than a corrupted
 # color image
@@ -162,15 +170,13 @@ if [ -z "$GAMESCOPECMD" ]; then
 	fi
 
 	PANEL_TYPE_OPTION=""
-	if [ -n "$PANEL_TYPE" ]; then
+	if [ -n "$PANEL_TYPE" ] && gamescope_has_option "--force-panel-type"; then
 		PANEL_TYPE_OPTION="--force-panel-type $PANEL_TYPE"
 	fi
 
-	if (gamescope --help 2>&1 | grep -e "--bypass-steam-resolution" >/dev/null); then
+	BYPASS_STEAM_RESOLUTION=""
+	if gamescope_has_option "--bypass-steam-resolution"; then
 		BYPASS_STEAM_RESOLUTION="--bypass-steam-resolution"
-	else
-		BYPASS_STEAM_RESOLUTION=""
-		PANEL_TYPE_OPTION="" # setting panel type requires `--bypass-steam-resolution`
 	fi
 
 	GAMESCOPECMD="/usr/bin/gamescope \
