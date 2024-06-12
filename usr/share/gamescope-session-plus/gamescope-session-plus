@@ -199,7 +199,7 @@ fi
 GAMESCOPECMD+=" -R $socket -T $stats"
 
 # Add custom vulkan adapter if specified
-if [ -n $VULKAN_ADAPTER ]; then
+if [ -n "$VULKAN_ADAPTER" ]; then
 	GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER"
 fi
 
