@@ -248,6 +248,11 @@ if [ -n "$STEAMCMD" ] ; then
 	CLIENTCMD=$STEAMCMD
 fi
 
+if [[ -n ${BEFORE_GAMESCOPE_CLIENT+x} ]]; then
+  $BEFORE_GAMESCOPE_CLIENT
+fi
+
+bluetoothctl connect 4C:79:6E:F6:43:E7
 # Start client application
 $CLIENTCMD > "${HOME}/.${CLIENT}-stdout.log" 2>&1
 

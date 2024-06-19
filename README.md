@@ -46,6 +46,9 @@ BEFORE_GAMESCOPE_SESSION_PLUS="/bin/turn_on_tv.sh"
 
 #If desired, define an additional command that will be executed after the session ends
 AFTER_GAMESCOPE_SESSION_PLUS="/bin/turn_off_tv.sh"
+
+#Run the task just before starting the client
+BEFORE_GAMESCOPE_CLIENT="/bin/bluetooth-audio-connect.sh"
 ```
 
 # Creating a custom session
