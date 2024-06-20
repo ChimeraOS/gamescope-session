@@ -26,11 +26,18 @@ if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
   export STEAM_DISPLAY_REFRESH_LIMITS=40,120
 fi
 
-# AYANEO AIR, SLIDE, and FLIP Devices
-AIR_LIST="AIR:AIR Pro:AIR Plus:SLIDE:FLIP KB:FLIP DS:"
+# AYANEO AIR, SLIDE, and FLIP Keyboard Devices
+AIR_LIST="AIR:AIR Pro:AIR Plus:SLIDE:FLIP KB:"
 if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
   PANEL_TYPE=external
   ORIENTATION=left
+fi
+
+# AYANEO FLIP Dual Screen
+if [[ ":FLIP DS:" =~ ":$SYS_ID:" ]]; then
+  PANEL_TYPE=external
+  ORIENTATION=left
+  OUTPUT_CONNECTOR='*,eDP-2' # prefer the top screen
 fi
 
 # AYN Loki Devices
