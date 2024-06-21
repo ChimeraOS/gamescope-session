@@ -37,7 +37,7 @@ fi
 if [[ ":FLIP DS:" =~ ":$SYS_ID:" ]]; then
   PANEL_TYPE=external
   ORIENTATION=left
-  OUTPUT_CONNECTOR='*,eDP-2' # prefer the top screen
+  OUTPUT_CONNECTOR='*,eDP-1,eDP-2' # prefer the top screen
 fi
 
 # AYN Loki Devices
