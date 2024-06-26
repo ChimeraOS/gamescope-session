@@ -27,6 +27,9 @@ and set variables there:
 SCREEN_HEIGHT=2160
 SCREEN_WIDTH=3840
 
+# Lock Game Mode to the specified refresh rate in hz. Monitor must support refresh rate.
+REFRESH_RATE=60
+
 # Override entire client command line
 CLIENTCMD="steam -steamos -pipewire-dmabuf -gamepadui"
 

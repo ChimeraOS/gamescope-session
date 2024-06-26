@@ -162,6 +162,11 @@ if [ -z "$GAMESCOPECMD" ]; then
 		DRM_MODE_OPTION="--generate-drm-mode $DRM_MODE"
 	fi
 
+	REFRESH_RATE_OPTION=""
+        if [ -n "$REFRESH_RATE" ]; then
+                REFRESH_RATE_OPTION="-r $REFRESH_RATE"
+        fi
+
 	ORIENTATION_OPTION=""
 	if [ -n "$ORIENTATION" ] ; then
 		ORIENTATION_OPTION="--force-orientation $ORIENTATION"
@@ -186,6 +191,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 		$CURSOR \
 		$RESOLUTION \
 		$INTERNAL_RESOLUTION \
+		$REFRESH_RATE_OPTION \
 		$ORIENTATION_OPTION \
 		$DRM_MODE_OPTION \
 		$BYPASS_STEAM_RESOLUTION \
