@@ -182,6 +182,11 @@ if [ -z "$GAMESCOPECMD" ]; then
 		BYPASS_STEAM_RESOLUTION="--bypass-steam-resolution"
 	fi
 
+	CUSTOM_REFRESH_RATES_OPTION=""
+	if [ -n "$CUSTOM_REFRESH_RATES" ] && gamescope_has_option "--custom-refresh-rates"; then
+		CUSTOM_REFRESH_RATES_OPTION="--custom-refresh-rates $CUSTOM_REFRESH_RATES"
+	fi
+
 	GAMESCOPECMD="/usr/bin/gamescope \
 		$CURSOR \
 		$RESOLUTION \
@@ -189,7 +194,9 @@ if [ -z "$GAMESCOPECMD" ]; then
 		$ORIENTATION_OPTION \
 		$DRM_MODE_OPTION \
 		$BYPASS_STEAM_RESOLUTION \
+		$ADAPTIVE_SYNC_OPTION \
 		$PANEL_TYPE_OPTION \
+		$CUSTOM_REFRESH_RATES_OPTION \
 		--prefer-output $OUTPUT_CONNECTOR \
 		--xwayland-count $XWAYLAND_COUNT \
 		--default-touch-mode $TOUCH_MODE \
