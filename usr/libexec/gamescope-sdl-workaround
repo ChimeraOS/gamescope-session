@@ -1,0 +1,57 @@
+#!/usr/bin/bash
+# Script returns true if a card requiring sdl workaround is detected
+
+# Regexes for GPUs requiring the SDL backend workaround
+# Can be used in regexes as $POLARIS_RE|$VEGA_RE etc for readability
+# Needed output for a regex can gathered from "switcherooctl list"
+POLARIS_RE="Ellesmere|Lexa PRO|RX 470/480/570/570X/580/580X/590|540/540X/550/550X|RX 540X/550/550X"
+
+# Used to combine all regex into 1 var ex: FINALE_RE="$POLARIS_RE|$VEGA_RE"
+FINAL_RE="$POLARIS_RE"
+
+# Get the users homedirs so we can check for export-gpu configs
+HOMES=$(grep "/home" /etc/passwd | awk -F ":" '{ print $6 }')
+
+# Find all GPUs using lspci
+VGA_CONTROLLERS=$(lspci -nn | grep -P "(VGA compatible|3D) controller")
+
+# Check inside users home if gamescope is configured to use a specific GPU
+# This at least does not break gamescope on systems where users have re-enabled the sddm login screen
+while IFS= read -r USERDIR
+do
+    # If a vulkan device config is present
+    if [ -f "$USERDIR/.config/environment.d/00-vulkan-device.conf" ]; then
+        # Check if a vulkan device is configured
+        VULKAN_GPU=$(grep -P "^VULKAN_ADAPTER=" "$USERDIR/.config/environment.d/00-vulkan-device.conf" | sed 's/VULKAN_ADAPTER=//')
+
+        # Write info to journal
+        echo "INFO: VULKAN_ADAPTER is set to $VULKAN_GPU by env config." | systemd-cat -t gamescope-sdl-workaround -p info
+
+        # If a vulkan device is configured
+        if [ -n "$VULKAN_GPU" ]; then
+            # Replace list of VGA controllers with just this device
+            VGA_CONTROLLERS=$(lspci -nn -d "$VULKAN_GPU")
+        fi
+    fi
+done <<< "$HOMES"
+
+# Process the VGA controllers list to see if we match any cards that need the sdl workaround
+while IFS= read -r GPU
+do
+    # If we match with a card that requires sdl workaround
+    if [[ "$GPU" =~ ($FINAL_RE) ]]; then
+        # Write info to journal
+        echo "INFO: $GPU detected" | systemd-cat -t gamescope-sdl-workaround -p info
+        echo "INFO: SDL backend workaround will be applied." | systemd-cat -t gamescope-sdl-workaround -p info
+
+        # This gpu requires sdl workaround, exit 0 (true)
+        exit 0
+    fi
+done <<< "$VGA_CONTROLLERS"
+
+# Write info to journalctl
+echo "INFO: SDL backend workaround not required for this system" | systemd-cat -t gamescope-sdl-workaround -p info
+echo 'INFO: If SDL backend workaround IS required for your card. Provide your "lspci -nn | grep -P '"'"'(VGA compatible|3D) controller'"'"'" to the developers.' | systemd-cat -t gamescope-sdl-workaround -p info
+
+# This GPU does not require sdl workaround, exit 1 (false)
+exit 1
