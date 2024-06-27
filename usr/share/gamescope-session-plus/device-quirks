@@ -44,8 +44,8 @@ fi
 AYN_LIST="Loki Max:Loki Zero:Loki MiniPro"
 if [[ ":$AYN_LIST:" =~ ":$SYS_ID:"  ]]; then
   DRM_MODE=fixed
-  PANEL_TYPE=external
   ORIENTATION=left
+  CUSTOM_REFRESH_RATES=40,50,60
 
   # Set refresh rate range and enable refresh rate switching
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
@@ -107,6 +107,10 @@ fi
 if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
   ORIENTATION=left
   ADAPTIVE_SYNC=1
+  CUSTOM_REFRESH_RATES=60,144
+
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=60,144
 fi
 
 # Aya Neo 2 & 2S
