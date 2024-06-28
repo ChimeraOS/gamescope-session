@@ -4,7 +4,7 @@
 # Regexes for GPUs requiring the SDL backend workaround
 # Can be used in regexes as $POLARIS_RE|$VEGA_RE etc for readability
 # Needed output for a regex can gathered from "switcherooctl list"
-POLARIS_RE="Ellesmere|Lexa PRO|RX 470/480/570/570X/580/580X/590|540/540X/550/550X|RX 540X/550/550X"
+POLARIS_RE="Ellesmere|Lexa PRO|Polaris \d{2} XL|RX 470/480/570/570X/580/580X/590|540/540X/550/550X|RX 540X/550/550X"
 
 # Used to combine all regex into 1 var ex: FINALE_RE="$POLARIS_RE|$VEGA_RE"
 FINAL_RE="$POLARIS_RE"
