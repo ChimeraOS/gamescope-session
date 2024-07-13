@@ -6,13 +6,21 @@ declare -r CLIENT_CONFIG_DIR_ETC=/etc/gamescope-session-plus/sessions.d
 declare -r CLIENT_CONFIG_DIR_LOCAL="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope-session-plus/sessions.d"
 
 # default empty session recovery function
-short_session_recover () {
+short_session_recover() {
 	:
 }
 
 # default empty function to run after gamescope is started
-post_gamescope_start () {
+post_gamescope_start() {
 	:
+}
+
+gamescope_has_option() {
+	if (gamescope --help 2>&1 | grep -e "$1" > /dev/null); then
+		return 0
+	fi
+
+	return 1
 }
 
 # Fix intel color corruption
@@ -24,6 +32,9 @@ export mesa_glthread=true
 # This should be used by default by gamescope. Cannot hurt to force it anyway.
 # Reported better framelimiting with this enabled
 export ENABLE_GAMESCOPE_WSI=1
+
+# Force Qt applications to run under xwayland
+export QT_QPA_PLATFORM=xcb
 
 # Some environment variables by default (taken from Deck session)
 export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
@@ -58,12 +69,12 @@ export GAMESCOPE_NV12_COLORSPACE=k_EStreamColorspace_BT601
 # so we don't get mangoapp showing up before Steam initializes
 # on OOBE and stuff.
 mkdir -p "$(dirname "$MANGOHUD_CONFIGFILE")"
-echo "no_display" > "$MANGOHUD_CONFIGFILE"
+echo "no_display" >"$MANGOHUD_CONFIGFILE"
 
 # Prepare our initial VRS config file
 # for dynamic VRS in Mesa.
 mkdir -p "$(dirname "$RADV_FORCE_VRS_CONFIG_FILE")"
-echo "1x1" > "$RADV_FORCE_VRS_CONFIG_FILE"
+echo "1x1" >"$RADV_FORCE_VRS_CONFIG_FILE"
 
 # To expose vram info from radv
 export WINEDLLOVERRIDES=dxgi=n
@@ -81,22 +92,20 @@ ulimit -n 524288
 
 # Source device quirks if exists
 if [ -f /usr/share/gamescope-session-plus/device-quirks ]; then
-  . /usr/share/gamescope-session-plus/device-quirks
+	. /usr/share/gamescope-session-plus/device-quirks
 fi
 
 # Source client app specific configuration files
 set -a
-for i in ${CLIENT_CONFIG_DIR_USR}/${CLIENT} ${CLIENT_CONFIG_DIR_ETC}/${CLIENT} ${CLIENT_CONFIG_DIR_LOCAL}/${CLIENT} ;
-do
-    [[ -f "${i}" ]] && . "${i}"
+for i in ${CLIENT_CONFIG_DIR_USR}/${CLIENT} ${CLIENT_CONFIG_DIR_ETC}/${CLIENT} ${CLIENT_CONFIG_DIR_LOCAL}/${CLIENT}; do
+	[[ -f "${i}" ]] && . "${i}"
 done
 set +a
 
 # Source user configuration from ~/.config/environment.d
 set -a
-for i in "${HOME}"/.config/environment.d/*.conf ;
-do
-    [[ -f "${i}" ]] && . "${i}"
+for i in "${HOME}"/.config/environment.d/*.conf; do
+	[[ -f "${i}" ]] && . "${i}"
 done
 set +a
 
@@ -128,51 +137,84 @@ else
 	echo >&2 "!! Failed to claim global gamescope stats session"
 fi
 
-CURSOR=""
-# Use specified cursor if file exists
-if [ -f "$CURSOR_FILE" ] ; then
-    CURSOR="--cursor ${CURSOR_FILE}"
+if [ -z "$GAMESCOPECMD" ]; then
+	# Set default values
+	: "${OUTPUT_CONNECTOR:=*,eDP-1}"
+	: "${XWAYLAND_COUNT:=2}"
+	: "${TOUCH_MODE:=4}"
+	: "${HIDE_CURSOR_DELAY_MS:=3000}"
+	: "${FADE_OUT_DURATION_MS:=200}"
+
+	CURSOR=""
+	if [ -f "$CURSOR_FILE" ]; then
+		# Use specified cursor if file exists
+		CURSOR="--cursor ${CURSOR_FILE}"
+	fi
+
+	RESOLUTION=""
+	if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ]; then
+		RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
+	fi
+
+	INTERNAL_RESOLUTION=""
+	if [ -n "$INTERNAL_WIDTH" ] && [ -n "$INTERNAL_HEIGHT" ] ; then
+		INTERNAL_RESOLUTION="-w $INTERNAL_WIDTH -h $INTERNAL_HEIGHT"
+	fi
+
+	DRM_MODE_OPTION=""
+	if [ -n "$DRM_MODE" ] ; then
+		DRM_MODE_OPTION="--generate-drm-mode $DRM_MODE"
+	fi
+
+	ORIENTATION_OPTION=""
+	if [ -n "$ORIENTATION" ] ; then
+		ORIENTATION_OPTION="--force-orientation $ORIENTATION"
+	fi
+
+	ADAPTIVE_SYNC_OPTION=""
+	if [ -n "$ADAPTIVE_SYNC" ]; then
+		ADAPTIVE_SYNC_OPTION="--adaptive-sync"
+	fi
+
+	PANEL_TYPE_OPTION=""
+	if [ -n "$PANEL_TYPE" ] && gamescope_has_option "--force-panel-type"; then
+		PANEL_TYPE_OPTION="--force-panel-type $PANEL_TYPE"
+	fi
+
+	BYPASS_STEAM_RESOLUTION=""
+	if gamescope_has_option "--bypass-steam-resolution"; then
+		BYPASS_STEAM_RESOLUTION="--bypass-steam-resolution"
+	fi
+
+	CUSTOM_REFRESH_RATES_OPTION=""
+	if [ -n "$CUSTOM_REFRESH_RATES" ] && gamescope_has_option "--custom-refresh-rates"; then
+		CUSTOM_REFRESH_RATES_OPTION="--custom-refresh-rates $CUSTOM_REFRESH_RATES"
+	fi
+
+	GAMESCOPECMD="/usr/bin/gamescope \
+		$CURSOR \
+		$RESOLUTION \
+		$INTERNAL_RESOLUTION \
+		$ORIENTATION_OPTION \
+		$DRM_MODE_OPTION \
+		$BYPASS_STEAM_RESOLUTION \
+		$ADAPTIVE_SYNC_OPTION \
+		$PANEL_TYPE_OPTION \
+		$CUSTOM_REFRESH_RATES_OPTION \
+		--prefer-output $OUTPUT_CONNECTOR \
+		--xwayland-count $XWAYLAND_COUNT \
+		--default-touch-mode $TOUCH_MODE \
+		--hide-cursor-delay $HIDE_CURSOR_DELAY_MS \
+		--fade-out-duration $FADE_OUT_DURATION_MS \
+		--steam"
 fi
 
-if [ -z "$GAMESCOPECMD" ] ; then
-    RESOLUTION=""
-    if [ -n "$SCREEN_WIDTH" ] && [ -n "$SCREEN_HEIGHT" ] ; then
-        RESOLUTION="-W $SCREEN_WIDTH -H $SCREEN_HEIGHT"
-    fi
-    
-    if [ -z $VULKAN_ADAPTER ]; then
-        GAMESCOPECMD="/usr/bin/gamescope \
-        $CURSOR \
-        -e \
-        $RESOLUTION \
-        --xwayland-count 2 \
-        -O *,eDP-1 \
-        --default-touch-mode 4 \
-        --hide-cursor-delay 3000 \
-        --fade-out-duration 200 \
-        -R $socket -T $stats"
-     else
-        GAMESCOPECMD="/usr/bin/gamescope \
-        $CURSOR \
-        -e \
-        $RESOLUTION \
-        --xwayland-count 2 \
-        -O *,eDP-1 \
-        --default-touch-mode 4 \
-        --hide-cursor-delay 3000 \
-        --fade-out-duration 200 \
-        --prefer-vk-device $VULKAN_ADAPTER \
-        -R $socket -T $stats"
-     fi
+# Add socket and stats read
+GAMESCOPECMD+=" -R $socket -T $stats"
 
-else
-    # Add socket and stats read
-    if [ -z $VULKAN_ADAPTER ]; then
-        GAMESCOPECMD+=" -R $socket -T $stats"
-    else
-        GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER -R $socket -T $stats"
-    fi
-    
+# Add custom vulkan adapter if specified
+if [ -n "$VULKAN_ADAPTER" ]; then
+	GAMESCOPECMD+=" --prefer-vk-device $VULKAN_ADAPTER"
 fi
 
 # Attempt to fallback to a desktop session if something goes wrong too many times
@@ -181,40 +223,40 @@ short_session_duration=60
 short_session_count_before_reset=3
 SECONDS=0
 
-short_session_count=$(< "$short_session_tracker_file" wc -l)
+short_session_count=$(wc <"$short_session_tracker_file" -l)
 
 if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
-    echo >&2 "gamescope-session-plus: detected broken ${CLIENT} or gamescope failure, will try to reset the session"
+	echo >&2 "gamescope-session-plus: detected broken ${CLIENT} or gamescope failure, will try to reset the session"
 
-    short_session_recover
+	short_session_recover
 
-    # rearm
-    rm "$short_session_tracker_file"
-    exit 1
+	# rearm
+	rm "$short_session_tracker_file"
+	exit 1
 fi
 
 # Log rotate the last session
 if [ -f "${HOME}"/.${CLIENT}-stdout.log ]; then
-    cp "${HOME}"/.${CLIENT}-stdout.log "${HOME}"/.${CLIENT}-stdout.log.old
+	cp "${HOME}"/.${CLIENT}-stdout.log "${HOME}"/.${CLIENT}-stdout.log.old
 fi
 if [ -f "${HOME}"/.gamescope-stdout.log ]; then
-    cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
+	cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
 fi
 if [ -f "${HOME}"/.gamescope-cmd.log ]; then
-    cp "${HOME}"/.gamescope-cmd.log "${HOME}"/.gamescope-cmd.log.old
+	cp "${HOME}"/.gamescope-cmd.log "${HOME}"/.gamescope-cmd.log.old
 fi
 
 # Start gamescope compositor, log it's output and background it
-echo $GAMESCOPECMD > "${HOME}"/.gamescope-cmd.log
-$GAMESCOPECMD > "${HOME}"/.gamescope-stdout.log 2>&1 &
+echo $GAMESCOPECMD >"${HOME}"/.gamescope-cmd.log
+$GAMESCOPECMD >"${HOME}"/.gamescope-stdout.log 2>&1 &
 gamescope_pid="$!"
 
-if read -r -t 3 response_x_display response_wl_display <> "$socket"; then
+if read -r -t 3 response_x_display response_wl_display <>"$socket"; then
 	export DISPLAY="$response_x_display"
 	export GAMESCOPE_WAYLAND_DISPLAY="$response_wl_display"
 	# We're done!
 else
-	echo "gamescope failed" >> "$short_session_tracker_file"
+	echo "gamescope failed" >>"$short_session_tracker_file"
 	kill -9 "$gamescope_pid"
 	wait
 	exit 1
@@ -225,27 +267,27 @@ fi
 post_gamescope_start
 
 # Input method support if present
-if command -v /usr/bin/ibus-daemon > /dev/null; then
-    /usr/bin/ibus-daemon -d -r --panel=disable --emoji-extension=disable
+if command -v /usr/bin/ibus-daemon >/dev/null; then
+	/usr/bin/ibus-daemon -d -r --panel=disable --emoji-extension=disable
 fi
 
 # If we have mangoapp binary start it
-if command -v mangoapp > /dev/null; then
+if command -v mangoapp >/dev/null; then
 	(while true; do
-		mangoapp > "${HOME}"/.mangoapp-stdout.log 2>&1
+		mangoapp >"${HOME}"/.mangoapp-stdout.log 2>&1
 	done) &
 fi
 
 # For compatibility with older user configuration overrides
-if [ -n "$STEAMCMD" ] ; then
+if [ -n "$STEAMCMD" ]; then
 	CLIENTCMD=$STEAMCMD
 fi
 
 # Start client application
-$CLIENTCMD > "${HOME}/.${CLIENT}-stdout.log" 2>&1
+$CLIENTCMD >"${HOME}/.${CLIENT}-stdout.log" 2>&1
 
 if [[ "$SECONDS" -lt "$short_session_duration" ]]; then
-	echo "${CLIENT} failed" >> "$short_session_tracker_file"
+	echo "${CLIENT} failed" >>"$short_session_tracker_file"
 else
 	rm "$short_session_tracker_file"
 fi
@@ -293,4 +335,3 @@ for job in $(jobs -p); do
 	fi
 	kill -9 "$job"
 done
-
