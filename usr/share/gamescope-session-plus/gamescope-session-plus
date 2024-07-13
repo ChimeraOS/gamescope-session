@@ -29,6 +29,10 @@ gamescope_has_option() {
 export INTEL_DEBUG=norbc
 export mesa_glthread=true
 
+# This should be used by default by gamescope. Cannot hurt to force it anyway.
+# Reported better framelimiting with this enabled
+export ENABLE_GAMESCOPE_WSI=1
+
 # Force Qt applications to run under xwayland
 export QT_QPA_PLATFORM=xcb
 
