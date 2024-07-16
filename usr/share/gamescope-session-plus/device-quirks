@@ -70,6 +70,13 @@ fi
 
 #GPD Win 4 supports 40-60hz refresh rate changing
 if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
+  CUSTOM_REFRESH_RATES=40,60
+  export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+fi
+
+# GPD Win Max 2 supports 40,60hz
+if [[ ":G1619-04:" =~ ":$SYS_ID:"  ]]; then
+  CUSTOM_REFRESH_RATES=40,60
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
 
