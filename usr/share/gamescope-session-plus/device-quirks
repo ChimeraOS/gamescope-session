@@ -121,3 +121,12 @@ if [[ ":AYANEO 2:AYANEO 2S:" =~ ":$SYS_ID:"  ]]; then
   INTERNAL_WIDTH=1280
   INTERNAL_HEIGHT=800
 fi
+
+# Minisforum V3
+if [[ ":V3:" =~ ":$SYS_ID:"  ]]; then
+  PANEL_TYPE=external
+  ADAPTIVE_SYNC=1
+
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=36,165
+fi
