@@ -319,8 +319,8 @@ if [ -n "$STEAMCMD" ]; then
 	CLIENTCMD=$STEAMCMD
 fi
 
-# Start client application
-$CLIENTCMD >"${HOME}/.${CLIENT}-stdout.log" 2>&1
+# Start client application with switcheroo to ensure it's on the correct GPU
+switcherooctl launch $CLIENTCMD >"${HOME}/.${CLIENT}-stdout.log" 2>&1
 
 if [[ "$SECONDS" -lt "$short_session_duration" ]]; then
 	echo "${CLIENT} failed" >>"$short_session_tracker_file"
