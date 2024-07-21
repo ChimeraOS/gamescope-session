@@ -137,8 +137,3 @@ if [[ ":V3:" =~ ":$SYS_ID:"  ]]; then
   # Set refresh rate range and enable refresh rate switching
   export STEAM_DISPLAY_REFRESH_LIMITS=36,165
 fi
-
-# GPUs that require the SDL backend
-if [ -x /usr/libexec/gamescope-sdl-workaround ] && /usr/libexec/gamescope-sdl-workaround; then
-  BACKEND=sdl
-fi

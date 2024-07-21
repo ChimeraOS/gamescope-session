@@ -15,8 +15,17 @@ post_gamescope_start() {
 	:
 }
 
+get_gamescope_binary() {
+	# GPUs that require the SDL backend
+	if /usr/libexec/gamescope-sdl-workaround && command -v /usr/bin/gamescope-legacy >/dev/null; then
+		echo "/usr/bin/gamescope-legacy"
+	else
+		echo "/usr/bin/gamescope"
+	fi
+}
+
 gamescope_has_option() {
-	if (gamescope --help 2>&1 | grep -e "$1" > /dev/null); then
+	if ($(get_gamescope_binary) --help 2>&1 | grep -e "$1" > /dev/null); then
 		return 0
 	fi
 
@@ -202,7 +211,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 		BACKEND_OPTION="--backend $BACKEND"
 	fi
 
-	GAMESCOPECMD="/usr/bin/gamescope \
+	GAMESCOPECMD="$(get_gamescope_binary) \
 		$CURSOR \
 		$RESOLUTION \
 		$INTERNAL_RESOLUTION \
