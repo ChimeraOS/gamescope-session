@@ -27,6 +27,31 @@ and set variables there:
 SCREEN_HEIGHT=2160
 SCREEN_WIDTH=3840
 
+# Internal render size of the screen. If not set, will be the same as SCREEN_HEIGHT and SCREEN_WIDTH.
+INTERNAL_WIDTH=1280
+INTERNAL_HEIGHT=800
+
+# Orientation adjustment of panel, possible values: left, right
+ORIENTATION=left
+
+# Enable VRR
+ADAPTIVE_SYNC=1
+
+# Treat the internal panel as an external monitor
+PANEL_TYPE=external
+
+# Set priority of display connectors
+OUTPUT_CONNECTOR='*,DSI-1'
+
+# Set the specific values allowed for refresh rates
+CUSTOM_REFRESH_RATES=40,50,60
+
+# Set the range of the refresh rate slider in the Steam client
+export STEAM_DISPLAY_REFRESH_LIMITS=40,60
+
+# TODO: document
+DRM_MODE=fixed
+
 # Override entire client command line
 CLIENTCMD="steam -steamos -pipewire-dmabuf -gamepadui"
 
