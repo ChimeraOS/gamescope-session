@@ -102,7 +102,6 @@ if [[ ":Jupiter:Galileo:" =~ ":$SYS_ID:" ]]; then
 
   # Prevent default power button behavior
   systemd-inhibit --what=handle-suspend-key:handle-power-key:handle-hibernate-key --who=gamescope-session --why="gamescope-session handles power button events" sleep infinity &
-  inhibitor_pid="$!"
 
   # Start SteamOS's power button handler daemon, this passes power button events to Steam.
   if command -v /usr/bin/powerbuttond > /dev/null; then
