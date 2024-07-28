@@ -15,8 +15,17 @@ post_gamescope_start() {
 	:
 }
 
+get_gamescope_binary() {
+	# GPUs that require the SDL backend
+	if /usr/libexec/gamescope-sdl-workaround && command -v /usr/bin/gamescope-legacy >/dev/null; then
+		echo "/usr/bin/gamescope-legacy"
+	else
+		echo "/usr/bin/gamescope"
+	fi
+}
+
 gamescope_has_option() {
-	if (gamescope --help 2>&1 | grep -e "$1" > /dev/null); then
+	if ($(get_gamescope_binary) --help 2>&1 | grep -e "$1" > /dev/null); then
 		return 0
 	fi
 
@@ -31,7 +40,12 @@ export mesa_glthread=true
 
 # This should be used by default by gamescope. Cannot hurt to force it anyway.
 # Reported better framelimiting with this enabled
-export ENABLE_GAMESCOPE_WSI=1
+if /usr/libexec/gamescope-sdl-workaround; then
+	# Skip on legacy hardware
+	export ENABLE_GAMESCOPE_WSI=0
+else
+	export ENABLE_GAMESCOPE_WSI=1
+fi
 
 # Force Qt applications to run under xwayland
 export QT_QPA_PLATFORM=xcb
@@ -196,7 +210,13 @@ if [ -z "$GAMESCOPECMD" ]; then
 		CUSTOM_REFRESH_RATES_OPTION="--custom-refresh-rates $CUSTOM_REFRESH_RATES"
 	fi
 
-	GAMESCOPECMD="/usr/bin/gamescope \
+	BACKEND_OPTION=""
+	# Check if an older GPU that needs the SDL workaround is in use.
+	if [ -n "$BACKEND" ] && gamescope_has_option "--backend"; then
+		BACKEND_OPTION="--backend $BACKEND"
+	fi
+
+	GAMESCOPECMD="$(get_gamescope_binary) \
 		$CURSOR \
 		$RESOLUTION \
 		$INTERNAL_RESOLUTION \
@@ -206,6 +226,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 		$ADAPTIVE_SYNC_OPTION \
 		$PANEL_TYPE_OPTION \
 		$CUSTOM_REFRESH_RATES_OPTION \
+		$BACKEND_OPTION \
 		--prefer-output $OUTPUT_CONNECTOR \
 		--xwayland-count $XWAYLAND_COUNT \
 		--default-touch-mode $TOUCH_MODE \
