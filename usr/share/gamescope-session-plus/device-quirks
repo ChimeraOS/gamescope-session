@@ -137,8 +137,8 @@ if [[ ":Galileo:" =~ ":$SYS_ID:" ]]; then
   fi
 fi
 
-# ROG Ally
-ALLY_LIST="ROG Ally RC71L_RC71L:ROG Ally RC71L"
+# ROG Ally & ROG Ally X
+ALLY_LIST="ROG Ally RC71L_RC71L:ROG Ally RC71L:ROG Ally X RC72LA"
 if [[ ":$ALLY_LIST:" =~ ":$SYS_ID:"  ]]; then
   PANEL_TYPE=external
   ADAPTIVE_SYNC=1
