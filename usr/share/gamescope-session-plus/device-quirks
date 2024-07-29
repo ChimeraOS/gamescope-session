@@ -157,15 +157,6 @@ if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
   export STEAM_DISPLAY_REFRESH_LIMITS=60,144
 fi
 
-# Aya Neo 2 & 2S
-if [[ ":AYANEO 2:AYANEO 2S:" =~ ":$SYS_ID:"  ]]; then
-  # enable lower resolution for better out of the box performance
-  SCREEN_WIDTH=1920
-  SCREEN_HEIGHT=1200
-  INTERNAL_WIDTH=1280
-  INTERNAL_HEIGHT=800
-fi
-
 # Minisforum V3
 if [[ ":V3:" =~ ":$SYS_ID:"  ]]; then
   PANEL_TYPE=external
