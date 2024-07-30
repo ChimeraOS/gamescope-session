@@ -29,10 +29,16 @@ do
         # Write info to journal
         echo "INFO: VULKAN_ADAPTER is set to $VULKAN_GPU by env config." | systemd-cat -t gamescope-sdl-workaround -p info
 
-        # If a vulkan device is configured
+        # If a Vulkan Device is configured
         if [ -n "$VULKAN_GPU" ]; then
-            # Replace list of VGA controllers with just this device and it's Subsystem
-            VGA_CONTROLLERS=$(lspci -nnk -d "$VULKAN_GPU" | head -n 2)
+            # Get the current Vulkan Device
+            CUR_VULKAN_ADAPTER=$(lspci -nnk -d "$VULKAN_GPU" | head -n 2)
+
+            # Check if output is not empty
+            if [ -n "$CUR_VULKAN_ADAPTER" ]; then
+                # Replace list of VGA controllers with $CUR_VULKAN_ADAPTER and it's Subsystem
+                VGA_CONTROLLERS="$CUR_VULKAN_ADAPTER"
+            fi
         fi
     fi
 done <<< "$HOMES"
