@@ -5,7 +5,7 @@
 # Can be used in regexes as $POLARIS_RE|$VEGA_RE etc for readability
 # Needed output for a regex can gathered from "lspci -nnk | grep -P "(VGA compatible|3D) controller" -A1"
 # The regex format is Perl REGEX
-POLARIS_RE="Ellesmere|Lexa (\[|XT|XL|PRO)|Baffin|Polaris \d{2}|Polaris\d{2}|RX 460/560D / Pro 450/455/460/555/555X/560/560X|RX 470/480/570/570X/580/580X/590|540/540X/550/550X|RX 540X/550/550X|RX\s?\d{3}(\s|\])"
+POLARIS_RE="Ellesmere|Lexa|Baffin|Polaris\s?\d{2}|RX\s?[4-5]\d{2}[^\d]"
 
 # Used to combine all regex into 1 var ex: FINALE_RE="$POLARIS_RE|$VEGA_RE" for readability if we need to add more card models
 FINAL_RE="$POLARIS_RE"
