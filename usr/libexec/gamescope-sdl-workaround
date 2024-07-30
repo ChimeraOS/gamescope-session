@@ -3,20 +3,22 @@
 
 # Regexes for GPUs requiring the SDL backend workaround
 # Can be used in regexes as $POLARIS_RE|$VEGA_RE etc for readability
-# Needed output for a regex can gathered from "switcherooctl list"
-POLARIS_RE="Baffin|Ellesmere|Lexa PRO|Polaris \d{2} XL|RX 460/560D / Pro 450/455/460/555/555X/560/560X|RX 470/480/570/570X/580/580X/590|540/540X/550/550X|RX 540X/550/550X"
+# Needed output for a regex can gathered from "lspci -nnk | grep -P "(VGA compatible|3D) controller" -A1"
+# The regex format is Perl REGEX
+POLARIS_RE="Ellesmere|Lexa (\[|XT|XL|PRO)|Baffin|Polaris \d{2}|Polaris\d{2}|RX 460/560D / Pro 450/455/460/555/555X/560/560X|RX 470/480/570/570X/580/580X/590|540/540X/550/550X|RX 540X/550/550X|RX\s?\d{3}(\s|\])"
 
-# Used to combine all regex into 1 var ex: FINALE_RE="$POLARIS_RE|$VEGA_RE"
+# Used to combine all regex into 1 var ex: FINALE_RE="$POLARIS_RE|$VEGA_RE" for readability if we need to add more card models
 FINAL_RE="$POLARIS_RE"
 
 # Get the users homedirs so we can check for export-gpu configs
 HOMES=$(grep "/home" /etc/passwd | awk -F ":" '{ print $6 }')
 
-# Find all GPUs using lspci
-VGA_CONTROLLERS=$(lspci -nn | grep -P "(VGA compatible|3D) controller")
+# Find all GPUs using lspci (and include the Subsystem in the output)
+VGA_CONTROLLERS=$(lspci -nnk | grep -P "(VGA compatible|3D) controller" -A1)
 
 # Check inside users home if gamescope is configured to use a specific GPU
-# This at least does not break gamescope on systems where users have re-enabled the sddm login screen
+# This at least does not break gamescope on systems where users have re-enabled the login screen
+# or use a different card for gamescope.
 while IFS= read -r USERDIR
 do
     # If a vulkan device config is present
@@ -29,8 +31,8 @@ do
 
         # If a vulkan device is configured
         if [ -n "$VULKAN_GPU" ]; then
-            # Replace list of VGA controllers with just this device
-            VGA_CONTROLLERS=$(lspci -nn -d "$VULKAN_GPU")
+            # Replace list of VGA controllers with just this device and it's Subsystem
+            VGA_CONTROLLERS=$(lspci -nnk -d "$VULKAN_GPU" | head -n 2)
         fi
     fi
 done <<< "$HOMES"
@@ -38,8 +40,9 @@ done <<< "$HOMES"
 # Process the VGA controllers list to see if we match any cards that need the sdl workaround
 while IFS= read -r GPU
 do
+    # We will utilize grep and its Perl regex engine for this, the bash regex engine is too basic
     # If we match with a card that requires sdl workaround
-    if [[ "$GPU" =~ ($FINAL_RE) ]]; then
+    if echo "$GPU" | grep -P "($FINAL_RE)"; then
         # Write info to journal
         echo "INFO: $GPU detected" | systemd-cat -t gamescope-sdl-workaround -p info
         echo "INFO: SDL backend workaround will be applied." | systemd-cat -t gamescope-sdl-workaround -p info
@@ -51,7 +54,7 @@ done <<< "$VGA_CONTROLLERS"
 
 # Write info to journalctl
 echo "INFO: SDL backend workaround not required for this system" | systemd-cat -t gamescope-sdl-workaround -p info
-echo 'INFO: If SDL backend workaround IS required for your card. Provide your "lspci -nn | grep -P '"'"'(VGA compatible|3D) controller'"'"'" to the developers.' | systemd-cat -t gamescope-sdl-workaround -p info
+echo 'INFO: If SDL backend workaround IS required for your card. Provide your "lspci -nnk | grep -P '"'"'(VGA compatible|3D) controller'"'"' -A1" to the developers.' | systemd-cat -t gamescope-sdl-workaround -p info
 
 # This GPU does not require sdl workaround, exit 1 (false)
 exit 1
