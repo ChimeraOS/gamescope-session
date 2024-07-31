@@ -27,6 +27,7 @@ get_gamescope_binary() {
 		echo "/usr/bin/gamescope"
 	fi
 }
+
 gamescope_has_option() {
 	if ($(get_gamescope_binary) --help 2>&1 | grep -e "$1" > /dev/null); then
 		return 0
