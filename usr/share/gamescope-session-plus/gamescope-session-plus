@@ -20,7 +20,7 @@ post_gamescope_start() {
 get_gamescope_binary() {
 	if [ -n "$GAMESCOPE_BIN" ]; then
 		echo $GAMESCOPE_BIN
-	elif [ -f /usr/libexec/gamescope-sdl-workaround ] && command -v /usr/bin/gamescope-legacy > /dev/null; then
+	elif /usr/libexec/gamescope-sdl-workaround && command -v /usr/bin/gamescope-legacy > /dev/null; then
 		# GPUs that require the SDL backend
 		echo "/usr/bin/gamescope-legacy"
 	else
