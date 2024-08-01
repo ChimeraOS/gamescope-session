@@ -150,7 +150,6 @@ fi
 # Lenovo Legion Go
 if [[ ":83E1:" =~ ":$SYS_ID:"  ]]; then
   ORIENTATION=left
-  ADAPTIVE_SYNC=1
   CUSTOM_REFRESH_RATES=60,144
 
   # Set refresh rate range and enable refresh rate switching
