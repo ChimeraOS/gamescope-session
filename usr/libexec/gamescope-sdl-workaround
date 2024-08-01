@@ -48,7 +48,7 @@ while IFS= read -r GPU
 do
     # We will utilize grep and its Perl regex engine for this, the bash regex engine is too basic
     # If we match with a card that requires sdl workaround
-    if echo "$GPU" | grep -P "($FINAL_RE)"; then
+    if echo "$GPU" | grep -P "($FINAL_RE)" > /dev/null; then
         # Write info to journal
         echo "INFO: $GPU detected" | systemd-cat -t gamescope-sdl-workaround -p info
         echo "INFO: SDL backend workaround will be applied." | systemd-cat -t gamescope-sdl-workaround -p info
