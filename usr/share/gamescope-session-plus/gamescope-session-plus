@@ -17,6 +17,11 @@ post_gamescope_start() {
 	:
 }
 
+# default empty function to run after client exits
+post_client_shutdown() {
+	:
+}
+
 get_gamescope_binary() {
 	if [ -n "$GAMESCOPE_BIN" ]; then
 		echo $GAMESCOPE_BIN
@@ -329,6 +334,8 @@ if [[ "$SECONDS" -lt "$short_session_duration" ]]; then
 else
 	rm "$short_session_tracker_file"
 fi
+
+post_client_shutdown
 
 # When the client exits, kill gamescope nicely
 kill $gamescope_pid
