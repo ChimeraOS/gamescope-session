@@ -26,6 +26,28 @@ if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
   export STEAM_DISPLAY_REFRESH_LIMITS=40,120
 fi
 
+# OXP X1 Devices
+OXP_X1_LIST="ONEXPLAYER X1 A"
+if [[ ":$OXP_X1_LIST:" =~ ":$SYS_ID:"  ]]; then
+  PANEL_TYPE=external
+  ORIENTATION=left
+  CUSTOM_REFRESH_RATES=60,120
+
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=60,120
+fi
+
+# OXP X1 144Hz Devices
+OXP_X1_144_LIST="ONEXPLAYER X1 mini"
+if [[ ":$OXP_X1_144_LIST:" =~ ":$SYS_ID:"  ]]; then
+  PANEL_TYPE=external
+  ORIENTATION=left
+  CUSTOM_REFRESH_RATES=60,144
+
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=60,144
+fi
+
 # AYANEO AIR, SLIDE, and FLIP Keyboard Devices
 AIR_LIST="AIR:AIR Pro:AIR Plus:SLIDE:FLIP KB:"
 if [[ ":$AIR_LIST:" =~ ":$SYS_ID:"  ]]; then
