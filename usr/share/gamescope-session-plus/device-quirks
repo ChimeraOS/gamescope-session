@@ -100,15 +100,19 @@ if [[ ":Jupiter:Galileo:" =~ ":$SYS_ID:" ]]; then
   # Sets CPU topology for Steam Deck hardware
   export WINE_CPU_TOPOLOGY=8:0,1,2,3,4,5,6,7
 
-  # Prevent default power button behavior
-  systemd-inhibit --what=handle-suspend-key:handle-power-key:handle-hibernate-key --who=gamescope-session --why="gamescope-session handles power button events" sleep infinity &
+  function inhibit_systemd {
+    # Prevent default power button behavior
+    systemd-inhibit --what=handle-suspend-key:handle-power-key:handle-hibernate-key --who=gamescope-session --why="gamescope-session handles power button events" sleep infinity &
+  }
 
   # Start SteamOS's power button handler daemon, this passes power button events to Steam.
   if command -v /usr/bin/powerbuttond > /dev/null; then
+    inhibit_systemd
     (while true; do
       /usr/bin/powerbuttond
     done) &
   elif [ -f /usr/lib/hwsupport/power-button-handler.py ]; then
+    inhibit_systemd
     (while true; do
       /usr/bin/python3 /usr/lib/hwsupport/power-button-handler.py
     done) &
