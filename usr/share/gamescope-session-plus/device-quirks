@@ -17,7 +17,7 @@ if [[ ":$OXP_LIST:" =~ ":$SYS_ID:"  ]] || [[  ":$AOK_LIST:" =~ ":$SYS_ID:"   ]];
 fi
 
 # OXP 120Hz Devices
-OXP_120_LIST="ONEXPLAYER F1"
+OXP_120_LIST="ONEXPLAYER F1:ONEXPLAYER F1 EVA-01"
 if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
   PANEL_TYPE=external
   ORIENTATION=left
