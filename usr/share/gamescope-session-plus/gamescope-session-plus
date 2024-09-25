@@ -209,9 +209,9 @@ if [ -z "$GAMESCOPECMD" ]; then
 		PANEL_TYPE_OPTION="--force-panel-type $PANEL_TYPE"
 	fi
 
-	BYPASS_STEAM_RESOLUTION=""
-	if [ ! -n "$DONT_BYPASS_RESOLUTION" ] && gamescope_has_option "--bypass-steam-resolution"; then
-		BYPASS_STEAM_RESOLUTION="--bypass-steam-resolution"
+	BYPASS_STEAM_RESOLUTION_OPTION=""
+	if [ -n "$BYPASS_STEAM_RESOLUTION" ] && gamescope_has_option "--bypass-steam-resolution"; then
+		BYPASS_STEAM_RESOLUTION_OPTION="--bypass-steam-resolution"
 	fi
 
 	CUSTOM_REFRESH_RATES_OPTION=""
@@ -231,7 +231,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 		$INTERNAL_RESOLUTION \
 		$ORIENTATION_OPTION \
 		$DRM_MODE_OPTION \
-		$BYPASS_STEAM_RESOLUTION \
+		$BYPASS_STEAM_RESOLUTION_OPTION \
 		$ADAPTIVE_SYNC_OPTION \
 		$PANEL_TYPE_OPTION \
 		$CUSTOM_REFRESH_RATES_OPTION \
