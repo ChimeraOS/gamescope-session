@@ -52,6 +52,11 @@ export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 # TODO: document
 DRM_MODE=fixed
 
+# Specify if you want to enable support for HDR content
+ENABLE_GAMESCOPE_HDR=1
+# Set the target luminace of the inverse tone mapping process (option)
+GAMESCOPE_HDR_NITS=400
+
 # Override entire client command line
 CLIENTCMD="steam -steamos -pipewire-dmabuf -gamepadui"
 
