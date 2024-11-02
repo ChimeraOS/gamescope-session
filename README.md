@@ -22,7 +22,7 @@ The session sources environment from `~/.config/environment.d/*.conf` files.
 The easiest way to configure the session is to create `~/.config/environment.d/gamescope-session-plus.conf`
 and set variables there:
 
-```
+```bash
 # Size of the screen. If not set gamescope will detect native resolution from drm.
 SCREEN_HEIGHT=2160
 SCREEN_WIDTH=3840
@@ -80,7 +80,7 @@ We also need to create `/usr/share/wayland-sessions/gamescope-session-video.desk
 defining the session so it appears as an option in our Display Manager/Login screen.
 
 In our example, this could be:
-```
+```ini
 [Desktop Entry]
 Encoding=UTF-8
 Name=Video
