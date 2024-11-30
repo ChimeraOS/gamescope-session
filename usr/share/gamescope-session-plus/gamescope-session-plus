@@ -269,7 +269,7 @@ fi
 # Attempt to fallback to a desktop session if something goes wrong too many times
 short_session_tracker_file="/tmp/chimeraos-short-session-tracker"
 short_session_duration=60
-short_session_count_before_reset=3
+short_session_count_before_reset=5
 SECONDS=0
 
 short_session_count=$(wc <"$short_session_tracker_file" -l)
