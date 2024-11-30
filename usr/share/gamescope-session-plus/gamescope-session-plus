@@ -307,7 +307,7 @@ if read -r -t 3 response_x_display response_wl_display <>"$socket"; then
 else
 	echo "gamescope failed" >>"$short_session_tracker_file"
 	kill -9 "$gamescope_pid"
-	wait
+	wait -n "$gamescope_pid"
 	exit 1
 	# Systemd or Session manager will have to restart session
 fi
