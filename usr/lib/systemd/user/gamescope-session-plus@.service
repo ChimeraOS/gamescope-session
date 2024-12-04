@@ -1,6 +1,3 @@
-# Startup systemd unit for Gamescope session plus meant to be started by a script.
-# Logs will go to journal and logged into /run/user/$USER
-# This is the way Valve does it, we add our own file structure and scripts
 [Unit]
 Description=Gamescope Session Plus
 BindsTo=graphical-session.target
@@ -10,8 +7,6 @@ After=graphical-session-pre.target
 
 [Service]
 ExecStart=/usr/share/gamescope-session-plus/gamescope-session-plus %i
-# This is a temporary workaround for the some proton apps becoming
-# confused by the AF_UNIX socket they get for the stdout when the
-# service outputs to the journal. (e.g.  Vampire Survivors).
-StandardOutput=append:%t/gamescope-session-plus.log
-StandardError=append:%t/gamescope-session-plus.log
+KillMode=mixed
+# Make Steam's srt-logger write to the journal with it's own prefixes
+Environment=SRT_LOG_TO_JOURNAL=1

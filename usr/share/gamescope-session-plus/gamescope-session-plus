@@ -284,20 +284,8 @@ if [[ "$short_session_count" -ge "$short_session_count_before_reset" ]]; then
 	exit 1
 fi
 
-# Log rotate the last session
-if [ -f "${HOME}"/.${CLIENT}-stdout.log ]; then
-	cp "${HOME}"/.${CLIENT}-stdout.log "${HOME}"/.${CLIENT}-stdout.log.old
-fi
-if [ -f "${HOME}"/.gamescope-stdout.log ]; then
-	cp "${HOME}"/.gamescope-stdout.log "${HOME}"/.gamescope-stdout.log.old
-fi
-if [ -f "${HOME}"/.gamescope-cmd.log ]; then
-	cp "${HOME}"/.gamescope-cmd.log "${HOME}"/.gamescope-cmd.log.old
-fi
-
-# Start gamescope compositor, log it's output and background it
-echo $GAMESCOPECMD >"${HOME}"/.gamescope-cmd.log
-$GAMESCOPECMD >"${HOME}"/.gamescope-stdout.log 2>&1 &
+# Start gamescope compositor and background it
+$GAMESCOPECMD &
 gamescope_pid="$!"
 
 if read -r -t 3 response_x_display response_wl_display <>"$socket"; then
@@ -323,7 +311,7 @@ fi
 # If we have mangoapp binary start it
 if command -v mangoapp >/dev/null; then
 	(while true; do
-		mangoapp >"${HOME}"/.mangoapp-stdout.log 2>&1
+		mangoapp
 	done) &
 fi
 
@@ -341,7 +329,7 @@ if [ -n "$STEAMCMD" ]; then
 fi
 
 # Start client application
-$CLIENTCMD >"${HOME}/.${CLIENT}-stdout.log" 2>&1
+$CLIENTCMD
 
 if [[ "$SECONDS" -lt "$short_session_duration" ]]; then
 	echo "${CLIENT} failed" >>"$short_session_tracker_file"
