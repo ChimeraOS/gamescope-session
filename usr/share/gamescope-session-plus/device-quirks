@@ -113,7 +113,6 @@ fi
 # Steam Deck (Common)
 if [[ ":Jupiter:Galileo:" =~ ":$SYS_ID:" ]]; then
   DRM_MODE=fixed
-  DONT_BYPASS_RESOLUTION=1
 
   # Enables the adaptive brightness toggle
   export STEAM_ENABLE_DYNAMIC_BACKLIGHT=1
