@@ -27,6 +27,17 @@ if [[ ":$OXP_120_LIST:" =~ ":$SYS_ID:"  ]]; then
 fi
 
 # OXP X1 Devices
+OXP_X1_LIST="ONEXPLAYER X1 i"
+if [[ ":$OXP_X1_LIST:" =~ ":$SYS_ID:"  ]]; then
+  PANEL_TYPE=internal
+  USE_ROTATION_SHADER=1
+  ORIENTATION=left
+  CUSTOM_REFRESH_RATES=60,120
+
+  # Set refresh rate range and enable refresh rate switching
+  export STEAM_DISPLAY_REFRESH_LIMITS=60,120
+fi
+
 OXP_X1_LIST="ONEXPLAYER X1 A"
 if [[ ":$OXP_X1_LIST:" =~ ":$SYS_ID:"  ]]; then
   PANEL_TYPE=external
