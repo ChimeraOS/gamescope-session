@@ -27,9 +27,6 @@ post_client_shutdown() {
 get_gamescope_binary() {
 	if [ -n "$GAMESCOPE_BIN" ]; then
 		echo $GAMESCOPE_BIN
-	elif /usr/libexec/gamescope-sdl-workaround && command -v /usr/bin/gamescope-legacy > /dev/null; then
-		# GPUs that require the SDL backend
-		echo "/usr/bin/gamescope-legacy"
 	else
 		echo "/usr/bin/gamescope"
 	fi
@@ -51,12 +48,7 @@ export mesa_glthread=true
 
 # This should be used by default by gamescope. Cannot hurt to force it anyway.
 # Reported better framelimiting with this enabled
-if /usr/libexec/gamescope-sdl-workaround; then
-	# Skip on legacy hardware
-	export ENABLE_GAMESCOPE_WSI=0
-else
-	export ENABLE_GAMESCOPE_WSI=1
-fi
+export ENABLE_GAMESCOPE_WSI=1
 
 # Force Qt applications to run under xwayland
 export QT_QPA_PLATFORM=xcb
