@@ -274,7 +274,7 @@ fi
 $GAMESCOPECMD &
 gamescope_pid="$!"
 
-if read -r -t 3 response_x_display response_wl_display <>"$socket"; then
+if read -r -t 5 response_x_display response_wl_display <>"$socket"; then
 	export DISPLAY="$response_x_display"
 	export GAMESCOPE_WAYLAND_DISPLAY="$response_wl_display"
 	# We're done!
