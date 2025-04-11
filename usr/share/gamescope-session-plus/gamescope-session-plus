@@ -230,16 +230,16 @@ if [ -z "$GAMESCOPECMD" ]; then
     HDR_OPTIONS="$HDR_OPTIONS --hdr-itm-sdr-nits $GAMESCOPE_HDR_NITS --hdr-sdr-content-nits $GAMESCOPE_HDR_NITS"
   fi
 
+	# $PANEL_TYPE_OPTION is bound to chimeraos fork of gamescope
+	# $CUSTOM_REFRESH_RATES_OPTION is also bound to chimearos fork of gamescope
+	# $USE_ROTATION_SHADER_OPTION is also bound to the chimeraos fork of gamescope
+	# $INTERNAL_RESOLUTION is not useful anymore (very likely?)
+	# $RESOLUTION taken out as gamescope should now be able to set them correctly
+	# $ORIENTATION_OPTION taken out as gamescope should now be able to set them correctly
 	GAMESCOPECMD="$(get_gamescope_binary) \
 		$CURSOR \
-		$RESOLUTION \
-		$INTERNAL_RESOLUTION \
-		$ORIENTATION_OPTION \
 		$DRM_MODE_OPTION \
 		$ADAPTIVE_SYNC_OPTION \
-		$PANEL_TYPE_OPTION \
-		$CUSTOM_REFRESH_RATES_OPTION \
-		$USE_ROTATION_SHADER_OPTION \
 		$BACKEND_OPTION \
 		$HDR_OPTIONS \
 		--prefer-output $OUTPUT_CONNECTOR \
