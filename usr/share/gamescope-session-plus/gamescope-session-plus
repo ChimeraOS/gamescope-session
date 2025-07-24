@@ -124,8 +124,11 @@ for i in ${CLIENT_CONFIG_DIR_USR}/${CLIENT} ${CLIENT_CONFIG_DIR_ETC}/${CLIENT} $
 done
 set +a
 
-# Source user configuration from ~/.config/environment.d
+# Source user configuration from /etc/environment.d and ~/.config/environment.d
 set -a
+for i in /etc/environment.d/*.conf; do
+	[[ -f "${i}" ]] && . "${i}"
+done
 for i in "${HOME}"/.config/environment.d/*.conf; do
 	[[ -f "${i}" ]] && . "${i}"
 done
