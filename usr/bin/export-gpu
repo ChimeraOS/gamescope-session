@@ -1,18 +1,32 @@
 #!/bin/bash
 
-# Search for all VGA-compatible devices
-echo "Searching for VGA-compatible devices..."
-gpu_info=$(lspci -vnn | grep VGA)
+# Search for all GPU-related devices
+echo "Searching for VGA-compatible/3D controller devices..."
+gpu_info=$(lspci -vnn 2>/dev/null | grep -E "(VGA compatible|3D) controller")
 
 if [ -z "$gpu_info" ]; then
   echo "No GPU devices found."
   exit 1
 fi
 
-# Extract the device IDs from the output and store them in an array
+# Extract device IDs and names from the output and store them in arrays
 gpu_ids=($(echo "$gpu_info" | grep -o "\[[0-9a-f]\{4\}:[0-9a-f]\{4\}\]" | tr -d '[]'))
 
-# Print the available GPU device IDs
+# Create arrays to store GPU information
+declare -a gpu_names
+
+# Parse each line to extract device names
+while IFS= read -r line; do
+  if [[ -n "$line" ]]; then
+    # Extract device name and clean up redundant vendor info
+    device_name=$(echo "$line" | sed 's/.*: //' | sed 's/ \[[0-9a-f]\{4\}:[0-9a-f]\{4\}\].*//')
+    # Remove redundant vendor prefixes
+    device_name=$(echo "$device_name" | sed 's/^Advanced Micro Devices, Inc\. \[AMD\/ATI\] //' | sed 's/^Intel Corporation //' | sed 's/^NVIDIA Corporation //')
+    gpu_names+=("$device_name")
+  fi
+done <<< "$gpu_info"
+
+# Print the available GPU device IDs with names
 echo "Available GPU device IDs:"
 for i in "${!gpu_ids[@]}"; do
   gpu_vendor=""
@@ -23,7 +37,7 @@ for i in "${!gpu_ids[@]}"; do
   elif [[ ${gpu_ids[$i]} == 10de:* ]]; then
     gpu_vendor="[NVIDIA]"
   fi
-  echo "$((i)). ${gpu_ids[$i]} ${gpu_vendor}"
+  echo "$((i)). ${gpu_ids[$i]} ${gpu_vendor} - ${gpu_names[$i]}"
 done
 
 # Prompt the user to select a device ID
