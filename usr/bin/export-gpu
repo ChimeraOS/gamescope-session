@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Search for all GPU-related devices
-echo "Searching for VGA-compatible/3D controller devices..."
-gpu_info=$(lspci -vnn 2>/dev/null | grep -E "(VGA compatible|3D) controller")
+echo "Searching for display controller devices..."
+gpu_info=$(lspci -vnn 2>/dev/null | grep -E "(VGA compatible|3D|Display) controller")
 
 if [ -z "$gpu_info" ]; then
   echo "No GPU devices found."
