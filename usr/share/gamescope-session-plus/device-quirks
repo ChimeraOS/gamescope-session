@@ -115,6 +115,11 @@ fi
 
 #GPD Win 4 supports 40-60hz refresh rate changing
 if [[ ":G1618-04:" =~ ":$SYS_ID:"  ]]; then
+  ORIENTATION=""
+  # Support for custom display firmware flash that disables the landscape screen rotation (which adds input latency)
+  if ( xrandr --prop 2>$1 | grep -e "1080x1920 " > /dev/null ) ; then
+     ORIENTATION=right
+  fi
   CUSTOM_REFRESH_RATES=40,60
   export STEAM_DISPLAY_REFRESH_LIMITS=40,60
 fi
