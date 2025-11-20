@@ -227,6 +227,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 		HDR_OPTIONS="--hdr-enabled --hdr-itm-enable"
 		export ENABLE_HDR_WSI=1
 		export DXVK_HDR=1
+		export GAMESCOPE_WAYLAND_DISPLAY="gamescope-0"
 	fi
 
 	if [ -n "$GAMESCOPE_HDR_NITS" ] && gamescope_has_option "--hdr-itm-sdr-nits" && gamescope_has_option "--hdr-sdr-content-nits"; then
