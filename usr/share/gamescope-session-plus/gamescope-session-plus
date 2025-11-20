@@ -222,16 +222,16 @@ if [ -z "$GAMESCOPECMD" ]; then
 		BACKEND_OPTION="--backend $BACKEND"
 	fi
 
-  HDR_OPTIONS=""
-  if [ "$ENABLE_GAMESCOPE_HDR" == "1" ] && [ "$ENABLE_GAMESCOPE_WSI" == "1" ] && gamescope_has_option "--hdr-enabled" && gamescope_has_option "--hdr-itm-enable"; then
-    HDR_OPTIONS="--hdr-enabled --hdr-itm-enable"
-    export ENABLE_HDR_WSI=1
-    export DXVK_HDR=1
-  fi
+	HDR_OPTIONS=""
+	if [ "$ENABLE_GAMESCOPE_HDR" == "1" ] && [ "$ENABLE_GAMESCOPE_WSI" == "1" ] && gamescope_has_option "--hdr-enabled" && gamescope_has_option "--hdr-itm-enable"; then
+		HDR_OPTIONS="--hdr-enabled --hdr-itm-enable"
+		export ENABLE_HDR_WSI=1
+		export DXVK_HDR=1
+	fi
 
-  if [ -n "$GAMESCOPE_HDR_NITS" ] && gamescope_has_option "--hdr-itm-sdr-nits" && gamescope_has_option "--hdr-sdr-content-nits"; then
-    HDR_OPTIONS="$HDR_OPTIONS --hdr-itm-sdr-nits $GAMESCOPE_HDR_NITS --hdr-sdr-content-nits $GAMESCOPE_HDR_NITS"
-  fi
+	if [ -n "$GAMESCOPE_HDR_NITS" ] && gamescope_has_option "--hdr-itm-sdr-nits" && gamescope_has_option "--hdr-sdr-content-nits"; then
+		HDR_OPTIONS="$HDR_OPTIONS --hdr-itm-sdr-nits $GAMESCOPE_HDR_NITS --hdr-sdr-content-nits $GAMESCOPE_HDR_NITS"
+	fi
 
 	GAMESCOPECMD="$(get_gamescope_binary) \
 		$CURSOR \
