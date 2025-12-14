@@ -169,6 +169,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 	: "${TOUCH_MODE:=4}"
 	: "${HIDE_CURSOR_DELAY_MS:=3000}"
 	: "${FADE_OUT_DURATION_MS:=200}"
+	: "${MAX_SCALE:=2}"
 
 	CURSOR=""
 	if [ -f "$CURSOR_FILE" ]; then
@@ -250,6 +251,7 @@ if [ -z "$GAMESCOPECMD" ]; then
 		--default-touch-mode $TOUCH_MODE \
 		--hide-cursor-delay $HIDE_CURSOR_DELAY_MS \
 		--fade-out-duration $FADE_OUT_DURATION_MS \
+		--max-scale $MAX_SCALE \
 		--steam"
 fi
 
