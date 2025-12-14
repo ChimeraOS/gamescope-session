@@ -256,7 +256,6 @@ if [ -z "$GAMESCOPECMD" ]; then
 		--default-touch-mode $TOUCH_MODE \
 		--hide-cursor-delay $HIDE_CURSOR_DELAY_MS \
 		--fade-out-duration $FADE_OUT_DURATION_MS \
-		--max-scale $MAX_SCALE \
 		--steam"
 fi
 
